@@ -1,0 +1,33 @@
+import React from "react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+
+const Header = ({ heading, subHeading, itemCount, onClick }) => {
+  return (
+    <>
+      <Flex alignItems="center" justifyContent="space-between">
+        <Box>
+          <Heading as="h1" fontSize="25px" mt="7">
+            {heading} {itemCount && <span>({itemCount})</span>}
+          </Heading>
+          <Text fontSize="sm" pt="1">
+            {subHeading}
+          </Text>
+        </Box>
+        <Button
+          leftIcon={<AddIcon />}
+          size="sm"
+          style={{
+            backgroundColor: "black",
+            color: "white",
+          }}
+          onClick={onClick}
+        >
+          Add new
+        </Button>
+      </Flex>
+    </>
+  );
+};
+
+export default Header;
