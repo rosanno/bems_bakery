@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -40,7 +41,7 @@ const Links = [
   },
 ];
 
-const NavLink = ({ children, href }) => (
+const NavLink = ({ children, pathname, href }) => (
   <Link
     px={2}
     py={1}
@@ -50,6 +51,7 @@ const NavLink = ({ children, href }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
+    backgroundColor={pathname === href && "gray.200"}
     href={href}
   >
     {children}
@@ -58,6 +60,7 @@ const NavLink = ({ children, href }) => (
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { pathname } = useLocation();
 
   return (
     <>
@@ -84,7 +87,7 @@ const Navbar = () => {
             <Box>Admin</Box>
             <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
               {Links.map((link) => (
-                <NavLink href={link.href} key={link.label}>
+                <NavLink href={link.href} pathname={pathname} key={link.label}>
                   {link.label}
                 </NavLink>
               ))}
