@@ -58,7 +58,7 @@ const Products = () => {
         id={id}
       />
 
-      <Box px={{ base: "4", xl: "32" }} mt="20">
+      <Box px={{ base: "4", xl: "32" }} mt="28">
         <Header
           heading="Products"
           subHeading="Manage your products"

@@ -59,7 +59,7 @@ const Category = () => {
         deleteData={deleteData}
         id={id}
       />
-      <Box px={{ base: "4", xl: "32" }} mt="20">
+      <Box px={{ base: "4", xl: "32" }} mt="28">
         <Header
           heading="Categories"
           subHeading="Manage categories for your products"
