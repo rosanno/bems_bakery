@@ -1,6 +1,6 @@
 import cloudinary from "../../config/cloudinary.js";
-import Product from "../models/productSchema.js";
-import Ingredient from "../models/productIngredientSchema.js";
+import Product from "../models/product.js";
+import Ingredient from "../models/ingredient.js";
 
 export const addProduct = async (req, res) => {
   try {

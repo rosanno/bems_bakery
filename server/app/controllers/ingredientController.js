@@ -1,4 +1,4 @@
-import Ingredient from "../models/productIngredientSchema.js";
+import Ingredient from "../models/ingredient.js";
 
 export const createIngredient = async (req, res) => {
   try {
