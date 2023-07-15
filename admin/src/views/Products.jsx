@@ -1,24 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import {
-  Box,
-  Divider,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Spinner,
-  Table,
-  TableCaption,
-  TableContainer,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Divider, Menu, MenuButton, MenuItem, MenuList, Td, Tr } from "@chakra-ui/react";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 

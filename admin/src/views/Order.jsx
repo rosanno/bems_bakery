@@ -1,21 +1,4 @@
-import {
-  Box,
-  Divider,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Spinner,
-  Table,
-  TableCaption,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Divider, Menu, MenuButton, MenuItem, MenuList, Td, Text, Tr } from "@chakra-ui/react";
 import Header from "../components/ui/Header";
 import { useGetOrderListQuery } from "../services/bakeryApi";
 import { AiOutlineEllipsis } from "react-icons/ai";
