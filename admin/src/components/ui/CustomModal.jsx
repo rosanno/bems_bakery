@@ -19,7 +19,7 @@ const CustomModal = ({ children, heading, handleClose }) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{heading}</ModalHeader>
+          <ModalHeader fontSize="lg">{heading}</ModalHeader>
           <ModalCloseButton />
           {children}
         </ModalContent>

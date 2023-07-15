@@ -16,16 +16,16 @@ const orderSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
+        paymentStatus: {
+          type: String,
+          enum: ["Pending", "Paid", "Failed"],
+          default: "Pending",
+        },
       },
     ],
     totalPrice: {
       type: Number,
       required: true,
-    },
-    paymentStatus: {
-      type: String,
-      enum: ["Pending", "Paid"],
-      default: "Pending",
     },
   },
   { timestamps: true }

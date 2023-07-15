@@ -5,7 +5,7 @@ const base_url = import.meta.env.VITE_BASE_URL;
 export const bakeryApi = createApi({
   reducerPath: "bakeryApi",
   baseQuery: fetchBaseQuery({ baseUrl: base_url }),
-  tagTypes: ["Category", "Ingredient", "Product"],
+  tagTypes: ["Category", "Ingredient", "Product", "Order"],
   endpoints: (builder) => ({
     /**
      * register endpoint
@@ -172,6 +172,18 @@ export const bakeryApi = createApi({
      */
     getOrderList: builder.query({
       query: () => "order/order-list",
+      providesTags: ["Order"],
+    }),
+    /**
+     * update payment status
+     */
+    updateOrderPaymentStatus: builder.mutation({
+      query: ({ id, paymentStatus }) => ({
+        url: `order/${id}`,
+        method: "PATCH",
+        body: { paymentStatus },
+      }),
+      invalidatesTags: ["Order"],
     }),
   }),
 });
@@ -194,4 +206,5 @@ export const {
   useUpdateIngredientMutation,
   useDeleteIngredientMutation,
   useGetOrderListQuery,
+  useUpdateOrderPaymentStatusMutation,
 } = bakeryApi;
