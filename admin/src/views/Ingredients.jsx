@@ -25,6 +25,21 @@ import Header from "../components/ui/Header";
 import IngredientsModal from "../components/IngredientsModal";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 
+const tableHead = [
+  {
+    label: "Ingredient",
+  },
+  {
+    label: "Created Date",
+  },
+  {
+    label: "Updated Date",
+  },
+  {
+    label: "",
+  },
+];
+
 const Ingredients = () => {
   const { onOpen } = useContext(ModalContext);
   const { onOpen: onDialogOpen } = useContext(DialogContext);
@@ -69,13 +84,16 @@ const Ingredients = () => {
         <Divider mt="2" />
 
         <Box mt="10">
-          <CustomTable isFetching={isFetching}>
+          <CustomTable tableHead={tableHead} isFetching={isFetching}>
             {data?.ingredients?.map((ingredient) => (
               <Tr key={ingredient._id}>
-                <Td fontSize="sm" fontWeight="medium">
+                <Td fontSize="sm" textColor="gray.600">
                   {ingredient.name}
                 </Td>
-                <Td fontSize="sm" fontWeight="medium">
+                <Td fontSize="sm" textColor="gray.600">
+                  {moment(ingredient.createdAt).format("MMM Do YY")}
+                </Td>
+                <Td fontSize="sm" textColor="gray.600">
                   {moment(ingredient.updatedAt).format("MMM Do YY")}
                 </Td>
                 <Td isNumeric>

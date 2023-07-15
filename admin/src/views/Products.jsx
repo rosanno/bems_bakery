@@ -29,6 +29,28 @@ import { DialogContext } from "../context/DialogContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { setId } from "../features/idsSlice";
 import ConfirmationDialog from "../components/ConfirmationDialog";
+import CustomTable from "../components/ui/CustomTable";
+
+const tableHead = [
+  {
+    label: "Product Name",
+  },
+  {
+    label: "Category",
+  },
+  {
+    label: "Price",
+  },
+  {
+    label: "Created Date",
+  },
+  {
+    label: "Updated Date",
+  },
+  {
+    label: "",
+  },
+];
 
 const Products = () => {
   const navigate = useNavigate();
@@ -70,57 +92,50 @@ const Products = () => {
         <Divider mt="2" />
 
         <Box mt="10">
-          <TableContainer border="1px" borderColor="gray.100" borderRadius="6">
-            <Table variant="simple">
-              {isFetching && (
-                <TableCaption>
-                  <Spinner size="lg" />
-                </TableCaption>
-              )}
-              <Thead>
-                <Tr>
-                  <Th>Product name</Th>
-                  <Th>Category</Th>
-                  <Th>Price</Th>
-                  <Th>Date</Th>
-                  <Th isNumeric></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {data?.products?.map((product) => (
-                  <Tr key={product._id}>
-                    <Td fontSize="sm">{product.name}</Td>
-                    <Td fontSize="sm">{product.category.name}</Td>
-                    <Td fontSize="sm">₱{product.price}</Td>
-                    <Td fontSize="sm">{moment(product.createdDate).format("MMM Do YY")}</Td>
-                    <Td isNumeric>
-                      <Menu>
-                        <MenuButton>
-                          <AiOutlineEllipsis />
-                        </MenuButton>
-                        <MenuList>
-                          <MenuItem
-                            fontSize="xs"
-                            onClick={() => navigate(`/edit-product/${product._id}`)}
-                          >
-                            <EditIcon fontSize="sm" mr="1" />
-                            Edit
-                          </MenuItem>
-                          <MenuItem
-                            fontSize="xs"
-                            onClick={() => handleDelete(product._id, product.name)}
-                          >
-                            <DeleteIcon mr="1" fontSize="sm" />
-                            Delete
-                          </MenuItem>
-                        </MenuList>
-                      </Menu>
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+          <CustomTable tableHead={tableHead} isFetching={isFetching}>
+            {data?.products?.map((product) => (
+              <Tr key={product._id}>
+                <Td fontSize="sm" textColor="gray.600">
+                  {product.name}
+                </Td>
+                <Td fontSize="sm" textColor="gray.600">
+                  {product.category.name}
+                </Td>
+                <Td fontSize="sm" textColor="gray.600">
+                  ₱{product.price}
+                </Td>
+                <Td fontSize="sm" textColor="gray.600">
+                  {moment(product.createdAt).format("MMM Do YY")}
+                </Td>
+                <Td fontSize="sm" textColor="gray.600">
+                  {moment(product.updatedAt).format("MMM Do YY")}
+                </Td>
+                <Td isNumeric>
+                  <Menu>
+                    <MenuButton>
+                      <AiOutlineEllipsis />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem
+                        fontSize="xs"
+                        onClick={() => navigate(`/edit-product/${product._id}`)}
+                      >
+                        <EditIcon fontSize="sm" mr="1" />
+                        Edit
+                      </MenuItem>
+                      <MenuItem
+                        fontSize="xs"
+                        onClick={() => handleDelete(product._id, product.name)}
+                      >
+                        <DeleteIcon mr="1" fontSize="sm" />
+                        Delete
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
+              </Tr>
+            ))}
+          </CustomTable>
         </Box>
       </Box>
     </>

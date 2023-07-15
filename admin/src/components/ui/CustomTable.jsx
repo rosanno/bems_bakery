@@ -9,7 +9,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-const CustomTable = ({ children, isFetching }) => {
+const CustomTable = ({ children, tableHead, isFetching }) => {
   return (
     <TableContainer border="1px" borderColor="gray.100" borderRadius="6">
       <Table variant="simple">
@@ -20,9 +20,9 @@ const CustomTable = ({ children, isFetching }) => {
         )}
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th>Date</Th>
-            <Th></Th>
+            {tableHead.map((thead) => (
+              <Th key={thead.label}>{thead.label}</Th>
+            ))}
           </Tr>
         </Thead>
         <Tbody>{children}</Tbody>
