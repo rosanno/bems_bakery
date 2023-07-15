@@ -1,17 +1,6 @@
 import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Box,
-  Divider,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Spinner,
-  Td,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Divider, Menu, MenuButton, MenuItem, MenuList, Td, Tr } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import moment from "moment";
@@ -70,44 +59,38 @@ const Category = () => {
         <Divider mt="2" />
 
         <Box mt="10">
-          {isFetching ? (
-            <Flex justifyContent="center">
-              <Spinner size="lg" />
-            </Flex>
-          ) : (
-            <CustomTable>
-              {data?.categories?.map((category) => (
-                <Tr key={category._id}>
-                  <Td fontSize="sm" fontWeight="medium">
-                    {category.name}
-                  </Td>
-                  <Td fontSize="sm" fontWeight="medium">
-                    {moment(category.updatedAt).format("MMM Do YY")}
-                  </Td>
-                  <Td isNumeric>
-                    <Menu>
-                      <MenuButton>
-                        <AiOutlineEllipsis />
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem fontSize="xs" onClick={() => handleUpdate(category._id)}>
-                          <EditIcon fontSize="sm" mr="1" />
-                          Edit
-                        </MenuItem>
-                        <MenuItem
-                          fontSize="xs"
-                          onClick={() => handleDelete(category._id, category.name)}
-                        >
-                          <DeleteIcon mr="1" fontSize="sm" />
-                          Delete
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
-                </Tr>
-              ))}
-            </CustomTable>
-          )}
+          <CustomTable isFetching={isFetching}>
+            {data?.categories?.map((category) => (
+              <Tr key={category._id}>
+                <Td fontSize="sm" fontWeight="medium">
+                  {category.name}
+                </Td>
+                <Td fontSize="sm" fontWeight="medium">
+                  {moment(category.updatedAt).format("MMM Do YY")}
+                </Td>
+                <Td isNumeric>
+                  <Menu>
+                    <MenuButton>
+                      <AiOutlineEllipsis />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem fontSize="xs" onClick={() => handleUpdate(category._id)}>
+                        <EditIcon fontSize="sm" mr="1" />
+                        Edit
+                      </MenuItem>
+                      <MenuItem
+                        fontSize="xs"
+                        onClick={() => handleDelete(category._id, category.name)}
+                      >
+                        <DeleteIcon mr="1" fontSize="sm" />
+                        Delete
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
+              </Tr>
+            ))}
+          </CustomTable>
         </Box>
       </Box>
     </>

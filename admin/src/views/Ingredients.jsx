@@ -69,44 +69,38 @@ const Ingredients = () => {
         <Divider mt="2" />
 
         <Box mt="10">
-          {isFetching ? (
-            <Flex justifyContent="center">
-              <Spinner size="lg" />
-            </Flex>
-          ) : (
-            <CustomTable>
-              {data?.ingredients?.map((ingredient) => (
-                <Tr key={ingredient._id}>
-                  <Td fontSize="sm" fontWeight="medium">
-                    {ingredient.name}
-                  </Td>
-                  <Td fontSize="sm" fontWeight="medium">
-                    {moment(ingredient.updatedAt).format("MMM Do YY")}
-                  </Td>
-                  <Td isNumeric>
-                    <Menu>
-                      <MenuButton>
-                        <AiOutlineEllipsis />
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem fontSize="xs" onClick={() => handleUpdate(ingredient._id)}>
-                          <EditIcon fontSize="sm" mr="1" />
-                          Edit
-                        </MenuItem>
-                        <MenuItem
-                          fontSize="xs"
-                          onClick={() => handleDelete(ingredient._id, ingredient.name)}
-                        >
-                          <DeleteIcon mr="1" fontSize="sm" />
-                          Delete
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
-                </Tr>
-              ))}
-            </CustomTable>
-          )}
+          <CustomTable isFetching={isFetching}>
+            {data?.ingredients?.map((ingredient) => (
+              <Tr key={ingredient._id}>
+                <Td fontSize="sm" fontWeight="medium">
+                  {ingredient.name}
+                </Td>
+                <Td fontSize="sm" fontWeight="medium">
+                  {moment(ingredient.updatedAt).format("MMM Do YY")}
+                </Td>
+                <Td isNumeric>
+                  <Menu>
+                    <MenuButton>
+                      <AiOutlineEllipsis />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem fontSize="xs" onClick={() => handleUpdate(ingredient._id)}>
+                        <EditIcon fontSize="sm" mr="1" />
+                        Edit
+                      </MenuItem>
+                      <MenuItem
+                        fontSize="xs"
+                        onClick={() => handleDelete(ingredient._id, ingredient.name)}
+                      >
+                        <DeleteIcon mr="1" fontSize="sm" />
+                        Delete
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
+              </Tr>
+            ))}
+          </CustomTable>
         </Box>
       </Box>
     </>
