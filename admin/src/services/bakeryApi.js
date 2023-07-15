@@ -162,6 +162,17 @@ export const bakeryApi = createApi({
       }),
       invalidatesTags: ["Ingredient"],
     }),
+
+    /**
+     * Order endpoints
+     */
+
+    /**
+     * get order items
+     */
+    getOrderList: builder.query({
+      query: () => "order/order-list",
+    }),
   }),
 });
 
@@ -182,4 +193,5 @@ export const {
   useGetIngredientsQuery,
   useUpdateIngredientMutation,
   useDeleteIngredientMutation,
+  useGetOrderListQuery,
 } = bakeryApi;
