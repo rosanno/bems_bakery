@@ -4,7 +4,9 @@ const base_url = import.meta.env.VITE_BASE_URL;
 
 export const bakeryApi = createApi({
   reducerPath: "bakeryApi",
-  baseQuery: fetchBaseQuery({ baseUrl: base_url }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: base_url,
+  }),
   tagTypes: ["Category", "Ingredient", "Product", "Order"],
   endpoints: (builder) => ({
     /**

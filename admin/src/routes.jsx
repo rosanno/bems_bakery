@@ -7,6 +7,7 @@ import Products from "./views/Products";
 import CreateProduct from "./views/CreateProduct";
 import UpdateProduct from "./views/UpdateProduct";
 import Order from "./views/Order";
+import Login from "./views/Login";
 
 export const router = createBrowserRouter([
   {
@@ -42,5 +43,9 @@ export const router = createBrowserRouter([
         element: <Order />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
