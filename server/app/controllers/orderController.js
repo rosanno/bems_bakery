@@ -150,6 +150,25 @@ export const updateOrder = async (req, res) => {
 
 export const deleteOrderList = async (req, res) => {
   try {
+    const { productId } = req.params;
+    const { customerId } = req.body;
+
+    const order = await Order.findOne({ customer: customerId });
+
+    if (!order) return res.status(404).json({ error: "Customer not found" });
+
+    const orderItemIndex = order.products.findIndex(
+      (product) => product.orderItem.toString() === productId
+    );
+
+    if (orderItemIndex === -1) {
+      return res.status(404).json({ message: "Order item not found" });
+    }
+
+    order.products.splice(orderItemIndex, 1);
+    order.save();
+
+    res.json({ message: "Order item deleted successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
