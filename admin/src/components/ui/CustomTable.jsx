@@ -25,7 +25,7 @@ const CustomTable = ({ children, tableHead, isFetching }) => {
             ))}
           </Tr>
         </Thead>
-        <Tbody>{children}</Tbody>
+        {!isFetching && <Tbody>{children}</Tbody>}
       </Table>
     </TableContainer>
   );
