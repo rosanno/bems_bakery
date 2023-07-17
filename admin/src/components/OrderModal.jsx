@@ -15,10 +15,6 @@ const options = [
     label: "Paid",
     value: "Paid",
   },
-  {
-    label: "Failed",
-    value: "Failed",
-  },
 ];
 
 const OrderModal = ({ status, setPaymentStatus }) => {
