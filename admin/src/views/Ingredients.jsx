@@ -1,17 +1,19 @@
 import {
   Box,
   Divider,
-  Flex,
+  Input,
+  InputGroup,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Spinner,
   Td,
   Tr,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { AiOutlineEllipsis } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import moment from "moment";
 
@@ -47,7 +49,8 @@ const Ingredients = () => {
   const ingredientId = useSelector((state) => state.ids._id);
   const id = ingredientId?.payload;
   const [page, setPage] = useState(1);
-  const { data, isFetching } = useGetIngredientsQuery({ page });
+  const [search, setSearch] = useState("");
+  const { data, isFetching } = useGetIngredientsQuery({ page, search });
   const [deleteIngredient] = useDeleteIngredientMutation();
   const dispatch = useDispatch();
   const [subHeading, setSubHeading] = useState("");
@@ -86,6 +89,19 @@ const Ingredients = () => {
         <Divider mt="2" />
 
         <Box mt="10">
+          <Box as="div" my="5">
+            <InputGroup width={"80"} size={"sm"}>
+              <Input
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                borderRadius={"md"}
+                placeholder="Search ingredients..."
+              />
+              <InputRightElement textColor={"gray.500"}>
+                <BsSearch />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
           <CustomTable tableHead={tableHead} isFetching={isFetching}>
             {data?.ingredients?.map((ingredient) => (
               <Tr key={ingredient._id}>
