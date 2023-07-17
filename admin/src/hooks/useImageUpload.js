@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const useImageUpload = () => {
   const fileInputRef = useRef(null);
@@ -26,9 +26,10 @@ const useImageUpload = () => {
     fileInputRef.current.click();
   };
 
-  const onDelete = () => {
+  const onDelete = useCallback(() => {
     setPreviewImage(null);
-  };
+    console.log("callback");
+  }, []);
 
   return {
     fileInputRef,

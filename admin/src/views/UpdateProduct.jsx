@@ -60,7 +60,7 @@ const UpdateProduct = () => {
       setValue("description", product?.result?.description);
     }
     console.log("product data");
-  }, [ingredients, options, product, setPreviewImage, setValue]);
+  }, [product, setPreviewImage, setValue]);
 
   const onSubmit = async (data) => {
     const result = await update({ productId, data });
