@@ -24,6 +24,7 @@ import { DialogContext } from "../context/DialogContextProvider";
 import Header from "../components/ui/Header";
 import IngredientsModal from "../components/IngredientsModal";
 import ConfirmationDialog from "../components/ConfirmationDialog";
+import Pagination from "../components/ui/Pagination";
 
 const tableHead = [
   {
@@ -45,7 +46,8 @@ const Ingredients = () => {
   const { onOpen: onDialogOpen } = useContext(DialogContext);
   const ingredientId = useSelector((state) => state.ids._id);
   const id = ingredientId?.payload;
-  const { data, isFetching } = useGetIngredientsQuery();
+  const [page, setPage] = useState(1);
+  const { data, isFetching } = useGetIngredientsQuery({ page });
   const [deleteIngredient] = useDeleteIngredientMutation();
   const dispatch = useDispatch();
   const [subHeading, setSubHeading] = useState("");
@@ -119,6 +121,15 @@ const Ingredients = () => {
               </Tr>
             ))}
           </CustomTable>
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+            }}
+          >
+            <Pagination totalPages={data?.totalPages} setPage={setPage} />
+          </Box>
         </Box>
       </Box>
     </>
