@@ -1,4 +1,6 @@
 import Ingredient from "../models/ingredient.js";
+import paginateResults from "../utils/pagination.js";
+import searchResults from "../utils/search.js";
 
 export const createIngredient = async (req, res) => {
   try {
@@ -16,10 +18,25 @@ export const createIngredient = async (req, res) => {
 };
 
 export const getIngredients = async (req, res) => {
-  try {
-    const ingredients = await Ingredient.find();
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+  const search = req.query.search || "";
 
-    res.status(200).json({ ingredients });
+  try {
+    let results;
+    let totalCount;
+
+    if (search) {
+      // Use the search utility function for searching ingredients
+      ({ results, totalCount } = await searchResults(Ingredient, "name", search, page, perPage));
+    } else {
+      // Use the pagination utility function for regular pagination
+      ({ results, totalCount } = await paginateResults(Ingredient, page, perPage));
+    }
+
+    const totalPages = Math.ceil(totalCount / perPage);
+
+    res.status(200).json({ ingredients: results, total: totalCount, totalPages });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
