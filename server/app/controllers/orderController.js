@@ -54,8 +54,22 @@ export const getOrders = async (req, res) => {
 };
 
 export const getOrderList = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+  const search = req.query.search || "";
+
   try {
-    const orders = await Order.find()
+    const query = {};
+    if (search) {
+      // Case-insensitive search for customer names or any other relevant fields
+      query["$or"] = [
+        { "customer.name": { $regex: search, $options: "i" } },
+        { "products.orderItem.name": { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const skip = (page - 1) * perPage;
+    const ordersPromise = Order.find(query)
       .populate({
         path: "customer",
         select: "name addresses email",
@@ -63,7 +77,19 @@ export const getOrderList = async (req, res) => {
       .populate({
         path: "products.orderItem",
         select: "name price category",
-      });
+      })
+      .skip(skip)
+      .limit(perPage)
+      .exec();
+
+    // Get the total count of orders (without pagination)
+    const countPromise = Order.countDocuments(query).exec();
+
+    // Execute both queries in parallel using Promise.all
+    const [orders, totalCount] = await Promise.all([ordersPromise, countPromise]);
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(totalCount / perPage);
 
     const transformData = orders.flatMap((order) => {
       const productItem = order.products.map((product) => {
@@ -96,7 +122,7 @@ export const getOrderList = async (req, res) => {
       return productItem;
     });
 
-    res.status(200).json({ data: transformData });
+    res.status(200).json({ data: transformData, totalPages });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

@@ -4,6 +4,9 @@ import {
   Badge,
   Box,
   Divider,
+  Input,
+  InputGroup,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
@@ -22,6 +25,8 @@ import CustomTable from "../components/ui/CustomTable";
 import OrderModal from "../components/OrderModal";
 import { ModalContext } from "../context/ContextProvider";
 import { setId } from "../features/idsSlice";
+import Pagination from "../components/ui/Pagination";
+import { BsSearch } from "react-icons/bs";
 
 const tableHead = [
   {
@@ -49,7 +54,9 @@ const tableHead = [
 
 const Order = () => {
   const dispatch = useDispatch();
-  const { data: orderList, isFetching } = useGetOrderListQuery();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const { data: orderList, isFetching } = useGetOrderListQuery({ page, search });
   const { onOpen } = useContext(ModalContext);
   const productId = useSelector((state) => state.ids._id);
   const id = productId?.payload;
@@ -70,6 +77,19 @@ const Order = () => {
         <Divider mt="2" />
 
         <Box mt="10">
+          <Box as="div" my="5">
+            <InputGroup width={"80"} size={"sm"}>
+              <Input
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                borderRadius={"md"}
+                placeholder="Search ingredients..."
+              />
+              <InputRightElement textColor={"gray.500"}>
+                <BsSearch />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
           <CustomTable tableHead={tableHead} isFetching={isFetching}>
             {orderList?.data.map((order) => (
               <Tr key={order.id}>
@@ -113,6 +133,17 @@ const Order = () => {
               </Tr>
             ))}
           </CustomTable>
+          {orderList?.totalPages !== 1 && (
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Pagination totalPages={orderList?.totalPages} setPage={setPage} />
+            </Box>
+          )}
         </Box>
       </Box>
     </>

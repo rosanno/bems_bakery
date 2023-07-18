@@ -175,7 +175,7 @@ export const bakeryApi = createApi({
      * get order items
      */
     getOrderList: builder.query({
-      query: () => "order/order-list",
+      query: ({ page, search }) => `order/order-list?page=${page}&perPage=5&search=${search}`,
       providesTags: ["Order"],
     }),
     /**
