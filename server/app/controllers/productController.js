@@ -31,10 +31,43 @@ export const addProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-  try {
-    const products = await Product.find().populate("category").populate("ingredients");
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+  const search = req.query.search || "";
 
-    res.status(200).json({ products });
+  try {
+    let results;
+    let totalCount;
+    let totalPages;
+
+    // MongoDB aggregation pipeline for pagination and search
+    const query = {};
+    if (search) {
+      // Case-insensitive search for product names or any other relevant fields
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const skip = (page - 1) * perPage;
+    const productsPromise = Product.find(query)
+      .populate("category")
+      .populate("ingredients")
+      .skip(skip)
+      .limit(perPage)
+      .exec();
+
+    // Get the total count of products (without pagination)
+    const countPromise = Product.countDocuments(query).exec();
+
+    // Execute both queries in parallel using Promise.all
+    [results, totalCount] = await Promise.all([productsPromise, countPromise]);
+
+    // Calculate the total number of pages
+    totalPages = Math.ceil(totalCount / perPage);
+
+    res.status(200).json({ products: results, totalCount, totalPages });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

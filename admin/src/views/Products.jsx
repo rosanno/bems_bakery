@@ -1,6 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { Box, Divider, Menu, MenuButton, MenuItem, MenuList, Td, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Td,
+  Tr,
+} from "@chakra-ui/react";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
@@ -12,6 +24,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setId } from "../features/idsSlice";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import CustomTable from "../components/ui/CustomTable";
+import Pagination from "../components/ui/Pagination";
+import { BsSearch } from "react-icons/bs";
 
 const tableHead = [
   {
@@ -39,7 +53,9 @@ const Products = () => {
   const dispatch = useDispatch();
   const productId = useSelector((state) => state.ids._id);
   const id = productId?.payload;
-  const { data, isFetching } = useGetProductsQuery();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const { data, isFetching } = useGetProductsQuery({ page, search });
   const [deleteProduct] = useDeleteProductMutation();
   const { onOpen } = useContext(DialogContext);
   const [subHeading, setSubHeading] = useState("");
@@ -74,6 +90,19 @@ const Products = () => {
         <Divider mt="2" />
 
         <Box mt="10">
+          <Box as="div" my="5">
+            <InputGroup width={"80"} size={"sm"}>
+              <Input
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                borderRadius={"md"}
+                placeholder="Search ingredients..."
+              />
+              <InputRightElement textColor={"gray.500"}>
+                <BsSearch />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
           <CustomTable tableHead={tableHead} isFetching={isFetching}>
             {data?.products?.map((product) => (
               <Tr key={product._id}>
@@ -118,6 +147,17 @@ const Products = () => {
               </Tr>
             ))}
           </CustomTable>
+          {data?.totalPages !== 1 && (
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Pagination totalPages={data?.totalPages} setPage={setPage} />
+            </Box>
+          )}
         </Box>
       </Box>
     </>

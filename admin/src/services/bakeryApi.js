@@ -50,7 +50,7 @@ export const bakeryApi = createApi({
      * get products
      */
     getProducts: builder.query({
-      query: () => "product",
+      query: ({ page, search }) => `product?page=${page}&perPage=5&search=${search}`,
       providesTags: ["Product"],
     }),
     /**
