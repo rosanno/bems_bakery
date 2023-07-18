@@ -133,7 +133,8 @@ export const bakeryApi = createApi({
      * Retrieve a ingredients
      */
     getIngredients: builder.query({
-      query: ({ page, search }) => `ingredient?page=${page}&perPage=5&search=${search}`,
+      query: ({ page, search, isQueryParams }) =>
+        `ingredient${isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""}`,
       providesTags: ["Ingredient"],
     }),
     /**

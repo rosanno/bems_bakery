@@ -50,7 +50,7 @@ const Ingredients = () => {
   const id = ingredientId?.payload;
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const { data, isFetching } = useGetIngredientsQuery({ page, search });
+  const { data, isFetching } = useGetIngredientsQuery({ page, search, isQueryParams: true });
   const [deleteIngredient] = useDeleteIngredientMutation();
   const dispatch = useDispatch();
   const [subHeading, setSubHeading] = useState("");

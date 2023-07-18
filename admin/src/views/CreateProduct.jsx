@@ -1,12 +1,5 @@
 import { useForm } from "react-hook-form";
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Heading, Text } from "@chakra-ui/react";
 
 import {
   useCreateProductMutation,
@@ -23,7 +16,7 @@ import ImageForm from "../components/ui/ImageForm";
 
 const CreateProduct = () => {
   const { data } = useGetCategoriesQuery();
-  const { data: result } = useGetIngredientsQuery();
+  const { data: result } = useGetIngredientsQuery({ isQueryParams: false });
   const {
     fileInputRef,
     previewImage,
