@@ -86,7 +86,8 @@ export const bakeryApi = createApi({
      * Retrieve a categories
      */
     getCategories: builder.query({
-      query: () => "category",
+      query: ({ page, search, isQueryParams }) =>
+        `category${isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""}`,
       providesTags: ["Category"],
     }),
     /**

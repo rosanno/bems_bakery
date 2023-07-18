@@ -1,6 +1,18 @@
 import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Divider, Menu, MenuButton, MenuItem, MenuList, Td, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Td,
+  Tr,
+} from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import moment from "moment";
@@ -13,6 +25,8 @@ import { DialogContext } from "../context/DialogContextProvider";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import Header from "../components/ui/Header";
 import CustomTable from "../components/ui/CustomTable";
+import Pagination from "../components/ui/Pagination";
+import { BsSearch } from "react-icons/bs";
 
 const tableHead = [
   {
@@ -32,7 +46,9 @@ const tableHead = [
 const Category = () => {
   const { onOpen } = useContext(ModalContext);
   const { onOpen: onDialogOpen } = useContext(DialogContext);
-  const { data, isFetching } = useGetCategoriesQuery();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const { data, isFetching } = useGetCategoriesQuery({ page, search, isQueryParams: true });
   const categoryId = useSelector((state) => state.ids._id);
   const id = categoryId?.payload;
   const [deleteData] = useDeleteCategoryMutation();
@@ -74,6 +90,19 @@ const Category = () => {
         <Divider mt="2" />
 
         <Box mt="10">
+          <Box as="div" my="5">
+            <InputGroup width={"80"} size={"sm"}>
+              <Input
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                borderRadius={"md"}
+                placeholder="Search category..."
+              />
+              <InputRightElement textColor={"gray.500"}>
+                <BsSearch />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
           <CustomTable tableHead={tableHead} isFetching={isFetching}>
             {data?.categories?.map((category) => (
               <Tr key={category._id}>
@@ -109,6 +138,17 @@ const Category = () => {
               </Tr>
             ))}
           </CustomTable>
+          {data?.totalPages !== 1 && (
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Pagination totalPages={data?.totalPages} setPage={setPage} />
+            </Box>
+          )}
         </Box>
       </Box>
     </>
