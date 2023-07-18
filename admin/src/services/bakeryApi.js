@@ -189,6 +189,20 @@ export const bakeryApi = createApi({
       }),
       invalidatesTags: ["Order"],
     }),
+
+    /**
+     * get revenue
+     */
+    getTotalRevenue: builder.query({
+      query: () => "order/get-total-revenue",
+    }),
+
+    /**
+     * get sales
+     */
+    getSalesCount: builder.query({
+      query: () => "order/get-sales-count",
+    }),
   }),
 });
 
@@ -211,4 +225,6 @@ export const {
   useDeleteIngredientMutation,
   useGetOrderListQuery,
   useUpdateOrderPaymentStatusMutation,
+  useGetTotalRevenueQuery,
+  useGetSalesCountQuery,
 } = bakeryApi;

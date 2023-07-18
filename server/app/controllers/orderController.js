@@ -174,6 +174,113 @@ export const updateOrder = async (req, res) => {
   }
 };
 
+export const getTotalRevenue = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate({
+        path: "customer",
+        select: "name addresses email",
+      })
+      .populate({
+        path: "products.orderItem",
+        select: "name price category",
+      });
+
+    let totalRevenue = 0;
+
+    orders.forEach((order) => {
+      order.products.forEach((product) => {
+        if (product.paymentStatus === "Paid") {
+          totalRevenue += product.orderItem.price * product.quantity;
+        }
+      });
+    });
+
+    res.status(200).json({ totalRevenue });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getSalesCount = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate({
+        path: "customer",
+        select: "name addresses email",
+      })
+      .populate({
+        path: "products.orderItem",
+        select: "name price category",
+      });
+
+    let salesCount = 0;
+
+    orders.forEach((order) => {
+      order.products.forEach((product) => {
+        if (product.paymentStatus === "Paid") {
+          salesCount += product.quantity;
+        }
+      });
+    });
+
+    res.status(200).json({ salesCount });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getMonthlyRevenuePaidOrders = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate({
+        path: "customer",
+        select: "name addresses email",
+      })
+      .populate({
+        path: "products.orderItem",
+        select: "name price category",
+      });
+
+    const monthlyRevenue = {};
+
+    orders.forEach((order) => {
+      if (order.products.some((product) => product.paymentStatus === "Paid")) {
+        // Get the month and year from the createdAt date
+        const createdAtDate = new Date(order.createdAt);
+        const month = createdAtDate.getMonth();
+        const year = createdAtDate.getFullYear();
+        const monthYearKey = `${year}-${month}`;
+
+        // Calculate the total revenue for the order
+        const orderRevenue = order.products.reduce((total, product) => {
+          if (product.paymentStatus === "Paid") {
+            return total + product.orderItem.price * product.quantity;
+          }
+          return total;
+        }, 0);
+
+        // Add the revenue to the corresponding month in the monthlyRevenue object
+        if (monthlyRevenue[monthYearKey]) {
+          monthlyRevenue[monthYearKey] += orderRevenue;
+        } else {
+          monthlyRevenue[monthYearKey] = orderRevenue;
+        }
+      }
+    });
+
+    console.log("Monthly Revenue from Paid Orders:", monthlyRevenue);
+
+    res.status(200).json({ monthlyRevenue });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 export const deleteOrderList = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -195,14 +302,6 @@ export const deleteOrderList = async (req, res) => {
     order.save();
 
     res.json({ message: "Order item deleted successfully" });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-export const removeOrder = async (req, res) => {
-  try {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
