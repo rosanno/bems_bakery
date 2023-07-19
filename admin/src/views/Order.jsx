@@ -83,7 +83,7 @@ const Order = () => {
                 onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 borderRadius={"md"}
-                placeholder="Search ingredients..."
+                placeholder="Search orders by customer name..."
               />
               <InputRightElement textColor={"gray.500"}>
                 <BsSearch />
