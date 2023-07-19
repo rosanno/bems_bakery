@@ -121,8 +121,13 @@ const Navbar = () => {
                   }
                 />
               </MenuButton>
-              <MenuList onClick={onLogout}>
-                <MenuItem>Logout</MenuItem>
+              <MenuList>
+                <MenuItem fontSize={"sm"} onClick={() => navigate("/profile")}>
+                  Profile
+                </MenuItem>
+                <MenuItem fontSize={"sm"} onClick={onLogout}>
+                  Logout
+                </MenuItem>
               </MenuList>
             </Menu>
           </Flex>
