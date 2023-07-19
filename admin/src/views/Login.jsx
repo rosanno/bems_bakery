@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import {
   Flex,
@@ -14,12 +14,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useLoginMutation } from "../services/bakeryApi";
-import { setCurrentUser } from "../features/authSlice";
+import { setToken } from "../features/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login] = useLoginMutation();
+  const token = useSelector((state) => state.auth.token);
+  const [login, { isLoading }] = useLoginMutation();
   const { control, handleSubmit } = useForm({
     defaultValues: {
       email: "",
@@ -27,10 +28,15 @@ const Login = () => {
     },
   });
 
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
+
   const onSubmit = async (data) => {
     const res = await login(data);
-    dispatch(setCurrentUser({ token: res?.data?.accessToken, user: res?.data?.user }));
-    console.log(res);
+    dispatch(setToken({ token: res?.data?.accessToken }));
   };
 
   return (
@@ -42,7 +48,9 @@ const Login = () => {
     >
       <Stack spacing={8} mx={"auto"} width={"md"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize="3xl">Admin Login</Heading>
+          <Heading fontSize="3xl" fontWeight={"semibold"}>
+            Login
+          </Heading>
         </Stack>
         <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -65,6 +73,7 @@ const Login = () => {
               </FormControl>
               <Stack spacing={10}>
                 <Button
+                  isLoading={isLoading}
                   bg={"blue.400"}
                   color={"white"}
                   _hover={{

@@ -1,13 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { auth } from "./auth";
 
-const base_url = import.meta.env.VITE_BASE_URL;
-
-export const bakeryApi = createApi({
-  reducerPath: "bakeryApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: base_url,
-  }),
-  tagTypes: ["Category", "Ingredient", "Product", "Order"],
+export const bakeryApi = auth.injectEndpoints({
   endpoints: (builder) => ({
     /**
      * register endpoint
