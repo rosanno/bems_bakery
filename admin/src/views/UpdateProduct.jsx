@@ -23,7 +23,12 @@ const UpdateProduct = () => {
   const { data: results } = useGetCategoriesQuery({ isQueryParams: false });
   const { data: result } = useGetIngredientsQuery({ isQueryParams: false });
   const [update, { isLoading }] = useUpdateProductMutation();
-  const { control, setValue, handleSubmit } = useForm({
+  const {
+    control,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
     defaultValues: {
       name: "",
       price: "",
@@ -105,8 +110,30 @@ const UpdateProduct = () => {
         <Box mt="7">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Flex alignItems="center" gap="3">
-              <CustomInput label="Product Name" name="name" type="text" control={control} />
-              <CustomInput label="Price" name="price" type="number" control={control} />
+              <CustomInput
+                label="Product Name"
+                name="name"
+                type="text"
+                control={control}
+                errors={errors?.name}
+                rules={{ required: "Product Name is required" }}
+              />
+              <CustomInput
+                label="Price"
+                name="price"
+                type="number"
+                control={control}
+                errors={errors?.price}
+                rules={{
+                  required: "Price is required",
+                  min: 0,
+                  max: 1000,
+                  pattern: {
+                    value: /^\d+(\.\d{1,2})?$/,
+                    message: "Invalid Price format",
+                  },
+                }}
+              />
               <SingleSelect
                 label="Category"
                 name="category"
@@ -118,7 +145,23 @@ const UpdateProduct = () => {
             <Box mt="5">
               <MultiSelect label="Ingredients" control={control} options={options} />
               <Box mt="5">
-                <CustomTextArea label="Description" control={control} />
+                <CustomTextArea
+                  label="Description"
+                  name="description"
+                  control={control}
+                  errors={errors?.description}
+                  rules={{
+                    required: "Description is required",
+                    minLength: {
+                      value: 10,
+                      message: "Description must be at least 10 characters long",
+                    },
+                    maxLength: {
+                      value: 200,
+                      message: "Description must not exceed 200 characters",
+                    },
+                  }}
+                />
               </Box>
             </Box>
             <Box mt="3" mb="3">
