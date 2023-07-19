@@ -19,5 +19,5 @@ export const auth = createApi({
   reducerPath: "bakeryApi",
   baseQuery: baseQuery,
   endpoints: (builder) => ({}),
-  tagTypes: ["Category", "Ingredient", "Product", "Order"],
+  tagTypes: ["Category", "Ingredient", "Product", "Order", "User"],
 });

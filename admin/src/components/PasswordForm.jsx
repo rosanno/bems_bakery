@@ -1,53 +1,65 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { FormControl, FormLabel, Input, Button, FormErrorMessage } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  FormErrorMessage,
+  useToast,
+} from "@chakra-ui/react";
+import { useUpdateUserMutation } from "../services/bakeryApi";
 
 const PasswordForm = () => {
+  const toast = useToast();
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
   const {
     handleSubmit,
     control,
     formState: { errors },
     watch,
+    reset,
   } = useForm({
     defaultValues: {
-      current_password: "",
-      new_password: "",
+      password: "",
       confirm_password: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const res = await updateUser(data);
+    if (res?.data) {
+      toast({
+        title: `${res?.data?.message}`,
+        status: "success",
+        position: "top",
+        isClosable: true,
+      });
+      reset();
+    }
+
+    console.log(res?.error?.message);
+
+    if (res?.error?.status === 401) {
+      toast({
+        title: `${res?.error?.message}`,
+        status: "error",
+        position: "top",
+        isClosable: true,
+      });
+    }
   };
 
-  const newPassword = watch("new_password", ""); // Provide a default value for newPassword
+  const newPassword = watch("password", ""); // Provide a default value for newPassword
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={!!errors.current_password}>
-        <FormLabel fontSize="sm" fontWeight="normal" textColor="gray.600">
-          Current Password
-        </FormLabel>
-        <Controller
-          name="current_password"
-          control={control}
-          defaultValue=""
-          rules={{ required: "This field is required" }}
-          render={({ field }) => (
-            <Input size="md" borderRadius="md" width="lg" type="password" {...field} />
-          )}
-        />
-        <FormErrorMessage>
-          {errors.current_password && errors.current_password.message}
-        </FormErrorMessage>
-      </FormControl>
-
-      <FormControl mt="4" isInvalid={!!errors.new_password}>
+      <FormControl mt="4" isInvalid={!!errors.password}>
         <FormLabel fontSize="sm" fontWeight="normal" textColor="gray.600">
           New Password
         </FormLabel>
         <Controller
-          name="new_password"
+          name="password"
           control={control}
           defaultValue=""
           rules={{
@@ -61,7 +73,7 @@ const PasswordForm = () => {
             <Input size="md" borderRadius="md" width="lg" type="password" {...field} />
           )}
         />
-        <FormErrorMessage>{errors.new_password && errors.new_password.message}</FormErrorMessage>
+        <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
       </FormControl>
 
       <FormControl mt="4" isInvalid={!!errors.confirm_password}>
@@ -85,7 +97,14 @@ const PasswordForm = () => {
         </FormErrorMessage>
       </FormControl>
 
-      <Button type="submit" colorScheme="red" mt="5" size="md">
+      <Button
+        type="submit"
+        isLoading={isLoading}
+        loadingText="saving..."
+        colorScheme="red"
+        mt="5"
+        size="md"
+      >
         Save
       </Button>
     </form>

@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
+import { useUpdateUserMutation } from "../services/bakeryApi";
 
-const ProfileForm = () => {
+const ProfileForm = ({ data }) => {
+  const toast = useToast();
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
   const {
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({
     defaultValues: {
       name: "",
@@ -21,8 +25,24 @@ const ProfileForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  useEffect(() => {
+    if (data?.user) {
+      setValue("name", data?.user?.name);
+      setValue("email", data?.user?.email);
+    }
+  }, [data?.user]);
+
+  const onSubmit = async (data) => {
+    const res = await updateUser(data);
+
+    if (res?.data) {
+      toast({
+        title: `${res?.data?.message}`,
+        status: "success",
+        position: "top",
+        isClosable: true,
+      });
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -32,7 +52,6 @@ const ProfileForm = () => {
         </FormLabel>
         <Controller
           name="name"
-          defaultValue=""
           control={control}
           rules={{
             required: "This field is required",
@@ -68,7 +87,14 @@ const ProfileForm = () => {
         />
         <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
-      <Button type="submit" colorScheme="red" mt={"5"} size={"md"}>
+      <Button
+        type="submit"
+        isLoading={isLoading}
+        loadingText="saving..."
+        colorScheme="red"
+        mt={"5"}
+        size={"md"}
+      >
         Save
       </Button>
     </form>
