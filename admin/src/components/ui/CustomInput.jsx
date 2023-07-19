@@ -12,7 +12,7 @@ const CustomInput = ({ label, name, type, control, errors, rules }) => {
         render={({ field }) => (
           <>
             <Input type={type} {...field} />
-            <FormErrorMessage>{errors && errors.message}</FormErrorMessage>
+            <FormErrorMessage fontSize={"sm"}>{errors && errors.message}</FormErrorMessage>
           </>
         )}
       />
