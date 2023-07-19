@@ -34,7 +34,11 @@ const Layout = () => {
   return (
     <>
       <Navbar />
-      <main>
+      <main
+        style={{
+          marginBottom: "30px",
+        }}
+      >
         <Outlet />
       </main>
     </>
