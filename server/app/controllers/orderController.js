@@ -244,15 +244,26 @@ export const getMonthlyRevenuePaidOrders = async (req, res) => {
         select: "name price category",
       });
 
-    const monthlyRevenue = {};
+    const monthlyRevenue = [
+      { name: "Jan", total: 0 },
+      { name: "Feb", total: 0 },
+      { name: "Mar", total: 0 },
+      { name: "Apr", total: 0 },
+      { name: "May", total: 0 },
+      { name: "Jun", total: 0 },
+      { name: "Jul", total: 0 },
+      { name: "Aug", total: 0 },
+      { name: "Sep", total: 0 },
+      { name: "Oct", total: 0 },
+      { name: "Nov", total: 0 },
+      { name: "Dec", total: 0 },
+    ];
 
     orders.forEach((order) => {
       if (order.products.some((product) => product.paymentStatus === "Paid")) {
-        // Get the month and year from the createdAt date
+        // Get the month from the createdAt date
         const createdAtDate = new Date(order.createdAt);
         const month = createdAtDate.getMonth();
-        const year = createdAtDate.getFullYear();
-        const monthYearKey = `${year}-${month}`;
 
         // Calculate the total revenue for the order
         const orderRevenue = order.products.reduce((total, product) => {
@@ -262,16 +273,10 @@ export const getMonthlyRevenuePaidOrders = async (req, res) => {
           return total;
         }, 0);
 
-        // Add the revenue to the corresponding month in the monthlyRevenue object
-        if (monthlyRevenue[monthYearKey]) {
-          monthlyRevenue[monthYearKey] += orderRevenue;
-        } else {
-          monthlyRevenue[monthYearKey] = orderRevenue;
-        }
+        // Update the corresponding total value in the monthlyRevenue array
+        monthlyRevenue[month].total += orderRevenue;
       }
     });
-
-    console.log("Monthly Revenue from Paid Orders:", monthlyRevenue);
 
     res.status(200).json({ monthlyRevenue });
   } catch (error) {
@@ -279,7 +284,6 @@ export const getMonthlyRevenuePaidOrders = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 export const deleteOrderList = async (req, res) => {
   try {
