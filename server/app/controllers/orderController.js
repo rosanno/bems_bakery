@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Order from "../models/order.js";
+import User from "../models/user.js";
 
 export const createOrder = async (req, res) => {
   try {
@@ -59,13 +60,19 @@ export const getOrderList = async (req, res) => {
   const search = req.query.search || "";
 
   try {
-    const query = {};
+    let query = {};
     if (search) {
       // Case-insensitive search for customer names or any other relevant fields
-      query["$or"] = [
-        { "customer.name": { $regex: search, $options: "i" } },
-        { "products.orderItem.name": { $regex: search, $options: "i" } },
-      ];
+      const customers = await User.find({ name: { $regex: search, $options: "i" } });
+
+      const customerIds = customers.map((customer) => customer._id);
+
+      query = {
+        $or: [
+          { customer: { $in: customerIds } },
+          { "products.orderItem.name": { $regex: search, $options: "i" } },
+        ],
+      };
     }
 
     const skip = (page - 1) * perPage;
