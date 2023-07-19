@@ -84,6 +84,7 @@ const Ingredients = () => {
           heading="Ingredients"
           subHeading="Manage ingredients for your products"
           onClick={onClick}
+          isButton
         />
 
         <Divider mt="2" />

@@ -85,6 +85,7 @@ const Products = () => {
           subHeading="Manage your products"
           onClick={onClick}
           itemCount={data?.products?.length}
+          isButton
         />
 
         <Divider mt="2" />

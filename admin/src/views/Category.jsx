@@ -85,6 +85,7 @@ const Category = () => {
           subHeading="Manage categories for your products"
           itemCount={data?.categories?.length}
           onClick={onClick}
+          isButton
         />
 
         <Divider mt="2" />
