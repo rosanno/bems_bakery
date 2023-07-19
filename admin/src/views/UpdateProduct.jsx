@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Heading, Text, useToast } from "@chakra-ui/react";
 import ImageForm from "../components/ui/ImageForm";
 import useImageUpload from "../hooks/useImageUpload";
 import CustomInput from "../components/ui/CustomInput";
@@ -18,6 +18,7 @@ import Progress from "../components/ui/Progress";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
+  const toast = useToast();
   const { data: product, isFetching } = useGetProductQuery(productId);
   const { data: results } = useGetCategoriesQuery({ isQueryParams: false });
   const { data: result } = useGetIngredientsQuery({ isQueryParams: false });
@@ -64,7 +65,15 @@ const UpdateProduct = () => {
 
   const onSubmit = async (data) => {
     const result = await update({ productId, data });
-    console.log(result);
+
+    if (result?.data?.product) {
+      toast({
+        title: "Updated successfully",
+        status: "success",
+        position: "top",
+        isClosable: true,
+      });
+    }
   };
 
   return (
