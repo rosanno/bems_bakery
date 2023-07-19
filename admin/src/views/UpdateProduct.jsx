@@ -19,8 +19,8 @@ import Progress from "../components/ui/Progress";
 const UpdateProduct = () => {
   const { productId } = useParams();
   const { data: product, isFetching } = useGetProductQuery(productId);
-  const { data: results } = useGetCategoriesQuery();
-  const { data: result } = useGetIngredientsQuery();
+  const { data: results } = useGetCategoriesQuery({ isQueryParams: false });
+  const { data: result } = useGetIngredientsQuery({ isQueryParams: false });
   const [update, { isLoading }] = useUpdateProductMutation();
   const { control, setValue, handleSubmit } = useForm({
     defaultValues: {

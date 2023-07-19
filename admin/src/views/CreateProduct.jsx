@@ -15,7 +15,7 @@ import CustomTextArea from "../components/ui/CustomTextArea";
 import ImageForm from "../components/ui/ImageForm";
 
 const CreateProduct = () => {
-  const { data } = useGetCategoriesQuery();
+  const { data } = useGetCategoriesQuery({ isQueryParams: false });
   const { data: result } = useGetIngredientsQuery({ isQueryParams: false });
   const {
     fileInputRef,
