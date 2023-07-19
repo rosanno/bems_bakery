@@ -36,9 +36,9 @@ const CreateProduct = () => {
     defaultValues: {
       name: "",
       price: "",
+      description: "",
       category: "",
       ingredients: "",
-      description: "",
     },
   });
 
@@ -64,6 +64,8 @@ const CreateProduct = () => {
     value: ingredient._id,
     label: ingredient.name,
   }));
+
+  console.log(errors);
 
   return (
     <>
@@ -128,7 +130,23 @@ const CreateProduct = () => {
             <Box mt="5">
               <MultiSelect label="Ingredients" control={control} options={options} />
               <Box mt="5">
-                <CustomTextArea label="Description" control={control} />
+                <CustomTextArea
+                  label="Description"
+                  name="description"
+                  control={control}
+                  errors={errors?.description}
+                  rules={{
+                    required: "Description is required",
+                    minLength: {
+                      value: 10,
+                      message: "Description must be at least 10 characters long",
+                    },
+                    maxLength: {
+                      value: 200,
+                      message: "Description must not exceed 200 characters",
+                    },
+                  }}
+                />
               </Box>
             </Box>
             <Box mt="3" mb="3">

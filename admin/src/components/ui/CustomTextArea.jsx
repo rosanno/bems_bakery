@@ -1,14 +1,20 @@
-import { FormControl, FormLabel, Textarea } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, Textarea } from "@chakra-ui/react";
 import { Controller } from "react-hook-form";
 
-const CustomTextArea = ({ label, control }) => {
+const CustomTextArea = ({ label, name, control, errors, rules }) => {
   return (
-    <FormControl>
+    <FormControl isInvalid={!!errors}>
       <FormLabel fontSize="sm">{label}</FormLabel>
       <Controller
-        name="description"
+        name={name}
         control={control}
-        render={({ field }) => <Textarea {...field} placeholder="Product decription..." rows="5" fontSize="sm" />}
+        rules={rules}
+        render={({ field }) => (
+          <>
+            <Textarea {...field} placeholder="Product decription..." rows="5" fontSize="sm" />
+            <FormErrorMessage fontSize={"sm"}>{errors && errors.message}</FormErrorMessage>
+          </>
+        )}
       />
     </FormControl>
   );
