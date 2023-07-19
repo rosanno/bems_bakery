@@ -27,7 +27,12 @@ const CreateProduct = () => {
     onDelete,
   } = useImageUpload();
   const [create, { isLoading }] = useCreateProductMutation();
-  const { control, reset, handleSubmit } = useForm({
+  const {
+    control,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
     defaultValues: {
       name: "",
       price: "",
@@ -88,8 +93,30 @@ const CreateProduct = () => {
         <Box mt="7">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Flex alignItems="center" gap="3">
-              <CustomInput label="Product Name" name="name" type="text" control={control} />
-              <CustomInput label="Price" name="price" type="number" control={control} />
+              <CustomInput
+                label="Product Name"
+                name="name"
+                type="text"
+                control={control}
+                errors={errors?.name}
+                rules={{ required: "Product Name is required" }}
+              />
+              <CustomInput
+                label="Price"
+                name="price"
+                type="number"
+                control={control}
+                errors={errors?.price}
+                rules={{
+                  required: "Price is required",
+                  min: 0,
+                  max: 1000,
+                  pattern: {
+                    value: /^\d+(\.\d{1,2})?$/,
+                    message: "Invalid Price format",
+                  },
+                }}
+              />
               <SingleSelect
                 label="Category"
                 name="category"
