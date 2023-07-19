@@ -61,7 +61,9 @@ export const updateUser = async (req, res) => {
     }
 
     if (typeof req.body.password === "string" && req.body.password.trim() !== "") {
-      user.password = req.body.password;
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+      user.password = hashedPassword;
     }
 
     const updatedUser = await user.save();
@@ -72,6 +74,5 @@ export const updateUser = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 export const deleteUser = async (req, res) => {};
