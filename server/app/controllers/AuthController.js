@@ -78,3 +78,22 @@ export const login = async (req, res) => {
     res.status(500).jsom({ message: "Internal server error" });
   }
 };
+
+export const getAuthUser = async (req, res) => {
+  try {
+    const { userId } = req.user;
+
+    const foundUser = await User.findOne({ _id: userId });
+
+    if (!foundUser) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+
+    const { refreshToken, ...user } = foundUser._doc;
+
+    res.status(200).json({ user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).jsom({ message: "Internal server error" });
+  }
+};
