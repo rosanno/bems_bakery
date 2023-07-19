@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -12,13 +11,14 @@ import {
   Button,
   Heading,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { useLoginMutation } from "../services/bakeryApi";
 import { setToken } from "../features/authSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const toast = useToast();
   const token = useSelector((state) => state.auth.token);
   const [login, { isLoading }] = useLoginMutation();
   const { control, handleSubmit } = useForm({
@@ -28,15 +28,24 @@ const Login = () => {
     },
   });
 
-  useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
+  if (token) {
+    return <Navigate to="/" />;
+  }
 
   const onSubmit = async (data) => {
     const res = await login(data);
-    dispatch(setToken({ token: res?.data?.accessToken }));
+    if (res?.data?.accessToken) {
+      dispatch(setToken({ token: res?.data?.accessToken }));
+    }
+
+    if (res?.error?.status === 404) {
+      toast({
+        title: `${res?.error?.data.message}`,
+        status: "error",
+        position: "top",
+        isClosable: true,
+      });
+    }
   };
 
   return (

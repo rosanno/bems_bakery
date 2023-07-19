@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -17,6 +17,11 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { BsBell } from "react-icons/bs";
+
+import { useLogoutMutation } from "../services/bakeryApi";
+import { persistor } from "../store";
+import { useDispatch } from "react-redux";
+import { resetAuthUser } from "../features/authSlice";
 
 const Links = [
   {
@@ -61,6 +66,16 @@ const NavLink = ({ children, pathname, href }) => (
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [logout] = useLogoutMutation();
+
+  const onLogout = async () => {
+    const res = await logout();
+    persistor.purge();
+    dispatch(resetAuthUser());
+    navigate("/login");
+  };
 
   return (
     <>
@@ -106,7 +121,7 @@ const Navbar = () => {
                   }
                 />
               </MenuButton>
-              <MenuList>
+              <MenuList onClick={onLogout}>
                 <MenuItem>Logout</MenuItem>
               </MenuList>
             </Menu>

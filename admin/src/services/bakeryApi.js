@@ -18,6 +18,23 @@ export const bakeryApi = auth.injectEndpoints({
     }),
 
     /**
+     * logout a user
+     */
+    logout: builder.mutation({
+      query: () => ({
+        url: "auth/logout",
+        method: "POST",
+      }),
+    }),
+
+    /**
+     * get authenticated user
+     */
+    getUser: builder.query({
+      query: () => "auth/user",
+    }),
+
+    /**
      * create a product
      */
     createProduct: builder.mutation({
@@ -208,6 +225,8 @@ export const bakeryApi = auth.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useGetUserQuery,
+  useLogoutMutation,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
