@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Box, Button, Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Heading, Text, useToast } from "@chakra-ui/react";
 
 import {
   useCreateProductMutation,
@@ -15,6 +15,7 @@ import CustomTextArea from "../components/ui/CustomTextArea";
 import ImageForm from "../components/ui/ImageForm";
 
 const CreateProduct = () => {
+  const toast = useToast();
   const { data } = useGetCategoriesQuery({ isQueryParams: false });
   const { data: result } = useGetIngredientsQuery({ isQueryParams: false });
   const {
@@ -41,9 +42,17 @@ const CreateProduct = () => {
       ...data,
       image: previewImage,
     };
-    await create(newData);
-    setPreviewImage(null);
-    reset();
+    const res = await create(newData);
+    if (res?.data?.product) {
+      toast({
+        title: "Product added",
+        status: "success",
+        position: "top",
+        isClosable: true,
+      });
+      setPreviewImage(null);
+      reset();
+    }
   };
 
   let options = result?.ingredients?.map((ingredient) => ({
