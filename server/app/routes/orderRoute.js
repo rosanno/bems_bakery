@@ -16,12 +16,12 @@ const router = express.Router();
 
 router.post("/", userAuth, createOrder);
 router.get("/", getOrders);
-router.get("/get-total-revenue", getTotalRevenue);
-router.get("/get-sales-count", getSalesCount);
-router.get("/get-monthly-revenue", getMonthlyRevenuePaidOrders);
-router.get("/order-list", getOrderList);
+router.get("/get-total-revenue", userAuth, getTotalRevenue);
+router.get("/get-sales-count", userAuth, getSalesCount);
+router.get("/get-monthly-revenue", userAuth, getMonthlyRevenuePaidOrders);
+router.get("/order-list", userAuth, getOrderList);
 router.get("/:userId", getOrder);
-router.patch("/:productId", updateOrder);
+router.patch("/:productId", userAuth, updateOrder);
 router.delete("/:productId", deleteOrderList);
 
 export default router;
