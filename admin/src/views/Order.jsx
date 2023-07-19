@@ -133,7 +133,7 @@ const Order = () => {
               </Tr>
             ))}
           </CustomTable>
-          {orderList?.totalPages !== 1 && (
+          {orderList?.totalPages !== 1 && orderList?.totalPages !== 0 && (
             <Box
               style={{
                 display: "flex",

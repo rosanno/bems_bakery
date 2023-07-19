@@ -138,15 +138,17 @@ const Ingredients = () => {
               </Tr>
             ))}
           </CustomTable>
-          <Box
-            style={{
-              display: "flex",
-              justifyContent: "end",
-              alignItems: "center",
-            }}
-          >
-            <Pagination totalPages={data?.totalPages} setPage={setPage} />
-          </Box>
+          {data?.totalPages !== 1 && data?.totalPages !== 0 && (
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Pagination totalPages={data?.totalPages} setPage={setPage} />
+            </Box>
+          )}
         </Box>
       </Box>
     </>

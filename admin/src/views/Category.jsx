@@ -139,7 +139,7 @@ const Category = () => {
               </Tr>
             ))}
           </CustomTable>
-          {data?.totalPages !== 1 && (
+          {data?.totalPages !== 1 && data?.totalPages !== 0 && (
             <Box
               style={{
                 display: "flex",
