@@ -42,6 +42,36 @@ export const createUser = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {};
 
-export const updateUser = async (req, res) => {};
+export const updateUser = async (req, res) => {
+  try {
+    const { userId } = req.user;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (typeof req.body.name === "string" && req.body.name.trim() !== "") {
+      user.name = req.body.name;
+    }
+
+    if (typeof req.body.email === "string" && req.body.email.trim() !== "") {
+      user.email = req.body.email;
+    }
+
+    if (typeof req.body.password === "string" && req.body.password.trim() !== "") {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({ message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 export const deleteUser = async (req, res) => {};
