@@ -1,13 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { auth } from "./auth";
 
-const base_url = import.meta.env.VITE_BASE_URL;
-
-export const bakeryApi = createApi({
-  reducerPath: "bakeryApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: base_url,
-  }),
-  tagTypes: ["Category", "Ingredient", "Product", "Order"],
+export const bakeryApi = auth.injectEndpoints({
   endpoints: (builder) => ({
     /**
      * register endpoint
@@ -22,6 +15,36 @@ export const bakeryApi = createApi({
         method: "POST",
         body: crendentials,
       }),
+    }),
+
+    /**
+     * update user
+     */
+    updateUser: builder.mutation({
+      query: (data) => ({
+        url: "user",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    /**
+     * logout a user
+     */
+    logout: builder.mutation({
+      query: () => ({
+        url: "auth/logout",
+        method: "POST",
+      }),
+    }),
+
+    /**
+     * get authenticated user
+     */
+    getUser: builder.query({
+      query: () => "auth/user",
+      providesTags: ["User"],
     }),
 
     /**
@@ -50,7 +73,7 @@ export const bakeryApi = createApi({
      * get products
      */
     getProducts: builder.query({
-      query: () => "product",
+      query: ({ page, search }) => `product?page=${page}&perPage=5&search=${search}`,
       providesTags: ["Product"],
     }),
     /**
@@ -86,7 +109,8 @@ export const bakeryApi = createApi({
      * Retrieve a categories
      */
     getCategories: builder.query({
-      query: () => "category",
+      query: ({ page, search, isQueryParams }) =>
+        `category${isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""}`,
       providesTags: ["Category"],
     }),
     /**
@@ -133,7 +157,8 @@ export const bakeryApi = createApi({
      * Retrieve a ingredients
      */
     getIngredients: builder.query({
-      query: () => "ingredient",
+      query: ({ page, search, isQueryParams }) =>
+        `ingredient${isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""}`,
       providesTags: ["Ingredient"],
     }),
     /**
@@ -173,7 +198,7 @@ export const bakeryApi = createApi({
      * get order items
      */
     getOrderList: builder.query({
-      query: () => "order/order-list",
+      query: ({ page, search }) => `order/order-list?page=${page}&perPage=5&search=${search}`,
       providesTags: ["Order"],
     }),
     /**
@@ -187,11 +212,35 @@ export const bakeryApi = createApi({
       }),
       invalidatesTags: ["Order"],
     }),
+
+    /**
+     * get revenue
+     */
+    getTotalRevenue: builder.query({
+      query: () => "order/get-total-revenue",
+    }),
+
+    /**
+     * get sales
+     */
+    getSalesCount: builder.query({
+      query: () => "order/get-sales-count",
+    }),
+
+    /**
+     * get monthly revenue
+     */
+    getMonthlyRevenue: builder.query({
+      query: () => "order/get-monthly-revenue",
+    }),
   }),
 });
 
 export const {
   useLoginMutation,
+  useUpdateUserMutation,
+  useGetUserQuery,
+  useLogoutMutation,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
@@ -209,4 +258,7 @@ export const {
   useDeleteIngredientMutation,
   useGetOrderListQuery,
   useUpdateOrderPaymentStatusMutation,
+  useGetTotalRevenueQuery,
+  useGetSalesCountQuery,
+  useGetMonthlyRevenueQuery,
 } = bakeryApi;

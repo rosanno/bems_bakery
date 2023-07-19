@@ -1,17 +1,19 @@
 import {
   Box,
   Divider,
-  Flex,
+  Input,
+  InputGroup,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Spinner,
   Td,
   Tr,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { AiOutlineEllipsis } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import moment from "moment";
 
@@ -24,6 +26,7 @@ import { DialogContext } from "../context/DialogContextProvider";
 import Header from "../components/ui/Header";
 import IngredientsModal from "../components/IngredientsModal";
 import ConfirmationDialog from "../components/ConfirmationDialog";
+import Pagination from "../components/ui/Pagination";
 
 const tableHead = [
   {
@@ -45,7 +48,9 @@ const Ingredients = () => {
   const { onOpen: onDialogOpen } = useContext(DialogContext);
   const ingredientId = useSelector((state) => state.ids._id);
   const id = ingredientId?.payload;
-  const { data, isFetching } = useGetIngredientsQuery();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const { data, isFetching } = useGetIngredientsQuery({ page, search, isQueryParams: true });
   const [deleteIngredient] = useDeleteIngredientMutation();
   const dispatch = useDispatch();
   const [subHeading, setSubHeading] = useState("");
@@ -79,11 +84,25 @@ const Ingredients = () => {
           heading="Ingredients"
           subHeading="Manage ingredients for your products"
           onClick={onClick}
+          isButton
         />
 
         <Divider mt="2" />
 
         <Box mt="10">
+          <Box as="div" my="5">
+            <InputGroup width={"80"} size={"sm"}>
+              <Input
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                borderRadius={"md"}
+                placeholder="Search ingredients..."
+              />
+              <InputRightElement textColor={"gray.500"}>
+                <BsSearch />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
           <CustomTable tableHead={tableHead} isFetching={isFetching}>
             {data?.ingredients?.map((ingredient) => (
               <Tr key={ingredient._id}>
@@ -119,6 +138,17 @@ const Ingredients = () => {
               </Tr>
             ))}
           </CustomTable>
+          {data?.totalPages !== 1 && data?.totalPages !== 0 && (
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Pagination totalPages={data?.totalPages} setPage={setPage} />
+            </Box>
+          )}
         </Box>
       </Box>
     </>

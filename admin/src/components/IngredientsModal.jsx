@@ -16,8 +16,8 @@ const IngredientsModal = () => {
   const { onClose, isOpen } = useContext(ModalContext);
   const ingredientId = useSelector((state) => state.ids._id);
   const id = ingredientId?.payload;
-  const [create] = useCreateIngredientMutation();
-  const [update] = useUpdateIngredientMutation();
+  const [create, { isLoading: isCreated }] = useCreateIngredientMutation();
+  const [update, { isLoading }] = useUpdateIngredientMutation();
   const { data } = useGetIngredientQuery({ id }, { skip: !id });
   const ingredient = data?.ingredient?.name;
   const { name, setName, onCreate, onUpdate, handleClose } = useCreateUpdate(
@@ -48,6 +48,8 @@ const IngredientsModal = () => {
           <Button
             onClick={onUpdate}
             colorScheme="blue"
+            isLoading={isLoading}
+            loadingText="updating..."
             mr={3}
             style={{
               backgroundColor: "black",
@@ -59,6 +61,8 @@ const IngredientsModal = () => {
           <Button
             onClick={onCreate}
             colorScheme="blue"
+            isLoading={isCreated}
+            loadingText="adding..."
             mr={3}
             style={{
               backgroundColor: "black",

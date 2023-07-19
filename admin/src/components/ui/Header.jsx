@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
-const Header = ({ heading, subHeading, itemCount, onClick }) => {
+const Header = ({ heading, subHeading, itemCount, onClick, isButton = false }) => {
   return (
     <>
       <Flex alignItems="center" justifyContent="space-between">
@@ -14,17 +14,19 @@ const Header = ({ heading, subHeading, itemCount, onClick }) => {
             {subHeading}
           </Text>
         </Box>
-        <Button
-          leftIcon={<AddIcon />}
-          size="sm"
-          style={{
-            backgroundColor: "black",
-            color: "white",
-          }}
-          onClick={onClick}
-        >
-          Add new
-        </Button>
+        {isButton && (
+          <Button
+            leftIcon={<AddIcon />}
+            size="sm"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+            }}
+            onClick={onClick}
+          >
+            Add new
+          </Button>
+        )}
       </Flex>
     </>
   );

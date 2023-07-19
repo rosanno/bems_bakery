@@ -15,12 +15,12 @@ import useCreateUpdate from "../hooks/useCreateUpdate";
 const CategoryModal = () => {
   const initialRef = useRef(null);
   const { onClose, isOpen } = useContext(ModalContext);
-  const [create] = useCreateCategoryMutation();
+  const [create, { isLoading: isCreated }] = useCreateCategoryMutation();
   const categoryId = useSelector((state) => state.ids._id);
   const id = categoryId?.payload;
   const { data } = useGetCategoryQuery({ id: categoryId?.payload }, { skip: !categoryId });
-  const [update] = useUpdateCategoryMutation();
-  const { name, setName,onCreate, onUpdate, handleClose } = useCreateUpdate(
+  const [update, { isLoading }] = useUpdateCategoryMutation();
+  const { name, setName, onCreate, onUpdate, handleClose } = useCreateUpdate(
     isOpen,
     onClose,
     id,
@@ -49,6 +49,8 @@ const CategoryModal = () => {
           <Button
             onClick={onUpdate}
             colorScheme="blue"
+            isLoading={isLoading}
+            loadingText="updating..."
             mr={3}
             style={{
               backgroundColor: "black",
@@ -60,6 +62,8 @@ const CategoryModal = () => {
           <Button
             onClick={onCreate}
             colorScheme="blue"
+            isLoading={isCreated}
+            loadingText="adding..."
             mr={3}
             style={{
               backgroundColor: "black",
