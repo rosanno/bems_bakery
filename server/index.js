@@ -5,12 +5,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import { dbconnect } from "./config/database.js";
+
 import userRoutes from "./app/routes/userRoutes.js";
 import authRoutes from "./app/routes/authRoutes.js";
 import productRoutes from "./app/routes/productRoutes.js";
 import categoryRoutes from "./app/routes/categoryRoutes.js";
 import ingredientRoutes from "./app/routes/ingredientRoutes.js";
 import orderRoutes from "./app/routes/orderRoute.js";
+import cartRoutes from "./app/routes/cartRoute.js";
 
 dotenv.config();
 const app = express();
@@ -35,6 +37,7 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
+app.use("/api/cart", cartRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/product", productRoutes);
