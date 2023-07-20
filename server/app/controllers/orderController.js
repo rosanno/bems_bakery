@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Order from "../models/order.js";
 import User from "../models/user.js";
 
