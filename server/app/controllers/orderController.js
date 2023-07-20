@@ -311,7 +311,7 @@ export const deleteOrderList = async (req, res) => {
     order.products.splice(orderItemIndex, 1);
     order.save();
 
-    res.json({ message: "Order item deleted successfully" });
+    res.json({ message: "deleted successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
