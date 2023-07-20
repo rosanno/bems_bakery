@@ -10,7 +10,6 @@ const ConfirmationDialog = ({ heading, subHeading, deleteData, id }) => {
 
   const onDelete = async () => {
     await deleteData({ id: id });
-
     onClose();
     dispatch(resetId());
   };

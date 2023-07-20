@@ -20,13 +20,15 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import moment from "moment";
 
 import Header from "../components/ui/Header";
-import { useGetOrderListQuery } from "../services/bakeryApi";
+import { useDeleteOrderFromListMutation, useGetOrderListQuery } from "../services/bakeryApi";
 import CustomTable from "../components/ui/CustomTable";
 import OrderModal from "../components/OrderModal";
 import { ModalContext } from "../context/ContextProvider";
 import { setId } from "../features/idsSlice";
 import Pagination from "../components/ui/Pagination";
 import { BsSearch } from "react-icons/bs";
+import ConfirmationDialog from "../components/ConfirmationDialog";
+import { DialogContext } from "../context/DialogContextProvider";
 
 const tableHead = [
   {
@@ -56,18 +58,36 @@ const Order = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const { data: orderList, isFetching } = useGetOrderListQuery({ page, search });
-  const { onOpen } = useContext(ModalContext);
   const [paymentStatus, setPaymentStatus] = useState("");
+  const [subHeading, setSubHeading] = useState("");
+
+  const orderId = useSelector((state) => state.ids.id);
+  const { data: orderList, isFetching } = useGetOrderListQuery({ page, search });
+  const [deleteOrder] = useDeleteOrderFromListMutation();
+  const { onOpen } = useContext(ModalContext);
+  const { onOpen: onDialogOpen } = useContext(DialogContext);
 
   const onOpenModal = (productId, status) => {
     setPaymentStatus(status);
-    dispatch(setId(productId));
+    dispatch(setId({ id: productId }));
     onOpen();
+  };
+
+  const handleDelete = (orderId, orderItem) => {
+    setSubHeading(orderItem);
+    dispatch(setId({ id: orderId }));
+    onDialogOpen();
   };
 
   return (
     <>
+      <ConfirmationDialog
+        heading="Delete Customer Order"
+        subHeading={subHeading}
+        deleteData={deleteOrder}
+        id={orderId}
+      />
+
       <OrderModal status={paymentStatus} setPaymentStatus={setPaymentStatus} />
       <Box px={{ base: "4", xl: "32" }} mt="28">
         <Header heading="Order" subHeading="Manage order products" />
@@ -126,7 +146,10 @@ const Order = () => {
                         <EditIcon fontSize="sm" mr="1" />
                         Edit
                       </MenuItem>
-                      <MenuItem fontSize="xs" onClick={() => {}}>
+                      <MenuItem
+                        fontSize="xs"
+                        onClick={() => handleDelete(order.id, order.orderItem)}
+                      >
                         <DeleteIcon mr="1" fontSize="sm" />
                         Delete
                       </MenuItem>

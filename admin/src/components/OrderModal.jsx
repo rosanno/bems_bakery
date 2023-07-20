@@ -19,8 +19,7 @@ const options = [
 
 const OrderModal = ({ status, setPaymentStatus }) => {
   const initialRef = useRef(null);
-  const productId = useSelector((state) => state.ids._id);
-  const id = productId?.payload;
+  const productId = useSelector((state) => state.ids.id);
   const { onClose } = useContext(ModalContext);
   const [updatePaymentStatus, { isLoading, isSuccess }] = useUpdateOrderPaymentStatusMutation();
 
@@ -29,7 +28,7 @@ const OrderModal = ({ status, setPaymentStatus }) => {
   };
 
   const onUpdate = async () => {
-    const res = await updatePaymentStatus({ id, paymentStatus: status });
+    const res = await updatePaymentStatus({ id: productId, paymentStatus: status });
 
     onClose();
   };
