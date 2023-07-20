@@ -55,7 +55,7 @@ const Ingredients = () => {
   const [subHeading, setSubHeading] = useState("");
 
   const handleUpdate = (ingredientId) => {
-    dispatch(setId(ingredientId));
+    dispatch(setId({ id: ingredientId }));
     onOpen();
   };
 

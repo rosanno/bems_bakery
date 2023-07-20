@@ -16,14 +16,13 @@ const CategoryModal = () => {
   const initialRef = useRef(null);
   const { onClose, isOpen } = useContext(ModalContext);
   const [create, { isLoading: isCreated }] = useCreateCategoryMutation();
-  const categoryId = useSelector((state) => state.ids._id);
-  const id = categoryId?.payload;
-  const { data } = useGetCategoryQuery({ id: categoryId?.payload }, { skip: !categoryId });
+  const categoryId = useSelector((state) => state.ids.id);
+  const { data } = useGetCategoryQuery({ id: categoryId }, { skip: !categoryId });
   const [update, { isLoading }] = useUpdateCategoryMutation();
   const { name, setName, onCreate, onUpdate, handleClose } = useCreateUpdate(
     isOpen,
     onClose,
-    id,
+    categoryId,
     data?.category?.name,
     create,
     update,
@@ -45,7 +44,7 @@ const CategoryModal = () => {
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        {categoryId?.payload ? (
+        {categoryId ? (
           <Button
             onClick={onUpdate}
             colorScheme="blue"

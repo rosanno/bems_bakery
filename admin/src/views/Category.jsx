@@ -55,7 +55,7 @@ const Category = () => {
   const [subHeading, setSubHeading] = useState("");
 
   const handleUpdate = (categoryId) => {
-    dispatch(setId(categoryId));
+    dispatch(setId({ id: categoryId }));
     onOpen();
   };
 

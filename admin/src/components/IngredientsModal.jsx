@@ -14,16 +14,15 @@ import { useSelector } from "react-redux";
 const IngredientsModal = () => {
   const initialRef = useRef(null);
   const { onClose, isOpen } = useContext(ModalContext);
-  const ingredientId = useSelector((state) => state.ids._id);
-  const id = ingredientId?.payload;
+  const ingredientId = useSelector((state) => state.ids.id);
   const [create, { isLoading: isCreated }] = useCreateIngredientMutation();
   const [update, { isLoading }] = useUpdateIngredientMutation();
-  const { data } = useGetIngredientQuery({ id }, { skip: !id });
+  const { data } = useGetIngredientQuery({ id: ingredientId }, { skip: !ingredientId });
   const ingredient = data?.ingredient?.name;
   const { name, setName, onCreate, onUpdate, handleClose } = useCreateUpdate(
     isOpen,
     onClose,
-    id,
+    ingredientId,
     ingredient,
     create,
     update
@@ -44,7 +43,7 @@ const IngredientsModal = () => {
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        {ingredientId?.payload ? (
+        {ingredientId ? (
           <Button
             onClick={onUpdate}
             colorScheme="blue"
