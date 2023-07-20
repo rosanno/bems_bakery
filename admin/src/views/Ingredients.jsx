@@ -84,6 +84,7 @@ const Ingredients = () => {
           heading="Ingredients"
           subHeading="Manage ingredients for your products"
           onClick={onClick}
+          itemCount={data?.ingredients?.length}
           isButton
         />
 
