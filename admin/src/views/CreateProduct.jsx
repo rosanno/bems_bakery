@@ -112,7 +112,7 @@ const CreateProduct = () => {
                 rules={{
                   required: "Price is required",
                   min: 0,
-                  max: 1000,
+                  max: 5000,
                   pattern: {
                     value: /^\d+(\.\d{1,2})?$/,
                     message: "Invalid Price format",
@@ -142,7 +142,7 @@ const CreateProduct = () => {
                       message: "Description must be at least 10 characters long",
                     },
                     maxLength: {
-                      value: 200,
+                      value: 500,
                       message: "Description must not exceed 200 characters",
                     },
                   }}

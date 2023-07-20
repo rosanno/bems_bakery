@@ -157,7 +157,7 @@ const UpdateProduct = () => {
                       message: "Description must be at least 10 characters long",
                     },
                     maxLength: {
-                      value: 200,
+                      value: 500,
                       message: "Description must not exceed 200 characters",
                     },
                   }}
