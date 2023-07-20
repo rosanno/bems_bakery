@@ -22,6 +22,6 @@ router.get("/get-monthly-revenue", userAuth, getMonthlyRevenuePaidOrders);
 router.get("/order-list", userAuth, getOrderList);
 router.get("/:userId", getOrder);
 router.patch("/:productId", userAuth, updateOrder);
-router.delete("/:productId", deleteOrderList);
+router.delete("/:productId", userAuth, deleteOrderList);
 
 export default router;

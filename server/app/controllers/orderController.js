@@ -295,14 +295,14 @@ export const getMonthlyRevenuePaidOrders = async (req, res) => {
 export const deleteOrderList = async (req, res) => {
   try {
     const { productId } = req.params;
-    const { customerId } = req.body;
+    const { userId } = req.user;
 
-    const order = await Order.findOne({ customer: customerId });
+    const order = await Order.findOne({ customer: userId });
 
     if (!order) return res.status(404).json({ error: "Customer not found" });
 
     const orderItemIndex = order.products.findIndex(
-      (product) => product.orderItem.toString() === productId
+      (product) => product._id.toString() === productId
     );
 
     if (orderItemIndex === -1) {
