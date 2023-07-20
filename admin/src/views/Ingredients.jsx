@@ -46,8 +46,7 @@ const tableHead = [
 const Ingredients = () => {
   const { onOpen } = useContext(ModalContext);
   const { onOpen: onDialogOpen } = useContext(DialogContext);
-  const ingredientId = useSelector((state) => state.ids._id);
-  const id = ingredientId?.payload;
+  const ingredientId = useSelector((state) => state.ids.id);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const { data, isFetching } = useGetIngredientsQuery({ page, search, isQueryParams: true });
@@ -62,7 +61,7 @@ const Ingredients = () => {
 
   const handleDelete = (ingredientId, ingredient) => {
     setSubHeading(ingredient);
-    dispatch(setId(ingredientId));
+    dispatch(setId({ id: ingredientId }));
     onDialogOpen();
   };
 
@@ -77,7 +76,7 @@ const Ingredients = () => {
         heading="Delete Ingredient"
         subHeading={subHeading}
         deleteData={deleteIngredient}
-        id={id}
+        id={ingredientId}
       />
       <Box px={{ base: "4", xl: "32" }} mt="28">
         <Header

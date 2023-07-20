@@ -51,8 +51,7 @@ const tableHead = [
 const Products = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const productId = useSelector((state) => state.ids._id);
-  const id = productId?.payload;
+  const productId = useSelector((state) => state.ids.id);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const { data, isFetching } = useGetProductsQuery({ page, search });
@@ -64,9 +63,9 @@ const Products = () => {
     navigate("/create-product");
   };
 
-  const handleDelete = (categoryId, product) => {
+  const handleDelete = (productId, product) => {
     setSubHeading(product);
-    dispatch(setId(categoryId));
+    dispatch(setId({ id: productId }));
     onOpen();
   };
 
@@ -76,7 +75,7 @@ const Products = () => {
         heading="Delete Product"
         subHeading={subHeading}
         deleteData={deleteProduct}
-        id={id}
+        id={productId}
       />
 
       <Box px={{ base: "4", xl: "32" }} mt="28">

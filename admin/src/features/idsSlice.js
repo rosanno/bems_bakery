@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  _id: null,
+  id: null,
 };
 
 const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {
-    setId: (state, payload) => {
-      state._id = payload;
+    setId: (state, action) => {
+      state.id = action.payload.id;
     },
     resetId: (state) => {
-      state._id = null;
+      state.id = null;
     },
   },
 });

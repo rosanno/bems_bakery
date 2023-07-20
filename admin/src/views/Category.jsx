@@ -49,8 +49,7 @@ const Category = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const { data, isFetching } = useGetCategoriesQuery({ page, search, isQueryParams: true });
-  const categoryId = useSelector((state) => state.ids._id);
-  const id = categoryId?.payload;
+  const categoryId = useSelector((state) => state.ids.id);
   const [deleteData] = useDeleteCategoryMutation();
   const dispatch = useDispatch();
   const [subHeading, setSubHeading] = useState("");
@@ -62,13 +61,15 @@ const Category = () => {
 
   const handleDelete = (categoryId, category) => {
     setSubHeading(category);
-    dispatch(setId(categoryId));
+    dispatch(setId({ id: categoryId }));
     onDialogOpen();
   };
 
   const onClick = () => {
     onOpen();
   };
+
+  console.log(categoryId);
 
   return (
     <>
@@ -77,7 +78,7 @@ const Category = () => {
         heading="Delete Category"
         subHeading={subHeading}
         deleteData={deleteData}
-        id={id}
+        id={categoryId}
       />
       <Box px={{ base: "4", xl: "32" }} mt="28">
         <Header

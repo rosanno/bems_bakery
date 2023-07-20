@@ -9,10 +9,18 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { DialogContext } from "../../context/DialogContextProvider";
+import { useDispatch } from "react-redux";
+import { resetId } from "../../features/idsSlice";
 
 const CustomDialog = ({ children, header, onDelete }) => {
   const { isOpen, onClose } = useContext(DialogContext);
+  const dispatch = useDispatch();
   const cancelRef = useRef();
+
+  const onCancel = () => {
+    onClose();
+    dispatch(resetId());
+  };
 
   return (
     <>
@@ -26,7 +34,7 @@ const CustomDialog = ({ children, header, onDelete }) => {
             <AlertDialogBody>{children}</AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button ref={cancelRef} onClick={onCancel}>
                 Cancel
               </Button>
               <Button colorScheme="red" onClick={onDelete} ml={3}>
