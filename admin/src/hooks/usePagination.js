@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const usePagination = (totalPages) => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage((prevPage) => Math.min(prevPage, totalPages));
+  }, [totalPages]);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -24,7 +28,7 @@ const usePagination = (totalPages) => {
   };
 
   return {
-    currentPage,
+    currentPage: isNaN(currentPage) || currentPage < 1 ? 1 : currentPage,
     handlePrevPage,
     handleNextPage,
     handlePageClick,

@@ -18,7 +18,7 @@ const CustomTable = ({ children, tableHead, isFetching, data, label }) => {
             <Spinner size="lg" />
           </TableCaption>
         )}
-        {data === 0 && <TableCaption>{label}</TableCaption>}
+        {data === 0 && !isFetching && <TableCaption>{label}</TableCaption>}
         <Thead>
           <Tr>
             {tableHead.map((thead) => (
