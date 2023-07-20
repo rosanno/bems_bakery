@@ -122,7 +122,7 @@ const Category = () => {
                 </Td>
                 <Td isNumeric>
                   <Menu>
-                    <MenuButton>
+                    <MenuButton bg={"gray.100"} p={"1"} borderRadius={"md"}>
                       <AiOutlineEllipsis />
                     </MenuButton>
                     <MenuList>
