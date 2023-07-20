@@ -1,5 +1,6 @@
 import cloudinary from "../../config/cloudinary.js";
 import Product from "../models/product.js";
+import Category from "../models/category.js";
 import Ingredient from "../models/ingredient.js";
 
 export const addProduct = async (req, res) => {
@@ -40,6 +41,8 @@ export const getProducts = async (req, res) => {
     let totalCount;
     let totalPages;
 
+    const categories = await Category.find({ name: { $regex: search, $options: "i" } });
+
     // MongoDB aggregation pipeline for pagination and search
     const query = {};
     if (search) {
@@ -48,6 +51,11 @@ export const getProducts = async (req, res) => {
         { name: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } },
       ];
+
+      const categoryIds = categories.map((category) => category._id);
+
+      // Add the extracted _id values to the $or query
+      query.$or.push({ category: { $in: categoryIds } });
     }
 
     const skip = (page - 1) * perPage;
