@@ -9,7 +9,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-const CustomTable = ({ children, tableHead, isFetching }) => {
+const CustomTable = ({ children, tableHead, isFetching, data, label }) => {
   return (
     <TableContainer border="1px" borderColor="gray.100" borderRadius="6">
       <Table variant="simple">
@@ -18,6 +18,7 @@ const CustomTable = ({ children, tableHead, isFetching }) => {
             <Spinner size="lg" />
           </TableCaption>
         )}
+        {data === 0 && <TableCaption>{label}</TableCaption>}
         <Thead>
           <Tr>
             {tableHead.map((thead) => (

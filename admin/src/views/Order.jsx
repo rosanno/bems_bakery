@@ -58,8 +58,6 @@ const Order = () => {
   const [search, setSearch] = useState("");
   const { data: orderList, isFetching } = useGetOrderListQuery({ page, search });
   const { onOpen } = useContext(ModalContext);
-  const productId = useSelector((state) => state.ids._id);
-  const id = productId?.payload;
   const [paymentStatus, setPaymentStatus] = useState("");
 
   const onOpenModal = (productId, status) => {
@@ -90,7 +88,12 @@ const Order = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <CustomTable tableHead={tableHead} isFetching={isFetching}>
+          <CustomTable
+            tableHead={tableHead}
+            isFetching={isFetching}
+            data={orderList?.data?.length}
+            label="Customer not found"
+          >
             {orderList?.data.map((order) => (
               <Tr key={order.id}>
                 <Td fontSize="sm" textColor="gray.600">

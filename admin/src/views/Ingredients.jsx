@@ -103,7 +103,12 @@ const Ingredients = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <CustomTable tableHead={tableHead} isFetching={isFetching}>
+          <CustomTable
+            tableHead={tableHead}
+            isFetching={isFetching}
+            data={data?.ingredients?.length}
+            label="Ingredients not found"
+          >
             {data?.ingredients?.map((ingredient) => (
               <Tr key={ingredient._id}>
                 <Td fontSize="sm" textColor="gray.600">

@@ -104,7 +104,12 @@ const Category = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <CustomTable tableHead={tableHead} isFetching={isFetching}>
+          <CustomTable
+            tableHead={tableHead}
+            isFetching={isFetching}
+            data={data?.categories?.length}
+            label="Category not found"
+          >
             {data?.categories?.map((category) => (
               <Tr key={category._id}>
                 <Td fontSize="sm" textColor="gray.600">

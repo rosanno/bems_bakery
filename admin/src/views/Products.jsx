@@ -104,7 +104,12 @@ const Products = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <CustomTable tableHead={tableHead} isFetching={isFetching}>
+          <CustomTable
+            tableHead={tableHead}
+            isFetching={isFetching}
+            data={data?.products?.length}
+            label="Product not found"
+          >
             {data?.products?.map((product) => (
               <Tr key={product._id}>
                 <Td fontSize="sm" textColor="gray.600">
