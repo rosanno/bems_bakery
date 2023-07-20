@@ -21,7 +21,7 @@ dbconnect();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://bems-bakery.vercel.app"],
+    origin: ["http://localhost:5173", "https://cake-shop-admin.vercel.app"],
     credentials: true,
   })
 );
