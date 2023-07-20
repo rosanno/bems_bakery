@@ -69,8 +69,6 @@ const Category = () => {
     onOpen();
   };
 
-  console.log(categoryId);
-
   return (
     <>
       <CategoryModal />
