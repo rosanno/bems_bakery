@@ -14,7 +14,7 @@ const Navigationbar = () => {
       <Navbar expand="lg" className="bg-white border p-md-0">
         <Container fluid className="mx-xl-5">
           <Navbar.Brand href="#">Cake Shop</Navbar.Brand>
-          <Button variant="outline">
+          <Button variant="outline" className="d-block d-lg-none">
             <RxHamburgerMenu className="fs-2" />
           </Button>
           <Navbar.Collapse id="navbarScroll">
