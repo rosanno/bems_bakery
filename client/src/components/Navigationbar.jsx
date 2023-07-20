@@ -3,15 +3,20 @@ import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Button from "react-bootstrap/Button";
 import { BsSearch, BsBag } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navigationbar = () => {
   return (
     <>
-      <Navbar expand="lg" className="bg-white border p-0">
+      <Navbar expand="lg" className="bg-white border p-md-0">
         <Container fluid className="mx-xl-5">
           <Navbar.Brand href="#">Cake Shop</Navbar.Brand>
+          <Button variant="outline">
+            <RxHamburgerMenu className="fs-2" />
+          </Button>
           <Navbar.Collapse id="navbarScroll">
             <div className="search-bar d-flex align-items-center me-auto ms-auto pe-3 py-1 rounded-2">
               <Form.Control
@@ -50,7 +55,7 @@ const Navigationbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Navbar expand="lg" className="bg-white border border-top-0 p-0">
+      <Navbar expand="lg" className="bg-white d-none d-md-block border border-top-0 p-0">
         <Container>
           <Navbar.Collapse className="d-flex justify-content-center">
             <Nav

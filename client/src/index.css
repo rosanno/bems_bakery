@@ -17,7 +17,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 /* navbar styles */
 .cart-label {
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
@@ -26,11 +26,56 @@ input[type="search"]::-webkit-search-results-decoration {
   color: white;
   border-radius: 20px;
   padding: 2px;
-  font-size: .8rem;
+  font-size: 0.8rem;
   top: 0;
   right: 0;
 }
 
 .sub-nav {
-  font-size: .9rem;
+  font-size: 0.9rem;
+}
+
+/* hero style */
+.hero-img {
+  width: 100%;
+  height: 360px;
+}
+
+.hero-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feature-label {
+  bottom: 35px;
+  left: 13px;
+  transform: translateY(10%);
+}
+
+.feature-label h1 {
+  font-size: 3.6rem;
+  color: #e9e9e9;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+@media (min-width: 475px) {}
+
+@media (min-width: 640px) {}
+
+@media (min-width: 768px) {}
+
+/** xl device **/
+@media (min-width: 1024px) {}
+
+/** xl device **/
+@media (min-width: 1280px) {
+  .hero-img {
+    height: 460px;
+  }
+
+  .feature-label h1 {
+    font-size: 5rem;
+  }
 }
