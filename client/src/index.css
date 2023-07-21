@@ -150,6 +150,22 @@ input[type="search"]::-webkit-search-results-decoration {
   background-color: #f4f4f4 !important;
 }
 
+/* cart styles */
+.qty-btn {
+  background: rgba(128, 128, 128, 0.1);
+  padding: 2px 7px;
+  transition:ease-in all 0.4s;
+}
+
+.qty-btn:hover {
+  background: rgba(128, 128, 128, 0.2);
+  cursor: pointer;
+}
+
+.qty-input {
+  outline: none;
+}
+
 @media (min-width: 475px) {
 }
 

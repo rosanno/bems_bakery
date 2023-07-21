@@ -13,6 +13,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { FaRegUserCircle } from "react-icons/fa";
 import usePrivateRequest from "../hooks/usePrivateRequest";
 import { setCart } from "../features/cartSlice";
+import Cart from "./Cart";
 
 const Navigationbar = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Navigationbar = () => {
   const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
   const { data: cartData, fetchData: fetchCart } = usePrivateRequest(token);
+  const [onCartOpen, setOnCartOpen] = useState(false);
 
   useEffect(() => {
     if (cartData?.cartItems) {
@@ -40,6 +42,7 @@ const Navigationbar = () => {
 
   return (
     <>
+      <Cart onCartOpen={onCartOpen} setOnCartOpen={setOnCartOpen} />
       <Navbar expand="lg" className="bg-white border p-md-0">
         <Container fluid className="mx-xl-5">
           <Navbar.Brand href="/" className="d-flex align-items-center">
@@ -64,7 +67,7 @@ const Navigationbar = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="#action1">
+              <Nav.Link onClick={() => setOnCartOpen(true)}>
                 <div className="d-flex flex-column align-items-center">
                   <div className="position-relative">
                     <BsBag className="fs-4" />
