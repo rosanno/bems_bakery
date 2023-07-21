@@ -72,17 +72,17 @@ const Navigationbar = () => {
               className="my-2 my-lg-0 d-flex align-items-center gap-5"
               style={{ maxHeight: "100px" }}
             >
-              <Nav.Link href="#action1">
-                <span className="sub-nav">Home</span>
+              <Nav.Link href="/">
+                <span className="sub-nav fw-semibold">Home</span>
+              </Nav.Link>
+              <Nav.Link href="/products">
+                <span className="sub-nav fw-semibold">Cakes</span>
               </Nav.Link>
               <Nav.Link href="#action1">
-                <span className="sub-nav">Cakes</span>
+                <span className="sub-nav fw-semibold">About Us</span>
               </Nav.Link>
               <Nav.Link href="#action1">
-                <span className="sub-nav">About Us</span>
-              </Nav.Link>
-              <Nav.Link href="#action1">
-                <span className="sub-nav">FAQ</span>
+                <span className="sub-nav fw-semibold">FAQ</span>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
