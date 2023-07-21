@@ -221,4 +221,11 @@ input[type="search"]::-webkit-search-results-decoration {
   .product-cta button {
     width: 20%;
   }
+
+  /* login style */
+  .login-form {
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }

@@ -55,7 +55,7 @@ const Navigationbar = () => {
                   <span className="cart-label">Cart</span>
                 </div>
               </Nav.Link>
-              <Nav.Link href="#action2">
+              <Nav.Link href="/login">
                 <div className="d-flex flex-column align-items-center">
                   <FiUser className="fs-4" />
                   <span className="cart-label">Sign in</span>
