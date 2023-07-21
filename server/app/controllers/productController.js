@@ -35,6 +35,7 @@ export const getProducts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const search = req.query.search || "";
+  const sort = req.query.sort || "";
 
   try {
     let results;
@@ -58,12 +59,25 @@ export const getProducts = async (req, res) => {
       query.$or.push({ category: { $in: categoryIds } });
     }
 
+    const sortOptions = {};
+
+    if (sort === "priceHigh") {
+      sortOptions.price = -1;
+    } else if (sort === "priceLow") {
+      sortOptions.price = 1;
+    } else if (sort === "nameDesc") {
+      sortOptions.name = -1;
+    } else if (sort === "nameAsc") {
+      sortOptions.name = 1;
+    }
+
     const skip = (page - 1) * perPage;
     const productsPromise = Product.find(query)
       .populate("category")
       .populate("ingredients")
       .skip(skip)
       .limit(perPage)
+      .sort(sortOptions)
       .exec();
 
     // Get the total count of products (without pagination)
