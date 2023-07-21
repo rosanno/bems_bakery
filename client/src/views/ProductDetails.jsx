@@ -10,11 +10,20 @@ import Section from "../components/ui/Section";
 import usePublicRequest from "../hooks/usePublicRequest";
 import CustomBadge from "../components/ui/CustomBadge";
 import Spinner from "react-bootstrap/esm/Spinner";
+import usePrivateRequest from "../hooks/usePrivateRequest";
+import { setCart } from "../features/cartSlice";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
   const { productId } = useParams();
   const { data, loading, error, fetchData } = usePublicRequest();
+  const {
+    data: cartData,
+    loading: isLoading,
+    error: isError,
+    fetchData: fetchCart,
+  } = usePrivateRequest(token);
   const { product } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -24,6 +33,28 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(setProduct({ product: data?.result }));
   }, [data?.result]);
+
+  useEffect(() => {
+    if (cartData?.cartItems) {
+      dispatch(setCart({ cartItem: cartData?.cartItems }));
+    }
+  }, [cartData]);
+
+  useEffect(() => {
+    const getCartItems = () => {
+      fetchCart("GET", "cart");
+    };
+
+    getCartItems();
+  }, [cartData?.cart]);
+
+  const handleAddToCart = () => {
+    const data = {
+      product_id: productId,
+      quantity: 1,
+    };
+    fetchCart("POST", "cart", data);
+  };
 
   return (
     <Section>
@@ -52,8 +83,25 @@ const ProductDetails = () => {
               </div>
 
               <div className="product-cta position-fixed bg-white d-flex justify-content-lg-end align-align-items-center gap-2 mx-2 py-2">
-                <Button variant="outline-danger" className="px-4 py-2">
-                  Add To Cart
+                <Button
+                  onClick={handleAddToCart}
+                  variant="outline-danger"
+                  className="px-4 py-2"
+                  disabled={isLoading}
+                >
+                  {isLoading && (
+                    <>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">Loading...</span>
+                    </>
+                  )}
+                  {isLoading ? "Adding..." : "Add To Cart"}
                 </Button>
                 <Button variant="danger" className="px-4 py-2">
                   Buy Now

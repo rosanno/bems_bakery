@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
@@ -11,10 +11,29 @@ import { BsSearch, BsBag } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaRegUserCircle } from "react-icons/fa";
+import usePrivateRequest from "../hooks/usePrivateRequest";
+import { setCart } from "../features/cartSlice";
 
 const Navigationbar = () => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
+  const { data: cartData, fetchData: fetchCart } = usePrivateRequest(token);
+
+  useEffect(() => {
+    if (cartData?.cartItems) {
+      dispatch(setCart({ cartItem: cartData?.cartItems }));
+    }
+  }, [cartData]);
+
+  useEffect(() => {
+    const getCartItems = () => {
+      fetchCart("GET", "cart");
+    };
+
+    getCartItems();
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -51,7 +70,7 @@ const Navigationbar = () => {
                     <BsBag className="fs-4" />
                     <div className="position-absolute translate-middle-y start-50 top-0 end-0 mt-1">
                       <Badge pill bg="danger" className="py-1" style={{ fontSize: ".6rem" }}>
-                        0
+                        {cartItems?.length}
                       </Badge>
                     </div>
                   </div>
