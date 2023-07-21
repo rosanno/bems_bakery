@@ -1,5 +1,4 @@
 import Card from "react-bootstrap/Card";
-import { AiFillStar } from "react-icons/ai";
 import CustomBadge from "./ui/CustomBadge";
 
 const ProductCard = ({ product }) => {
