@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
@@ -8,10 +10,11 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { BsSearch, BsBag } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useState } from "react";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Navigationbar = () => {
   const [show, setShow] = useState(false);
+  const { token, user } = useSelector((state) => state.auth);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -55,12 +58,19 @@ const Navigationbar = () => {
                   <span className="cart-label">Cart</span>
                 </div>
               </Nav.Link>
-              <Nav.Link href="/login">
+              {!token ? (
+                <Nav.Link href="/login">
+                  <div className="d-flex flex-column align-items-center">
+                    <FiUser className="fs-4" />
+                    <span className="cart-label">Sign in</span>
+                  </div>
+                </Nav.Link>
+              ) : (
                 <div className="d-flex flex-column align-items-center">
-                  <FiUser className="fs-4" />
-                  <span className="cart-label">Sign in</span>
+                  <FaRegUserCircle className="fs-4" />
+                  <span className="cart-label text-truncate">{user?.name}</span>
                 </div>
-              </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
