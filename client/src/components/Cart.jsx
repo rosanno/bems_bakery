@@ -1,11 +1,22 @@
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { BsTrash } from "react-icons/bs";
+import usePrivateRequest from "../hooks/usePrivateRequest";
+import { deleteCartItem } from "../features/cartSlice";
 
 const Cart = ({ onCartOpen, setOnCartOpen }) => {
+  const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+  const { token } = useSelector((state) => state.auth);
+  const { data, error, loading, fetchData } = usePrivateRequest(token);
+
+  const handleDelete = (productId) => {
+    fetchData("DELETE", `cart/delete/${productId}`);
+    dispatch(deleteCartItem({ productId: productId }));
+  };
 
   return (
     <>
@@ -14,10 +25,20 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
           <Offcanvas.Title>Cart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <div className="d-flex flex-column h-100">
-            {cartItems?.map((item) => (
-              <>
-                <div key={item?._id} className="d-flex">
+          <div className="d-flex h-75 flex-column h-100">
+            <div className="overflow-y-scroll">
+              {cartItems?.length === 0 && (
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{
+                    height: "500px",
+                  }}
+                >
+                  <h3 className="text-muted">Cart is Empty</h3>
+                </div>
+              )}
+              {cartItems?.map((item) => (
+                <div key={item?._id} className="d-flex my-2 py-2 border-bottom">
                   <div className="w-75 h-100">
                     <Image
                       src={item?.productId?.imageURL}
@@ -41,10 +62,17 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
                       </div>
                     </div>
                   </div>
+
+                  <div
+                    onClick={() => handleDelete(item?.productId?._id)}
+                    className="delete-btn d-flex justify-content-center align-items-center"
+                  >
+                    <BsTrash />
+                  </div>
                 </div>
-                <div className="border-top my-2" />
-              </>
-            ))}
+              ))}
+            </div>
+
             <Button variant="danger" className="mt-auto py-2">
               Checkout
             </Button>

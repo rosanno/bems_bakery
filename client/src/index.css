@@ -154,7 +154,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .qty-btn {
   background: rgba(128, 128, 128, 0.1);
   padding: 2px 7px;
-  transition:ease-in all 0.4s;
+  transition: ease-in all 0.4s;
 }
 
 .qty-btn:hover {
@@ -164,6 +164,18 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .qty-input {
   outline: none;
+}
+
+.delete-btn {
+  background: rgba(128, 128, 128, 0.1);
+  height: 30px;
+  width: 60px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: rgba(128, 128, 128, 0.2);
 }
 
 @media (min-width: 475px) {
