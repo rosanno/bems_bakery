@@ -6,12 +6,13 @@ const usePublicRequest = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = async (method, url, options = {}) => {
+  const fetchData = async (method, url, data = {}, options = {}) => {
     setLoading(true);
     try {
       const response = await publicRequest({
         method,
         url,
+        data,
         ...options,
       });
       setData(response.data);
