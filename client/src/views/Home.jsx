@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -13,6 +13,7 @@ import { setProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
 
 const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, loading, error, fetchData } = usePublicRequest();
   const products = useSelector((state) => state.product.products);
@@ -46,7 +47,11 @@ const Home = () => {
                 ))}
               </Row>
               <div className="d-flex justify-content-center mt-4">
-                <Button variant="outline-danger" className="custom-btn rounded-5 fw-semibold">
+                <Button
+                  onClick={() => navigate("/products")}
+                  variant="outline-danger"
+                  className="custom-btn rounded-5 fw-semibold"
+                >
                   View all
                 </Button>
               </div>
