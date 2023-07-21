@@ -4,17 +4,24 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import { BsSearch, BsBag } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useState } from "react";
 
 const Navigationbar = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <>
       <Navbar expand="lg" className="bg-white border p-md-0">
         <Container fluid className="mx-xl-5">
           <Navbar.Brand href="#">Cake Shop</Navbar.Brand>
-          <Button variant="outline" className="d-block d-lg-none">
+          <Button variant="outline" className="d-block d-md-none" onClick={handleShow}>
             <RxHamburgerMenu className="fs-2" />
           </Button>
           <Navbar.Collapse id="navbarScroll">
@@ -78,6 +85,15 @@ const Navigationbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          Some text as placeholder. In real life you can have the elements you have chosen. Like,
+          text, images, lists, etc.
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 };
