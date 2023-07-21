@@ -20,7 +20,10 @@ const Navigationbar = () => {
     <>
       <Navbar expand="lg" className="bg-white border p-md-0">
         <Container fluid className="mx-xl-5">
-          <Navbar.Brand href="#">Cake Shop</Navbar.Brand>
+          <Navbar.Brand href="/" className="d-flex align-items-center">
+            <span className="logo-1">Cake</span>
+            <span className="logo-2">Delights</span>
+          </Navbar.Brand>
           <Button variant="outline" className="d-block d-md-none" onClick={handleShow}>
             <RxHamburgerMenu className="fs-2" />
           </Button>
