@@ -27,7 +27,9 @@ const Products = () => {
   }, [data?.products]);
 
   useEffect(() => {
-    fetchData("GET", `product?sort=${sort}`);
+    if (sort) {
+      fetchData("GET", `product?sort=${sort}`);
+    }
   }, [sort]);
 
   const handleSort = (e) => {
