@@ -146,9 +146,6 @@ input[type="search"]::-webkit-search-results-decoration {
   width: 100%;
 }
 
-.product-image {
-  background-color: #f4f4f4 !important;
-}
 
 /* cart styles */
 .qty-btn {

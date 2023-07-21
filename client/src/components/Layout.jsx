@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import Navigationbar from "./Navigationbar";
 import Container from "react-bootstrap/esm/Container";
 import usePrivateRequest from "../hooks/usePrivateRequest";
@@ -23,6 +25,7 @@ const Layout = () => {
 
   return (
     <>
+      <ToastContainer />
       <Navigationbar />
       <Container fluid>
         <main>

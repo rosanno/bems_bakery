@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
+import { toast } from "react-toastify";
 
 import { setProduct } from "../features/productSlice";
 import Section from "../components/ui/Section";
@@ -66,9 +67,9 @@ const ProductDetails = () => {
             </Spinner>
           </div>
         ) : (
-          <div className="d-flex flex-column flex-md-row gap-5">
-            <div className="px-5 w-100 h-100 mh-100 py-1 product-image rounded-3">
-              <Image src={product?.imageURL} alt="" className="w-100 h-100" />
+          <div className="d-flex flex-column flex-lg-row gap-4">
+            <div className="px-5 w-100 h-100 py-1 product-image rounded-3">
+              <Image src={product?.imageURL} alt={product?.name} className="w-100 h-100" />
             </div>
             <div className="mb-5 w-100">
               <h1 className="product-name">{product?.name}</h1>
