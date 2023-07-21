@@ -63,6 +63,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .card-img-top {
   background-color: #f4f4f4 !important;
+  border-radius: 10px;
 }
 
 @media (min-width: 475px) {}
