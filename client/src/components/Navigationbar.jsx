@@ -49,7 +49,7 @@ const Navigationbar = () => {
             <span className="logo-1">Cake</span>
             <span className="logo-2">Delights</span>
           </Navbar.Brand>
-          <Button variant="outline" className="d-block d-md-none" onClick={handleShow}>
+          <Button variant="outline" className="d-block d-lg-none" onClick={handleShow}>
             <RxHamburgerMenu className="fs-2" />
           </Button>
           <Navbar.Collapse id="navbarScroll">
@@ -97,7 +97,7 @@ const Navigationbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Navbar expand="lg" className="bg-white d-none d-md-block border border-top-0 p-0">
+      <Navbar expand="lg" className="bg-white d-none d-lg-block border border-top-0 p-0">
         <Container>
           <Navbar.Collapse className="d-flex justify-content-center">
             <Nav
