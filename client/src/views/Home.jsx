@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 
 import HeroCarousel from "../components/HeroCarousel";
 import usePublicRequest from "../hooks/usePublicRequest";
@@ -29,23 +31,32 @@ const Home = () => {
         <HeroCarousel />
       </section>
       <section className="px-xl-5 mt-3 mt-md-5">
-        {!loading ? (
-          <Container>
-            <Row className="row-gap-3 row-gap-lg-4">
-              {products?.map((product) => (
-                <Col xs={6} sm={4} md={3} key={product._id}>
-                  <ProductCard product={product} />
-                </Col>
-              ))}
-            </Row>
-          </Container>
-        ) : (
-          <div className="d-flex justify-content-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        )}
+        <Container>
+          <div className="border-top mb-3  mb-md-5" />
+          <h1 className="fs-2 text-capitalize">Surprise you loved one</h1>
+          {!loading ? (
+            <div className="mt-lg-3">
+              <Row className="row-gap-3 row-gap-lg-4">
+                {products?.map((product) => (
+                  <Col xs={6} sm={4} md={4} lg={3} key={product._id}>
+                    <Link to={`/product/details/${product._id}`} className="text-decoration-none">
+                      <ProductCard product={product} />
+                    </Link>
+                  </Col>
+                ))}
+              </Row>
+              <div className="d-flex justify-content-center mt-4">
+                <Button className="">View all</Button>
+              </div>
+            </div>
+          ) : (
+            <div className="d-flex justify-content-center">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          )}
+        </Container>
       </section>
     </>
   );
