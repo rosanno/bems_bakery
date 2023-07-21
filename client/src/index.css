@@ -96,6 +96,11 @@ input[type="search"]::-webkit-search-results-decoration {
 .custom-badge span {
   color: #15723d;
   font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.badge-text {
+  font-size: 1rem;
 }
 
 .card-title {
@@ -116,6 +121,35 @@ input[type="search"]::-webkit-search-results-decoration {
   border-color: #ffffff !important;
 }
 
+/* product details style */
+.product-name {
+  font-size: 1.4rem;
+}
+
+.product-decription {
+  font-size: 0.8rem;
+}
+
+.text-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.product-cta {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.product-cta button {
+  width: 100%;
+}
+
+.product-image {
+  background-color: #f4f4f4 !important;
+}
+
 @media (min-width: 475px) {
 }
 
@@ -127,6 +161,22 @@ input[type="search"]::-webkit-search-results-decoration {
 
 /** xl device **/
 @media (min-width: 1024px) {
+  /* product details styles */
+  .product-cta {
+    width: 90%;
+  }
+
+  .product-decription {
+    font-size: 1rem;
+  }
+
+  .product-name {
+    font-size: 1.8rem;
+  }
+
+  .product-cta button {
+    width: 20%;
+  }
 }
 
 /** xl device **/
@@ -149,5 +199,26 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .card-text {
     font-size: 1.2rem;
+  }
+
+  .custom-badge span {
+    font-size: 1rem;
+  }
+
+  /* product details styles */
+  .product-cta {
+    width: 90%;
+  }
+
+  .product-decription {
+    font-size: 1rem;
+  }
+
+  .product-name {
+    font-size: 1.8rem;
+  }
+
+  .product-cta button {
+    width: 20%;
   }
 }
