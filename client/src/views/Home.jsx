@@ -46,7 +46,9 @@ const Home = () => {
                 ))}
               </Row>
               <div className="d-flex justify-content-center mt-4">
-                <Button className="">View all</Button>
+                <Button variant="outline-danger" className="custom-btn rounded-5 fw-semibold">
+                  View all
+                </Button>
               </div>
             </div>
           ) : (
