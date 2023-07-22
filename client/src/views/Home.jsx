@@ -12,6 +12,7 @@ import usePublicRequest from "../hooks/usePublicRequest";
 import { setProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/ui/Loader";
+import Section from "../components/ui/Section";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,10 +30,10 @@ const Home = () => {
 
   return (
     <>
-      <section className="px-xl-5 mt-3 mt-md-5">
+      <Section className="px-xl-5 mt-3 mt-md-5">
         <HeroCarousel />
-      </section>
-      <section className="px-xl-5 mt-3 mt-md-5">
+      </Section>
+      <Section className="px-xl-5 mt-3 mt-md-5">
         <Container>
           <div className="border-top mb-3  mb-md-5" />
           <h1 className="fs-2 text-capitalize">Surprise you loved one</h1>
@@ -61,7 +62,7 @@ const Home = () => {
             <Loader />
           )}
         </Container>
-      </section>
+      </Section>
     </>
   );
 };

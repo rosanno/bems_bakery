@@ -37,8 +37,8 @@ const Products = () => {
   };
 
   return (
-    <Section>
-      <Container className="mx-md-0 mx-lg-auto">
+    <Container className="mx-md-0 mx-lg-auto">
+      <Section className="px-xl-5 mt-3 mt-md-5">
         <div>
           <h1 className="fs-2 text-capitalize fw-bold">Finest Cakes Await</h1>
           <div className="mt-lg-4">
@@ -72,8 +72,8 @@ const Products = () => {
             <Loader />
           )}
         </div>
-      </Container>
-    </Section>
+      </Section>
+    </Container>
   );
 };
 
