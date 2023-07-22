@@ -13,6 +13,7 @@ import CustomBadge from "../components/ui/CustomBadge";
 import Spinner from "react-bootstrap/esm/Spinner";
 import usePrivateRequest from "../hooks/usePrivateRequest";
 import { setCart } from "../features/cartSlice";
+import Loader from "../components/ui/Loader";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -60,13 +61,7 @@ const ProductDetails = () => {
   return (
     <Section>
       <Container>
-        {loading ? (
-          <div className="d-flex justify-content-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        ) : (
+        {!loading ? (
           <div className="d-flex flex-column flex-lg-row gap-4 mt-lg-4">
             <div className="px-5 w-100 h-100 py-1 product-image rounded-3">
               <Image src={product?.imageURL} alt={product?.name} className="w-100 h-100" />
@@ -116,6 +111,8 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
+        ) : (
+          <Loader />
         )}
       </Container>
     </Section>

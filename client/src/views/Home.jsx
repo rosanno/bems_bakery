@@ -11,6 +11,7 @@ import HeroCarousel from "../components/HeroCarousel";
 import usePublicRequest from "../hooks/usePublicRequest";
 import { setProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
+import Loader from "../components/ui/Loader";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -57,11 +58,7 @@ const Home = () => {
               </div>
             </div>
           ) : (
-            <div className="d-flex justify-content-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
+            <Loader />
           )}
         </Container>
       </section>

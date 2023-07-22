@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
 
 import usePublicRequest from "../hooks/usePublicRequest";
@@ -11,6 +10,7 @@ import Section from "../components/ui/Section";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
+import Loader from "../components/ui/Loader";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Products = () => {
 
   return (
     <Section>
-      <Container>
+      <Container className="mx-md-0 mx-lg-auto">
         <div>
           <h1 className="fs-2 text-capitalize fw-bold">Finest Cakes Await</h1>
           <div className="mt-lg-4">
@@ -69,11 +69,7 @@ const Products = () => {
               </Row>
             </div>
           ) : (
-            <div className="d-flex justify-content-center align-align-items-center mt-3">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
+            <Loader />
           )}
         </div>
       </Container>
