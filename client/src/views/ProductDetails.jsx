@@ -117,11 +117,23 @@ const ProductDetails = () => {
                 <div className="border-top mt-4" />
 
                 <div>
-                  <h3 className="review-label mt-3 text-center text-lg-start">Rating & Reviews</h3>
                   <div>
-                    {product?.customerReviews?.map((review) => (
-                      <Review key={review._id} review={review} />
-                    ))}
+                    <h3 className="review-label mt-3 text-center text-lg-start">
+                      Rating & Reviews
+                    </h3>
+                    <div className="d-flex align-items-center">
+                      <h4 className="p-0 m-0">{product?.overallRating}</h4>
+                      <AiFillStar size={"20px"} className="text-warning" />
+                    </div>
+                  </div>
+                  <div>
+                    {product?.customerReviews?.length > 0 ? (
+                      product.customerReviews.map((review) => (
+                        <Review key={review._id} review={review} />
+                      ))
+                    ) : (
+                      <p>No review for this product</p>
+                    )}
                   </div>
                 </div>
               </div>
