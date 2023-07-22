@@ -7,36 +7,48 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import Dropdown from "react-bootstrap/Dropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { BsSearch, BsBag } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaRegUserCircle } from "react-icons/fa";
+
 import usePrivateRequest from "../hooks/usePrivateRequest";
 import { setCart } from "../features/cartSlice";
 import Cart from "./Cart";
+import { resetAuthUser } from "../features/authSlice";
+import { persistor } from "../store";
 
 const Navigationbar = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
-  const { data: cartData, fetchData: fetchCart } = usePrivateRequest(token);
+  const { data: protectedData, fetchData: privateFetch } = usePrivateRequest(token);
   const [onCartOpen, setOnCartOpen] = useState(false);
 
   useEffect(() => {
-    if (cartData?.cartItems) {
-      dispatch(setCart({ cartItem: cartData?.cartItems }));
+    if (protectedData?.cartItems) {
+      dispatch(setCart({ cartItem: protectedData?.cartItems }));
     }
-  }, [cartData]);
+  }, [protectedData]);
 
   useEffect(() => {
     const getCartItems = () => {
-      fetchCart("GET", "cart");
+      privateFetch("GET", "cart");
     };
 
     getCartItems();
   }, []);
+
+  const handleLogout = () => {
+    privateFetch("POST", "auth/logout");
+    dispatch(resetAuthUser());
+    persistor.purge();
+  };
+
+  console.log(token);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -102,10 +114,24 @@ const Navigationbar = () => {
                   </div>
                 </Nav.Link>
               ) : (
-                <div className="d-flex flex-column align-items-center">
-                  <FaRegUserCircle className="fs-4" />
-                  <span className="cart-label text-truncate">{user?.name}</span>
-                </div>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    variant="none"
+                    className="d-flex flex-column align-items-center p-0 shadow-none border-0"
+                    style={{
+                      width: "max-content",
+                    }}
+                  >
+                    <FaRegUserCircle className="fs-4" />
+                    <span className="cart-label text-truncate">{user?.name}</span>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Account</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Order</Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               )}
             </Nav>
           </Navbar.Collapse>
