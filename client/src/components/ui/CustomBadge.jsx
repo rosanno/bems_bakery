@@ -1,18 +1,18 @@
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
 
-const CustomBadge = () => {
+const CustomBadge = ({ overallRating, reviewCount }) => {
   return (
     <div className="d-flex align-items-center gap-2 mt-3 mt-lg-3">
       <div className="custom-badge d-flex align-items-center">
-        <span>4.9</span>
+        <span>{overallRating}</span>
         <AiFillStar
           style={{
             color: "#15723D",
           }}
         />
       </div>
-      <p className="badge-text d-none d-md-block mb-0 fw-semibold">330 Reviews</p>
+      <p className="badge-text d-none d-md-block mb-0 fw-semibold">{reviewCount} Reviews</p>
     </div>
   );
 };

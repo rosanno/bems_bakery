@@ -77,7 +77,10 @@ const ProductDetails = () => {
                 <h1 className="product-name">{product?.name}</h1>
                 <div className="border-top" />
                 <div>
-                  <CustomBadge />
+                  <CustomBadge
+                    overallRating={product?.overallRating}
+                    reviewCount={product?.reviewsCount}
+                  />
                   <p className="text-price mt-lg-4">₱{product?.price}</p>
                   <div>
                     <h2>Description</h2>

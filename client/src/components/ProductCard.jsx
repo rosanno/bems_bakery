@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
       <Card.Body className="px-2">
         <Card.Title className="fw-normal">{product?.name}</Card.Title>
         <Card.Text className="fw-semibold mb-1">₱{product?.price}</Card.Text>
-        <CustomBadge />
+        <CustomBadge overallRating={product?.overallRating} reviewCount={product?.reviewsCount} />
       </Card.Body>
     </Card>
   );

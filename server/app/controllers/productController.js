@@ -75,6 +75,7 @@ export const getProducts = async (req, res) => {
     const productsPromise = Product.find(query)
       .populate("category")
       .populate("ingredients")
+      .populate("customerReviews")
       .skip(skip)
       .limit(perPage)
       .sort(sortOptions)
@@ -86,10 +87,26 @@ export const getProducts = async (req, res) => {
     // Execute both queries in parallel using Promise.all
     [results, totalCount] = await Promise.all([productsPromise, countPromise]);
 
+    // Calculate the overall rating for each product
+    const productsWithOverallRating = results.map((product) => {
+      let totalRating = 0;
+      const reviewsCount = product.customerReviews.length;
+      for (const review of product.customerReviews) {
+        totalRating += review.rating;
+      }
+      const overallRating = reviewsCount > 0 ? totalRating / reviewsCount : 0;
+
+      return {
+        ...product.toJSON(),
+        overallRating,
+        reviewsCount,
+      };
+    });
+
     // Calculate the total number of pages
     totalPages = Math.ceil(totalCount / perPage);
 
-    res.status(200).json({ products: results, totalCount, totalPages });
+    res.status(200).json({ products: productsWithOverallRating, totalCount, totalPages });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
@@ -135,6 +152,7 @@ export const getProductByCategory = async (req, res) => {
     const productsPromise = Product.find(query)
       .populate("category")
       .populate("ingredients")
+      .populate("customerReviews")
       .skip(skip)
       .limit(perPage)
       .sort(sortOptions)
@@ -146,10 +164,26 @@ export const getProductByCategory = async (req, res) => {
     // Execute both queries in parallel using Promise.all
     const [products, totalCount] = await Promise.all([productsPromise, countPromise]);
 
+    // Calculate the overall rating for each product
+    const productsWithOverallRating = products.map((product) => {
+      let totalRating = 0;
+      const reviewsCount = product.customerReviews.length;
+      for (const review of product.customerReviews) {
+        totalRating += review.rating;
+      }
+      const overallRating = reviewsCount > 0 ? totalRating / reviewsCount : 0;
+
+      return {
+        ...product.toJSON(),
+        overallRating,
+        reviewsCount,
+      };
+    });
+
     // Calculate the total number of pages
     const totalPages = Math.ceil(totalCount / perPage);
 
-    res.status(200).json({ products, totalCount, totalPages });
+    res.status(200).json({ products: productsWithOverallRating, totalCount, totalPages });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
@@ -167,12 +201,26 @@ export const getProduct = async (req, res) => {
 
     if (!product) res.status(404).json({ message: "Product not found!" });
 
-    res.status(200).json({ result: product });
+    let totalRating = 0;
+    const reviewsCount = product.customerReviews.length;
+    for (const review of product.customerReviews) {
+      totalRating += review.rating;
+    }
+    const overallRating = reviewsCount > 0 ? totalRating / reviewsCount : 0;
+
+    res.status(200).json({
+      result: {
+        ...product.toJSON(),
+        overallRating, // Adding the overallRating field to the result
+        reviewsCount,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 export const getProductOverallRating = async (req, res) => {
   const { productId } = req.params;
