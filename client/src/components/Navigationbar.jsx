@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
@@ -49,9 +50,22 @@ const Navigationbar = () => {
             <span className="logo-1">Cake</span>
             <span className="logo-2">Delights</span>
           </Navbar.Brand>
-          <Button variant="outline" className="d-block d-lg-none" onClick={handleShow}>
-            <RxHamburgerMenu className="fs-2" />
-          </Button>
+          <div className="d-flex align-items-center gap-3 d-block d-lg-none">
+            <Button variant="outline" className="p-0">
+              <BsSearch className="fs-3" />
+            </Button>
+            <div className="position-relative" onClick={() => setOnCartOpen(true)}>
+              <BsBag className="fs-4" />
+              <div className="position-absolute translate-middle-y start-50 top-0 end-0 mt-1">
+                <Badge pill bg="danger" className="py-1" style={{ fontSize: ".6rem" }}>
+                  {cartItems?.length}
+                </Badge>
+              </div>
+            </div>
+            <Button variant="outline" className="p-0" onClick={handleShow}>
+              <RxHamburgerMenu className="fs-3" />
+            </Button>
+          </div>
           <Navbar.Collapse id="navbarScroll">
             <div className="search-bar d-flex align-items-center me-auto ms-auto pe-3 py-1 rounded-2">
               <Form.Control
@@ -122,11 +136,42 @@ const Navigationbar = () => {
       </Navbar>
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title className="cart-canva d-flex align-items-center">
+            <span className="logo-1">Cake</span>
+            <span className="logo-2">Delights</span>
+          </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you have chosen. Like,
-          text, images, lists, etc.
+          <ul className="nav-item list-unstyled">
+            <li className="border-bottom" onClick={handleClose}>
+              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+                Home
+              </Link>
+            </li>
+            <li className="border-bottom pt-3" onClick={handleClose}>
+              <Link to="/products" className="text-decoration-none text-black d-inline-block py-1">
+                Cakes
+              </Link>
+            </li>
+            <li className="border-bottom pt-3" onClick={handleClose}>
+              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+                About
+              </Link>
+            </li>
+            <li className="border-bottom pt-3" onClick={handleClose}>
+              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+                Contact Us
+              </Link>
+            </li>
+            <li className="border-bottom pt-3" onClick={handleClose}>
+              <Link
+                to="/"
+                className="text-decoration-none text-black d-inline-block py-1 border-bottom"
+              >
+                FAQ
+              </Link>
+            </li>
+          </ul>
         </Offcanvas.Body>
       </Offcanvas>
     </>

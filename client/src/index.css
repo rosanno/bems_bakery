@@ -18,17 +18,20 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 /* navbar styles */
-.navbar-brand {
+.navbar-brand,
+.cart-canva {
   font-family: "Alex Brush", cursive;
   font-size: 1.4rem !important;
   font-weight: bolder !important;
 }
 
-.navbar-brand .logo-1 {
+.navbar-brand .logo-1 ,
+.cart-canva .logo-1 {
   color: #bb2d3b;
 }
 
-.navbar-brand .logo-2 {
+.navbar-brand .logo-2 ,
+.cart-canva .logo-2 {
   color: #94593e;
 }
 
