@@ -72,10 +72,11 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
                 </div>
               ))}
             </div>
-
-            <Button variant="danger" className="mt-auto py-2">
-              Checkout
-            </Button>
+            {cartItems?.length !== 0 && (
+              <Button variant="danger" className="mt-auto py-2">
+                Checkout
+              </Button>
+            )}
           </div>
         </Offcanvas.Body>
       </Offcanvas>
