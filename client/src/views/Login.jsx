@@ -7,19 +7,16 @@ import Button from "react-bootstrap/Button";
 import usePublicRequest from "../hooks/usePublicRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../features/authSlice";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { data, loading, error, fetchData } = usePublicRequest();
   const [validated, setValidated] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const token = useSelector((state) => state.auth.token);
-
-  if (token) {
-    return <Navigate to="/" />;
-  }
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -45,12 +42,18 @@ const Login = () => {
     }
   }, [data, dispatch]);
 
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
+
   return (
-    <Section>
+    <Section className="px-xl-5 mt-3 mt-md-5">
       <Container>
         <div>
-          <h3>Customer Login</h3>
-          <div className="border-top my-3" />
+          <h3 className="login-heading">Customer Login</h3>
+          <div className="divider my-3" />
           <div className="login-form mt-3 mt-lg-5">
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Form.Group>
@@ -81,6 +84,14 @@ const Login = () => {
                 </Button>
               </div>
             </Form>
+            <div className="mt-3">
+              <span className="redirect-label">
+                Don&apos;t have account{" "}
+                <Link to="/sign-up" className="text-black">
+                  Sign up
+                </Link>
+              </span>
+            </div>
           </div>
         </div>
       </Container>

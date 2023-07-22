@@ -29,26 +29,22 @@ const Navigationbar = () => {
   const [onCartOpen, setOnCartOpen] = useState(false);
 
   useEffect(() => {
-    if (protectedData?.cartItems) {
+    if (protectedData?.cartItems && token) {
       dispatch(setCart({ cartItem: protectedData?.cartItems }));
     }
-  }, [protectedData]);
+  }, [protectedData, token]);
 
   useEffect(() => {
-    const getCartItems = () => {
+    if (token) {
       privateFetch("GET", "cart");
-    };
-
-    getCartItems();
-  }, []);
+    }
+  }, [token]);
 
   const handleLogout = () => {
     privateFetch("POST", "auth/logout");
     dispatch(resetAuthUser());
     persistor.purge();
   };
-
-  console.log(token);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

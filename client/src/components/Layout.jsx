@@ -14,8 +14,10 @@ const Layout = () => {
   const { data, loading, error, fetchData } = usePrivateRequest(token);
 
   useEffect(() => {
-    fetchData("GET", "auth/user");
-  }, []);
+    if (token) {
+      fetchData("GET", "auth/user");
+    }
+  }, [token]);
 
   useEffect(() => {
     if (data?.user) {
