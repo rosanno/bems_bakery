@@ -14,23 +14,37 @@ import Loader from "../components/ui/Loader";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { data, loading, error, fetchData } = usePublicRequest();
+  const { loading, error, fetchData } = usePublicRequest();
   const products = useSelector((state) => state.product.products);
   const [sort, setSort] = useState("");
 
   useEffect(() => {
-    fetchData("GET", "product");
-  }, []);
+    const getProducts = async () => {
+      try {
+        const productsData = await fetchData("GET", "product");
+        dispatch(setProducts({ products: productsData?.products }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getProducts();
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setProducts({ products: data?.products }));
-  }, [data?.products]);
+    const fetchSortedProducts = async () => {
+      try {
+        if (sort) {
+          const sortedData = await fetchData("GET", `product?sort=${sort}`);
+          dispatch(setProducts({ products: sortedData?.products }));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  useEffect(() => {
-    if (sort) {
-      fetchData("GET", `product?sort=${sort}`);
-    }
-  }, [sort]);
+    fetchSortedProducts();
+  }, [sort, dispatch]);
 
   const handleSort = (e) => {
     setSort(e.target.value);

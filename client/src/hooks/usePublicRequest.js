@@ -2,7 +2,6 @@ import { useState } from "react";
 import { publicRequest } from "../axiosInstance";
 
 const usePublicRequest = () => {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -15,15 +14,17 @@ const usePublicRequest = () => {
         data,
         ...options,
       });
-      setData(response.data);
+
+      setLoading(false);
+      return response.data;
     } catch (error) {
       setError(error);
-    } finally {
       setLoading(false);
+      throw error;
     }
   };
 
-  return { data, loading, error, fetchData };
+  return { loading, error, fetchData };
 };
 
 export default usePublicRequest;

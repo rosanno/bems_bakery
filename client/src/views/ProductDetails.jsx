@@ -23,7 +23,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const { productId } = useParams();
-  const { data, loading, error, fetchData } = usePublicRequest();
+  const { loading, error, fetchData } = usePublicRequest();
   const {
     data: cartData,
     loading: isLoading,
@@ -33,12 +33,16 @@ const ProductDetails = () => {
   const { product } = useSelector((state) => state.product);
 
   useEffect(() => {
-    fetchData("GET", `product/${productId}`);
-  }, []);
-
-  useEffect(() => {
-    dispatch(setProduct({ product: data?.result }));
-  }, [data?.result]);
+    async function fetchProductData() {
+      try {
+        const data = await fetchData("GET", `product/${productId}`);
+        dispatch(setProduct({ product: data?.result }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchProductData();
+  }, [productId]);
 
   useEffect(() => {
     if (cartData?.cartItems) {

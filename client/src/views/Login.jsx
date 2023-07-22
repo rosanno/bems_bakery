@@ -18,29 +18,28 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const token = useSelector((state) => state.auth.token);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
     } else {
-      event.preventDefault();
-      const data = {
-        email,
-        password,
-      };
-      fetchData("POST", "auth/login", data);
+      try {
+        const data = {
+          email,
+          password,
+        };
+        const response = await fetchData("POST", "auth/login", data);
+        if (response?.accessToken) {
+          dispatch(setToken({ token: response.accessToken }));
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     setValidated(true);
   };
-
-  useEffect(() => {
-    if (data && data.accessToken) {
-      dispatch(setToken({ token: data.accessToken }));
-      console.log("token");
-    }
-  }, [data, dispatch]);
 
   useEffect(() => {
     if (token) {

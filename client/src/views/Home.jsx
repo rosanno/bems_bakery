@@ -17,16 +17,23 @@ import Section from "../components/ui/Section";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data, loading, error, fetchData } = usePublicRequest();
+  const { loading, error, fetchData } = usePublicRequest();
   const products = useSelector((state) => state.product.products);
 
   useEffect(() => {
-    fetchData("GET", "product");
+    async function fetchProductData() {
+      try {
+        const data = await fetchData("GET", "product");
+        console.log(data);
+        dispatch(setProducts({ products: data?.products }));
+      } catch (error) {
+        // Handle the error, if needed
+      }
+    }
+
+    fetchProductData();
   }, []);
 
-  useEffect(() => {
-    dispatch(setProducts({ products: data?.products }));
-  }, [data?.products]);
 
   return (
     <>

@@ -124,7 +124,7 @@ const Navigationbar = () => {
 
                   <Dropdown.Menu>
                     <Dropdown.Item href="#/action-1">Account</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Order</Dropdown.Item>
+                    <Dropdown.Item href="/customer/order">My Orders</Dropdown.Item>
                     <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
