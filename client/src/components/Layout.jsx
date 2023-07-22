@@ -11,19 +11,25 @@ import { setCurrentUser } from "../features/authSlice";
 const Layout = () => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
-  const { data, loading, error, fetchData } = usePrivateRequest(token);
+  const { fetchData } = usePrivateRequest(token);
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await fetchData("GET", "auth/user");
+        if (userData?.user) {
+          dispatch(setCurrentUser({ user: userData.user }));
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // Handle error (e.g., show an error message or retry)
+      }
+    };
+
     if (token) {
-      fetchData("GET", "auth/user");
+      fetchUserData();
     }
-  }, [token]);
-
-  useEffect(() => {
-    if (data?.user) {
-      dispatch(setCurrentUser({ user: data.user }));
-    }
-  }, [data, dispatch]);
+  }, [token, dispatch]);
 
   return (
     <>

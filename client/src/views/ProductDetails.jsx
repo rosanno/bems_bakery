@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
@@ -24,12 +23,8 @@ const ProductDetails = () => {
   const token = useSelector((state) => state.auth.token);
   const { productId } = useParams();
   const { loading, error, fetchData } = usePublicRequest();
-  const {
-    data: cartData,
-    loading: isLoading,
-    error: isError,
-    fetchData: fetchCart,
-  } = usePrivateRequest(token);
+  const { loading: isLoading, error: isError, fetchData: fetchCart } = usePrivateRequest(token);
+  const { loading: isAdding, fetchData: addToCart } = usePrivateRequest(token);
   const { product } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -44,28 +39,35 @@ const ProductDetails = () => {
     fetchProductData();
   }, [productId]);
 
-  useEffect(() => {
-    if (cartData?.cartItems) {
-      dispatch(setCart({ cartItem: cartData?.cartItems }));
+  const getCartData = async () => {
+    try {
+      const cartData = await fetchCart("GET", "cart");
+      if (cartData?.cartItems) {
+        dispatch(setCart({ cartItem: cartData.cartItems }));
+      }
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+      // Handle error (e.g., show an error message or retry)
     }
-  }, [cartData]);
+  };
 
   useEffect(() => {
     if (token) {
-      fetchCart("GET", "cart");
+      getCartData();
     }
-  }, [cartData?.cart, token]);
+  }, [token, dispatch]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!token) {
-      return navigate("/login");
+      return navigate("/login"); // Redirect to the login page if the user is not logged in
     }
 
     const data = {
-      product_id: productId,
+      product_id: productId, // Replace productId with the actual product ID
       quantity: 1,
     };
-    fetchCart("POST", "cart", data);
+    await addToCart("POST", "cart", data);
+    getCartData();
   };
 
   return (
@@ -99,7 +101,7 @@ const ProductDetails = () => {
                     className="px-4 py-2 w-75"
                     disabled={isLoading}
                   >
-                    {isLoading && (
+                    {isAdding && (
                       <>
                         <Spinner
                           as="span"
@@ -111,7 +113,7 @@ const ProductDetails = () => {
                         <span className="visually-hidden">Loading...</span>
                       </>
                     )}
-                    {isLoading ? "Adding..." : "Add To Cart"}
+                    {isAdding ? "Adding..." : "Add To Cart"}
                   </Button>
                   <Button variant="danger" className="px-4 py-2 w-75">
                     Buy Now

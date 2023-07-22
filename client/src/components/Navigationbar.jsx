@@ -25,25 +25,35 @@ const Navigationbar = () => {
   const [show, setShow] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
-  const { data: protectedData, fetchData: privateFetch } = usePrivateRequest(token);
+  const { fetchData: privateFetch } = usePrivateRequest(token);
   const [onCartOpen, setOnCartOpen] = useState(false);
 
   useEffect(() => {
-    if (protectedData?.cartItems && token) {
-      dispatch(setCart({ cartItem: protectedData?.cartItems }));
-    }
-  }, [protectedData, token]);
+    const fetchCartItems = async () => {
+      try {
+        const protectedData = await privateFetch("GET", "cart");
+        if (protectedData?.cartItems) {
+          dispatch(setCart({ cartItem: protectedData.cartItems }));
+        }
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
 
-  useEffect(() => {
     if (token) {
-      privateFetch("GET", "cart");
+      fetchCartItems();
     }
-  }, [token]);
+  }, [token, dispatch]);
 
-  const handleLogout = () => {
-    privateFetch("POST", "auth/logout");
-    dispatch(resetAuthUser());
-    persistor.purge();
+  const handleLogout = async () => {
+    try {
+      await privateFetch("POST", "auth/logout");
+      dispatch(resetAuthUser());
+      persistor.purge();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   const handleClose = () => setShow(false);

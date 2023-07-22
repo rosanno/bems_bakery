@@ -11,10 +11,10 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.auth);
-  const { data, error, loading, fetchData } = usePrivateRequest(token);
+  const { loading, fetchData } = usePrivateRequest(token);
 
-  const handleDelete = (productId) => {
-    fetchData("DELETE", `cart/delete/${productId}`);
+  const handleDelete = async (productId) => {
+    await fetchData("DELETE", `cart/delete/${productId}`);
     dispatch(deleteCartItem({ productId: productId }));
   };
 
