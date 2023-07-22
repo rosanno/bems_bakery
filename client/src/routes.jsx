@@ -6,6 +6,7 @@ import Products from "./views/Products";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Order from "./views/Order";
+import Account from "./views/Account";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "customer/order",
         element: <Order />,
+      },
+      {
+        path: "user/:userId",
+        element: <Account />,
       },
       {
         path: "login",

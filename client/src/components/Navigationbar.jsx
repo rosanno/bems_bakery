@@ -133,7 +133,7 @@ const Navigationbar = () => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Account</Dropdown.Item>
+                    <Dropdown.Item href={`user/${user?._id}`}>Account</Dropdown.Item>
                     <Dropdown.Item href="/customer/order">My Orders</Dropdown.Item>
                     <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
                   </Dropdown.Menu>
