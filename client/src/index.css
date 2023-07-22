@@ -136,16 +136,13 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-top: 6px;
 }
 
-.product-cta {
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
 .product-cta button {
   width: 100%;
 }
 
+.review-label {
+  font-size: 1.2rem;
+}
 
 /* cart styles */
 .qty-btn {
@@ -231,20 +228,9 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
   /* product details styles */
-  .product-cta {
-    width: 90%;
-  }
 
-  .product-decription {
-    font-size: 1rem;
-  }
-
-  .product-name {
-    font-size: 1.8rem;
-  }
-
-  .product-cta button {
-    width: 20%;
+  .review-label {
+    font-size: 1.5rem;
   }
 
   /* login style */

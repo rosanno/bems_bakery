@@ -67,7 +67,7 @@ const ProductDetails = () => {
             </Spinner>
           </div>
         ) : (
-          <div className="d-flex flex-column flex-lg-row gap-4">
+          <div className="d-flex flex-column flex-lg-row gap-4 mt-lg-4">
             <div className="px-5 w-100 h-100 py-1 product-image rounded-3">
               <Image src={product?.imageURL} alt={product?.name} className="w-100 h-100" />
             </div>
@@ -83,11 +83,11 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <div className="product-cta position-fixed bg-white d-flex justify-content-lg-end align-align-items-center gap-2 mx-2 py-2">
+              <div className="d-flex align-align-items-center gap-2 mt-lg-5">
                 <Button
                   onClick={handleAddToCart}
                   variant="outline-danger"
-                  className="px-4 py-2"
+                  className="px-4 py-2 w-75"
                   disabled={isLoading}
                 >
                   {isLoading && (
@@ -104,9 +104,15 @@ const ProductDetails = () => {
                   )}
                   {isLoading ? "Adding..." : "Add To Cart"}
                 </Button>
-                <Button variant="danger" className="px-4 py-2">
+                <Button variant="danger" className="px-4 py-2 w-75">
                   Buy Now
                 </Button>
+              </div>
+
+              <div className="border-top mt-4" />
+
+              <div>
+                <h3 className="review-label mt-3 text-center text-lg-start">Rating & Reviews</h3>
               </div>
             </div>
           </div>
