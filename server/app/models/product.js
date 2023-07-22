@@ -18,9 +18,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    ingredients: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Ingredient", required: true }
-    ],
+    ingredients: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ingredient", required: true }],
     category: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true },
     availableSizes: [
       {
@@ -32,7 +30,7 @@ const productSchema = new mongoose.Schema(
     customerReviews: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Review",
+        ref: "CustomerReview",
       },
     ],
     specialOffers: {

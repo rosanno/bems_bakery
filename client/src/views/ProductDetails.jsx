@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
+import { AiFillStar } from "react-icons/ai";
 
 import { setProduct } from "../features/productSlice";
 import Section from "../components/ui/Section";
@@ -14,6 +16,7 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import usePrivateRequest from "../hooks/usePrivateRequest";
 import { setCart } from "../features/cartSlice";
 import Loader from "../components/ui/Loader";
+import Review from "../components/Review";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -112,10 +115,15 @@ const ProductDetails = () => {
 
                 <div>
                   <h3 className="review-label mt-3 text-center text-lg-start">Rating & Reviews</h3>
+                  <div>
+                    {product?.customerReviews?.map((review) => (
+                      <Review key={review._id} review={review} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-            <Section className="px-xl-5 mt-3 mt-md-5">
+            <Section className="px-xl-5 mt-3 mt-md-2">
               <h3 className="review-label mt-3 text-center">You may also like</h3>
             </Section>
           </>

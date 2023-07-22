@@ -156,14 +156,14 @@ export const getProductByCategory = async (req, res) => {
   }
 };
 
-
 export const getProduct = async (req, res) => {
   try {
     const { productId } = req.params;
 
     const product = await Product.findById({ _id: productId })
       .populate("category")
-      .populate("ingredients");
+      .populate("ingredients")
+      .populate("customerReviews");
 
     if (!product) res.status(404).json({ message: "Product not found!" });
 
@@ -171,6 +171,40 @@ export const getProduct = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getProductOverallRating = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await Product.findById(productId).populate("customerReviews");
+
+    console.log(product);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    let totalRating = 0;
+    const reviewsCount = product.customerReviews.length;
+    for (const review of product.customerReviews) {
+      totalRating += review.rating;
+    }
+    const overallRating = reviewsCount > 0 ? totalRating / reviewsCount : 0;
+
+    res.status(200).json({
+      success: true,
+      data: {
+        productId: product._id,
+        overallRating,
+        reviewsCount,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, error: "An error occurred while fetching product ratings" });
   }
 };
 

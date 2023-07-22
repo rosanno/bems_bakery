@@ -189,8 +189,8 @@ input[type="search"]::-webkit-search-results-decoration {
   font-weight: 400 !important;
 }
 
-.redirect-label{
-  font-size: .9rem;
+.redirect-label {
+  font-size: 0.9rem;
   color: rgba(128, 128, 128, 1);
 }
 
@@ -198,10 +198,45 @@ input[type="search"]::-webkit-search-results-decoration {
   border-top: 1px solid rgba(185, 180, 180, 0.2) !important;
 }
 
+/* product review styles */
+.review-name,
+.review-date,
+.review-rating,
+.review-message {
+  font-size: 0.8rem;
+}
+
+.review-rating {
+  background-color: #8febb7;
+  width: max-content;
+  padding: 0px 8px;
+  font-weight: bold;
+}
+
+.read-btn {
+  font-size: 0.8rem;
+  color: blue;
+  cursor: pointer;
+}
+
 @media (min-width: 475px) {
+  /* product review styles */
+  .review-name,
+  .review-date,
+  .review-rating,
+  .review-message {
+    font-size: 1rem;
+  }
 }
 
 @media (min-width: 640px) {
+  /* product review styles */
+  .review-name,
+  .review-date,
+  .review-rating,
+  .review-message {
+    font-size: .9rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -214,9 +249,17 @@ input[type="search"]::-webkit-search-results-decoration {
     width: 100%;
     margin: 0 auto;
   }
+
+  /* product review styles */
+  .review-name,
+  .review-date,
+  .review-rating,
+  .review-message {
+    font-size: .9rem;
+  }
 }
 
-/** xl device **/
+/** lg device **/
 @media (min-width: 1024px) {
   .custom-select {
     font-size: 1rem !important;
@@ -238,6 +281,14 @@ input[type="search"]::-webkit-search-results-decoration {
     max-width: 450px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  /* product review styles */
+  .review-name,
+  .review-date,
+  .review-rating,
+  .review-message {
+    font-size: .9rem;
   }
 }
 
@@ -281,5 +332,19 @@ input[type="search"]::-webkit-search-results-decoration {
     max-width: 450px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  /* product review styles */
+  .review-name,
+  .review-date,
+  .review-rating,
+  .review-message {
+    font-size: .9rem;
+  }
+
+  .read-btn {
+    font-size: 1rem;
+    color: rgb(72, 72, 214);
+    cursor: pointer;
   }
 }

@@ -20,7 +20,9 @@ export const addReviewToProduct = async (req, res) => {
 
     const savedReview = await newReview.save();
 
-    product.reviews.push(savedReview);
+    console.log(savedReview);
+
+    product.customerReviews.push(savedReview._id);
     await product.save();
 
     res.status(201).json(savedReview);

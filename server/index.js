@@ -13,6 +13,7 @@ import categoryRoutes from "./app/routes/categoryRoutes.js";
 import ingredientRoutes from "./app/routes/ingredientRoutes.js";
 import orderRoutes from "./app/routes/orderRoute.js";
 import cartRoutes from "./app/routes/cartRoute.js";
+import customerReviewRoutes from "./app/routes/customerReviewRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -44,5 +45,6 @@ app.use("/api/product", productRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/ingredient", ingredientRoutes);
 app.use("/api/order", orderRoutes);
+app.use("/api/customer-review", customerReviewRoutes);
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
