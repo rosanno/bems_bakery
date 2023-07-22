@@ -96,6 +96,67 @@ export const getProducts = async (req, res) => {
   }
 };
 
+export const getProductByCategory = async (req, res) => {
+  const { category } = req.params;
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+  const search = req.query.search || "";
+  const sort = req.query.sort || "";
+
+  try {
+    const regex = new RegExp(category, "i");
+    const categories = await Category.find({ name: regex });
+
+    if (!categories) return res.status(404).json({ message: "product not found" });
+
+    // MongoDB aggregation pipeline for pagination and search
+    const query = { category: { $in: categories.map((category) => category._id) } };
+    if (search) {
+      // Case-insensitive search for product names or any other relevant fields
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const sortOptions = {};
+
+    if (sort === "priceHigh") {
+      sortOptions.price = -1;
+    } else if (sort === "priceLow") {
+      sortOptions.price = 1;
+    } else if (sort === "nameDesc") {
+      sortOptions.name = -1;
+    } else if (sort === "nameAsc") {
+      sortOptions.name = 1;
+    }
+
+    const skip = (page - 1) * perPage;
+    const productsPromise = Product.find(query)
+      .populate("category")
+      .populate("ingredients")
+      .skip(skip)
+      .limit(perPage)
+      .sort(sortOptions)
+      .exec();
+
+    // Get the total count of products (without pagination)
+    const countPromise = Product.countDocuments(query).exec();
+
+    // Execute both queries in parallel using Promise.all
+    const [products, totalCount] = await Promise.all([productsPromise, countPromise]);
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(totalCount / perPage);
+
+    res.status(200).json({ products, totalCount, totalPages });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 export const getProduct = async (req, res) => {
   try {
     const { productId } = req.params;
