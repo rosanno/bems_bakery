@@ -219,6 +219,33 @@ input[type="search"]::-webkit-search-results-decoration {
   cursor: pointer;
 }
 
+/* account style */
+.account-heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.account-subheading {
+  font-size: 0.9rem;
+}
+
+.card-heading {
+  font-size: 1rem !important;
+}
+
+.card-subheading {
+  font-size: 0.8rem !important;
+  margin-top: 1px !important;
+}
+
+.form-label {
+  font-size: 0.9rem;
+}
+
+.update-form {
+  width: 100% !important;
+}
+
 @media (min-width: 475px) {
   /* product review styles */
   .review-name,
@@ -235,8 +262,9 @@ input[type="search"]::-webkit-search-results-decoration {
   .review-date,
   .review-rating,
   .review-message {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
+  
 }
 
 @media (min-width: 768px) {
@@ -255,7 +283,11 @@ input[type="search"]::-webkit-search-results-decoration {
   .review-date,
   .review-rating,
   .review-message {
-    font-size: .9rem;
+    font-size: 0.9rem;
+  }
+
+  .update-form {
+    width: 80% !important;
   }
 }
 
@@ -288,7 +320,11 @@ input[type="search"]::-webkit-search-results-decoration {
   .review-date,
   .review-rating,
   .review-message {
-    font-size: .9rem;
+    font-size: 0.9rem;
+  }
+
+  .update-form {
+    width: 70% !important;
   }
 }
 
@@ -339,12 +375,17 @@ input[type="search"]::-webkit-search-results-decoration {
   .review-date,
   .review-rating,
   .review-message {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   .read-btn {
     font-size: 1rem;
     color: rgb(72, 72, 214);
     cursor: pointer;
+  }
+
+  /** account style **/
+  .update-form {
+    width: 50% !important;
   }
 }
