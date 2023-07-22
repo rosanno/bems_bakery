@@ -136,6 +136,10 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-top: 6px;
 }
 
+.custom-select {
+  font-size: 0.8rem !important;
+}
+
 .product-cta button {
   width: 100%;
 }
@@ -179,6 +183,9 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 @media (min-width: 768px) {
+  .custom-select {
+    font-size: 1rem !important;
+  }
 }
 
 /** xl device **/
@@ -186,6 +193,10 @@ input[type="search"]::-webkit-search-results-decoration {
   /* product details styles */
   .product-cta {
     width: 90%;
+  }
+
+  .custom-select {
+    font-size: 1rem !important;
   }
 
   .product-decription {
@@ -228,6 +239,9 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
   /* product details styles */
+  .custom-select {
+    font-size: 1rem !important;
+  }
 
   .review-label {
     font-size: 1.5rem;

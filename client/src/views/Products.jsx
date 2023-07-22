@@ -44,7 +44,7 @@ const Products = () => {
           <div className="mt-lg-4">
             <Form.Select
               aria-label="Sort"
-              className="shadow-none"
+              className="custom-select shadow-none"
               style={{
                 width: "max-content",
               }}

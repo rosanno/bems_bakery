@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { FeaturedCategory } from "../constant";
+import { Link } from "react-router-dom";
 
 const HeroCarousel = () => {
   return (
@@ -39,13 +40,16 @@ const HeroCarousel = () => {
       >
         {FeaturedCategory.map((item) => (
           <SwiperSlide key={item.category}>
-            <div className="hero-img position-relative overflow-hidden">
+            <Link
+              to={`/product/${item.category}`}
+              className="hero-img d-block position-relative overflow-hidden"
+            >
               <img src={item.img_path} alt="" className="rounded-4" />
               <div className="position-absolute z-2 feature-label">
                 <h1>{item.category}</h1>
               </div>
               <div className="bg-black opacity-25 position-absolute top-0 h-100 w-100 rounded-4" />
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
