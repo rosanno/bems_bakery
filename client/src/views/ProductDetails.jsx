@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
@@ -17,6 +17,7 @@ import Loader from "../components/ui/Loader";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const { productId } = useParams();
   const { data, loading, error, fetchData } = usePublicRequest();
@@ -43,14 +44,16 @@ const ProductDetails = () => {
   }, [cartData]);
 
   useEffect(() => {
-    const getCartItems = () => {
+    if (token) {
       fetchCart("GET", "cart");
-    };
-
-    getCartItems();
-  }, [cartData?.cart]);
+    }
+  }, [cartData?.cart, token]);
 
   const handleAddToCart = () => {
+    if (!token) {
+      return navigate("/login");
+    }
+
     const data = {
       product_id: productId,
       quantity: 1,
