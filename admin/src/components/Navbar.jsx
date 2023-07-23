@@ -29,14 +29,6 @@ const Links = [
     href: "/",
   },
   {
-    label: "Category",
-    href: "/category",
-  },
-  {
-    label: "Ingredients",
-    href: "/ingredients",
-  },
-  {
     label: "Products",
     href: "/products",
   },
