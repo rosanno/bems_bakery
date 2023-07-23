@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
@@ -7,7 +7,7 @@ import Card from "react-bootstrap/Card";
 import Section from "../components/ui/Section";
 import { BsCash } from "react-icons/bs";
 import usePrivateRequest from "../hooks/usePrivateRequest";
-import { clearCart } from "../features/cartSlice";
+import { clearCart, setCart } from "../features/cartSlice";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -16,6 +16,24 @@ const Checkout = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const [selectedPayment, setSelectedPayment] = useState("cod");
   const { fetchData: postCheckout } = usePrivateRequest(token);
+  const { fetchData: privateFetch } = usePrivateRequest(token);
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const protectedData = await privateFetch("GET", "cart");
+        if (protectedData?.cartItems) {
+          dispatch(setCart({ cartItem: protectedData.cartItems }));
+        }
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+
+    if (token) {
+      fetchCartItems();
+    }
+  }, [token, dispatch]);
 
   const calculateTotalPrice = (cartItems) => {
     let totalPrice = 0;
