@@ -1,11 +1,72 @@
-import Offcanvas from "react-bootstrap/Offcanvas";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import usePrivateRequest from "../hooks/usePrivateRequest";
 import { deleteCartItem } from "../features/cartSlice";
+
+const CartItem = ({ item, handleDelete }) => {
+  const [quantity, setQuantity] = useState(item?.quantity);
+  const { token } = useSelector((state) => state.auth);
+  const { fetchData: updateQuantity } = usePrivateRequest(token);
+
+  const updateQty = async (newQuantity) => {
+    const data = {
+      product_id: item?.productId._id,
+      quantity: newQuantity,
+    };
+
+    await updateQuantity("PUT", "cart/update", data);
+  };
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+      updateQty(quantity - 1);
+    }
+  };
+
+  const handleIncrease = () => {
+    setQuantity(quantity + 1);
+    updateQty(quantity + 1);
+  };
+
+  return (
+    <div className="d-flex my-2 py-2 border-bottom">
+      <div className="w-75 h-100">
+        <Image src={item?.productId?.imageURL} className="w-100 h-75 object-fit-contain" />
+      </div>
+      <div className="w-100">
+        <p className="m-0 fw-semibold">{item?.productId?.name}</p>
+        <p>₱{item?.productId?.price}</p>
+        <div className="d-flex align-items-center gap-2">
+          <button className="qty-btn rounded-2" onClick={handleDecrease} disabled={quantity === 1}>
+            <AiOutlineMinus />
+          </button>
+          <input
+            type="number"
+            value={quantity}
+            readOnly
+            className="qty-input text-center d-flex w-25 border-0"
+          />
+          <button className="qty-btn rounded-2" onClick={handleIncrease}>
+            <AiOutlinePlus />
+          </button>
+        </div>
+      </div>
+
+      <div
+        onClick={() => handleDelete(item?.productId?._id)}
+        className="delete-btn d-flex justify-content-center align-items-center"
+      >
+        <BsTrash />
+      </div>
+    </div>
+  );
+};
 
 const Cart = ({ onCartOpen, setOnCartOpen }) => {
   const dispatch = useDispatch();
@@ -38,38 +99,7 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
                 </div>
               )}
               {cartItems?.map((item) => (
-                <div key={item?._id} className="d-flex my-2 py-2 border-bottom">
-                  <div className="w-75 h-100">
-                    <Image
-                      src={item?.productId?.imageURL}
-                      className="w-100 h-75 object-fit-contain"
-                    />
-                  </div>
-                  <div className="w-100">
-                    <p className="m-0 fw-semibold">{item?.productId?.name}</p>
-                    <p>₱{item?.productId?.price}</p>
-                    <div className="d-flex align-items-center gap-2">
-                      <div className="qty-btn rounded-2">
-                        <AiOutlineMinus />
-                      </div>
-                      <input
-                        type="number"
-                        value={item?.quantity}
-                        className="qty-input text-center d-flex w-25 border-0"
-                      />
-                      <div className="qty-btn rounded-2">
-                        <AiOutlinePlus />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    onClick={() => handleDelete(item?.productId?._id)}
-                    className="delete-btn d-flex justify-content-center align-items-center"
-                  >
-                    <BsTrash />
-                  </div>
-                </div>
+                <CartItem key={item?._id} item={item} handleDelete={handleDelete} />
               ))}
             </div>
             {cartItems?.length !== 0 && (

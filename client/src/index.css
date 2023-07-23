@@ -164,6 +164,7 @@ input[type="search"]::-webkit-search-results-decoration {
   background: rgba(128, 128, 128, 0.1);
   padding: 2px 7px;
   transition: ease-in all 0.4s;
+  border: 0;
 }
 
 .qty-btn:hover {
