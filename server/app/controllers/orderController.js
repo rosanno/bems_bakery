@@ -139,11 +139,7 @@ export const getOrder = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    console.log(userId);
-
     const foundOrder = await Order.findOne({ customer: userId }).populate("products.orderItem");
-
-    console.log(foundOrder);
 
     if (!foundOrder) return res.status(404).json({ message: "Order not found!" });
 
