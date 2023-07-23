@@ -66,8 +66,20 @@ const ProductDetails = () => {
       product_id: productId, // Replace productId with the actual product ID
       quantity: 1,
     };
-    await addToCart("POST", "cart", data);
-    getCartData();
+    const res = await addToCart("POST", "cart", data);
+    if (res?.cart) {
+      toast.success(`${res?.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      getCartData();
+    }
   };
 
   return (

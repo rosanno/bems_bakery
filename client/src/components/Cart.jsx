@@ -26,7 +26,7 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div className="d-flex h-75 flex-column h-100">
-            <div className="overflow-y-scroll">
+            <div className="overflow-y-scroll cart-container">
               {cartItems?.length === 0 && (
                 <div
                   className="d-flex justify-content-center align-items-center"
