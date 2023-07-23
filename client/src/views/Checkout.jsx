@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 
 import Section from "../components/ui/Section";
 import { BsCash } from "react-icons/bs";
+import usePrivateRequest from "../hooks/usePrivateRequest";
 
 const Checkout = () => {
-  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
   const [selectedPayment, setSelectedPayment] = useState("cod");
+  const { fetchData: postCheckout } = usePrivateRequest(token);
 
   const calculateTotalPrice = (cartItems) => {
     let totalPrice = 0;
@@ -21,9 +25,22 @@ const Checkout = () => {
 
   const totalCartPrice = calculateTotalPrice(cartItems);
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (selectedPayment === "cod") {
-      console.log("Processing Cash on Delivery payment...");
+      const productsData = cartItems.map((item) => ({
+        orderItem: item.productId._id,
+        quantity: item.quantity,
+      }));
+
+      const data = {
+        products: productsData,
+        totalPrice: totalCartPrice,
+      };
+
+      const res = await postCheckout("POST", "customer/checkout", data);
+      if (res.status === 200) {
+        navigate("/success");
+      }
     } else if (selectedPayment === "paypal") {
       console.log("Redirecting to PayPal payment gateway...");
     } else {
@@ -108,7 +125,9 @@ const Checkout = () => {
                   <span>₱{totalCartPrice}</span>
                 </div>
               </div>
-              <button className="order-btn text-capitalize">place order</button>
+              <button onClick={handleCheckout} className="order-btn text-capitalize">
+                place order
+              </button>
             </Card.Body>
           </Card>
         </div>

@@ -8,6 +8,7 @@ import Signup from "./views/Signup";
 import Order from "./views/Order";
 import Account from "./views/Account";
 import Checkout from "./views/Checkout";
+import Success from "./views/Success";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        path: "success",
+        element: <Success />,
       },
       {
         path: "login",
