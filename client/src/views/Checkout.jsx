@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 
 import Section from "../components/ui/Section";
 import { BsCash } from "react-icons/bs";
 import usePrivateRequest from "../hooks/usePrivateRequest";
+import { clearCart } from "../features/cartSlice";
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
   const [selectedPayment, setSelectedPayment] = useState("cod");
@@ -39,6 +41,7 @@ const Checkout = () => {
 
       const res = await postCheckout("POST", "customer/checkout", data);
       if (res.status === 200) {
+        dispatch(clearCart());
         navigate("/success");
       }
     } else if (selectedPayment === "paypal") {
