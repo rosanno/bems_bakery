@@ -9,6 +9,7 @@ import Order from "./views/Order";
 import Account from "./views/Account";
 import Checkout from "./views/Checkout";
 import Success from "./views/Success";
+import Reviews from "./views/Reviews";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: "customer/order",
         element: <Order />,
+      },
+      {
+        path: "customer/review/:productId",
+        element: <Reviews />,
       },
       {
         path: "user/:userId",

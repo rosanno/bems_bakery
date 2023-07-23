@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
@@ -8,6 +9,7 @@ import Section from "../components/ui/Section";
 import Loader from "../components/ui/Loader";
 
 const Order = () => {
+  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const { fetchData: getOrders, loading } = usePrivateRequest(token);
   const [orders, setOrders] = useState([]);
@@ -20,8 +22,6 @@ const Order = () => {
 
     fetchOrder();
   }, []);
-
-  console.log(orders);
 
   return (
     <Container className="mx-md-0 mx-lg-auto">
@@ -42,7 +42,7 @@ const Order = () => {
                     {item.isDelivered ? "Received" : ""}
                   </Card.Text>
                 </Card.Header>
-                <Card.Body>
+                <Card.Body className="d-flex flex-column flex-md-row gap-3 gap-md-0 align-items-md-center justify-content-between">
                   <div className="d-flex justify-content-between gap-2 card-container">
                     <div className="h-100 d-flex gap-3">
                       <img
@@ -58,6 +58,14 @@ const Order = () => {
                       <span className="block ms-2">{item.quantity}</span>
                     </p>
                   </div>
+                  {item.isDelivered && item.paymentStatus === "Paid" && !item.isReview && (
+                    <button
+                      onClick={() => navigate(`/customer/review/${item.orderItem._id}`)}
+                      className="review-btn rounded-5"
+                    >
+                      Add Review
+                    </button>
+                  )}
                 </Card.Body>
               </Card>
             ))}
