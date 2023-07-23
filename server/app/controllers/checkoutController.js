@@ -18,6 +18,8 @@ export const createOrder = async (req, res) => {
         const item = {
           orderItem: product.orderItem,
           quantity: product.quantity,
+          isDelivered: product.isDelivered,
+          isReview: product.isReview,
         };
 
         orderItem.push(item);

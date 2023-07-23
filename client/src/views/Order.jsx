@@ -21,6 +21,8 @@ const Order = () => {
     fetchOrder();
   }, []);
 
+  console.log(orders);
+
   return (
     <Container className="mx-md-0 mx-lg-auto">
       <Section className="px-xl-5 mt-3 mt-md-5">
@@ -36,7 +38,9 @@ const Order = () => {
                   <Card.Text className="payment-badge rounded-5 m-0 text-muted">
                     {item.paymentStatus}
                   </Card.Text>
-                  <Card.Text className="payment-badge rounded-5 m-0 text-muted">Received</Card.Text>
+                  <Card.Text className="payment-badge rounded-5 m-0 text-muted">
+                    {item.isDelivered ? "Received" : ""}
+                  </Card.Text>
                 </Card.Header>
                 <Card.Body>
                   <div className="d-flex justify-content-between gap-2 card-container">
