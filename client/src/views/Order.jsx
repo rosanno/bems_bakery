@@ -15,6 +15,13 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+  }, [token]);
+
+  useEffect(() => {
     const fetchOrder = async () => {
       const res = await getOrders("GET", "order/customer/orders");
       setOrders(res?.order);
