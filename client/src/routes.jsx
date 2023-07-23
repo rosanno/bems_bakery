@@ -7,6 +7,7 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Order from "./views/Order";
 import Account from "./views/Account";
+import Checkout from "./views/Checkout";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "user/:userId",
         element: <Account />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
       {
         path: "login",

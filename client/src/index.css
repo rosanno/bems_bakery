@@ -271,6 +271,51 @@ input[type="search"]::-webkit-search-results-decoration {
   width: 100%;
 }
 
+/* checkout page styles */
+.payment-wrap {
+  border: 1px solid #ecf0f7;;
+  cursor: pointer;
+}
+
+.active {
+  border: 1px solid #1A9CB7 !important;
+}
+
+.paypal-logo {
+  width: 20px;
+}
+
+.card-heading-fs {
+  font-size: 1rem !important;
+}
+
+.order-btn {
+  width: 100%;
+  padding: .4rem 0;
+  background: #bb2d3b;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.order-btn:hover {
+  background: #d93642;
+  cursor: pointer;
+}
+
+.order-summary {
+  font-size: 1rem;
+}
+
+.order-info {
+  font-size: .9rem;
+}
+
+.payment-text {
+  font-size: .8rem;
+}
+
 @media (min-width: 475px) {
   /* product review styles */
   .review-name,
@@ -313,6 +358,11 @@ input[type="search"]::-webkit-search-results-decoration {
   .update-form {
     width: 80% !important;
   }
+
+  /* checkout pages style */
+  .custom-card {
+    width: 80%;
+  }
 }
 
 /** lg device **/
@@ -349,6 +399,11 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .update-form {
     width: 70% !important;
+  }
+
+  /* checkout pages style */
+  .custom-card {
+    width: 60%;
   }
 }
 
@@ -423,6 +478,11 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
   .card-container {
+    width: 50%;
+  }
+
+  /* checkout pages style */
+  .custom-card {
     width: 50%;
   }
 }

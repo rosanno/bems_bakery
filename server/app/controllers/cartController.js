@@ -36,7 +36,13 @@ export const getCartItems = async (req, res) => {
       return res.status(404).json({ message: "Cart not found for the user" });
     }
 
-    res.status(200).json({ cartItems: cart.items });
+    let totalPrice = 0;
+    cart.items.forEach((item) => {
+      const { price } = item.productId;
+      totalPrice += price * item.quantity;
+    });
+
+    res.status(200).json({ cartItems: cart.items, totalPrice });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

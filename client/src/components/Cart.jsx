@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
@@ -70,6 +71,7 @@ const CartItem = ({ item, handleDelete }) => {
 
 const Cart = ({ onCartOpen, setOnCartOpen }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.auth);
   const { loading, fetchData } = usePrivateRequest(token);
@@ -103,7 +105,14 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
               ))}
             </div>
             {cartItems?.length !== 0 && (
-              <Button variant="danger" className="mt-auto py-2">
+              <Button
+                variant="danger"
+                className="mt-auto py-2"
+                onClick={() => {
+                  navigate("/checkout");
+                  setOnCartOpen(false);
+                }}
+              >
                 Checkout
               </Button>
             )}
