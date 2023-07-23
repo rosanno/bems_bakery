@@ -246,6 +246,26 @@ input[type="search"]::-webkit-search-results-decoration {
   width: 100% !important;
 }
 
+.order-header {
+  font-size: 1.2rem;
+}
+
+.payment-badge {
+  background-color: #ecf0f7;
+  width: max-content;
+  padding: 0 10px;
+  font-size: 1rem !important;
+}
+
+/* order styles */
+.product-image {
+  width: 50px;
+}
+
+.card-container {
+  width: 100%;
+}
+
 @media (min-width: 475px) {
   /* product review styles */
   .review-name,
@@ -264,7 +284,6 @@ input[type="search"]::-webkit-search-results-decoration {
   .review-message {
     font-size: 0.9rem;
   }
-  
 }
 
 @media (min-width: 768px) {
@@ -387,5 +406,18 @@ input[type="search"]::-webkit-search-results-decoration {
   /** account style **/
   .update-form {
     width: 50% !important;
+  }
+
+  /* order styles */
+  .order-header {
+    font-size: 1.4rem;
+  }
+
+  .product-image {
+    width: 50px;
+  }
+
+  .card-container {
+    width: 50%;
   }
 }
