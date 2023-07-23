@@ -99,7 +99,7 @@ const Navigationbar = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link onClick={() => setOnCartOpen(true)}>
+              <div onClick={() => setOnCartOpen(true)} className="py-3 cart-icon">
                 <div className="d-flex flex-column align-items-center">
                   <div className="position-relative">
                     <BsBag className="fs-4" />
@@ -111,7 +111,7 @@ const Navigationbar = () => {
                   </div>
                   <span className="cart-label">Cart</span>
                 </div>
-              </Nav.Link>
+              </div>
               {!token ? (
                 <Nav.Link href="/login">
                   <div className="d-flex flex-column align-items-center">
@@ -120,24 +120,16 @@ const Navigationbar = () => {
                   </div>
                 </Nav.Link>
               ) : (
-                <Dropdown>
-                  <Dropdown.Toggle
-                    variant="none"
-                    className="d-flex flex-column align-items-center p-0 shadow-none border-0"
-                    style={{
-                      width: "max-content",
-                    }}
-                  >
-                    <FaRegUserCircle className="fs-4" />
-                    <span className="cart-label text-truncate">{user?.name}</span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item href={`user/${user?._id}`}>Account</Dropdown.Item>
-                    <Dropdown.Item href="/customer/order">My Orders</Dropdown.Item>
-                    <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <div
+                  onClick={handleShow}
+                  className="d-flex flex-column align-items-center p-0 shadow-none border-0 profile-icon"
+                  style={{
+                    width: "max-content",
+                  }}
+                >
+                  <FaRegUserCircle className="fs-4" />
+                  <span className="cart-label text-truncate">{user?.name}</span>
+                </div>
               )}
             </Nav>
           </Navbar.Collapse>
@@ -166,7 +158,7 @@ const Navigationbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Offcanvas show={show} onHide={handleClose}>
+      <Offcanvas show={show} onHide={handleClose} placement="end">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title className="cart-canva d-flex align-items-center">
             <span className="logo-1">Cake</span>
@@ -175,19 +167,30 @@ const Navigationbar = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ul className="nav-item list-unstyled">
-            <li className="border-bottom" onClick={handleClose}>
+            <li className="border-bottom d-block d-lg-none" onClick={handleClose}>
               <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
                 Home
               </Link>
             </li>
-            <li className="border-bottom pt-3" onClick={handleClose}>
+            <li className="border-bottom pt-3 pt-lg-0 d-block d-lg-none" onClick={handleClose}>
               <Link to="/products" className="text-decoration-none text-black d-inline-block py-1">
                 Cakes
               </Link>
             </li>
             <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
-                About
+              <Link
+                to={`user/${user?._id}`}
+                className="text-decoration-none text-black d-inline-block py-1"
+              >
+                Account
+              </Link>
+            </li>
+            <li className="border-bottom pt-3" onClick={handleClose}>
+              <Link
+                to="/customer/order"
+                className="text-decoration-none text-black d-inline-block py-1"
+              >
+                My Orders
               </Link>
             </li>
             <li className="border-bottom pt-3" onClick={handleClose}>
@@ -196,11 +199,16 @@ const Navigationbar = () => {
               </Link>
             </li>
             <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link
-                to="/"
-                className="text-decoration-none text-black d-inline-block py-1 border-bottom"
-              >
+              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
                 FAQ
+              </Link>
+            </li>
+            <li className="border-bottom pt-3" onClick={handleClose}>
+              <Link
+                onClick={handleLogout}
+                className="text-decoration-none text-black d-inline-block py-1"
+              >
+                Sign out
               </Link>
             </li>
           </ul>

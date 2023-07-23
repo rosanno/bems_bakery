@@ -341,6 +341,10 @@ input[type="search"]::-webkit-search-results-decoration {
   font-size: 0.8rem;
 }
 
+.profile-icon, .cart-icon {
+  cursor: pointer;
+}
+
 @media (min-width: 475px) {
   /* product review styles */
   .review-name,
