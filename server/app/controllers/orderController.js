@@ -108,6 +108,7 @@ export const getOrderList = async (req, res) => {
         const transformedOrder = {
           id: product._id,
           status: product.paymentStatus,
+          deliveryStatus: product.isDelivered,
           totalPrice: order.totalPrice,
           quantity: product.quantity,
           numberOfItems: order.products.length,
@@ -170,6 +171,38 @@ export const updateOrder = async (req, res) => {
     }
 
     foundOrder.products[productIndex].paymentStatus = paymentStatus;
+
+    await foundOrder.save();
+
+    res.status(200).json({ message: "updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updateDeliveryStatus = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const { deliveryStatus } = req.body;
+
+    let foundOrder = await Order.findOne({
+      "products._id": productId,
+    });
+
+    console.log("test");
+
+    if (!foundOrder) return res.sendStatus(404);
+
+    const productIndex = foundOrder.products.findIndex(
+      (product) => product._id.toString() === productId
+    );
+
+    if (productIndex === -1) {
+      return res.sendStatus(404);
+    }
+
+    foundOrder.products[productIndex].isDelivered = deliveryStatus;
 
     await foundOrder.save();
 
@@ -294,9 +327,9 @@ export const getMonthlyRevenuePaidOrders = async (req, res) => {
 export const deleteOrderList = async (req, res) => {
   try {
     const { productId } = req.params;
-    const { userId } = req.user;
+    const { customerId } = req.body;
 
-    const order = await Order.findOne({ customer: userId });
+    const order = await Order.findOne({ customer: customerId });
 
     if (!order) return res.status(404).json({ error: "Customer not found" });
 

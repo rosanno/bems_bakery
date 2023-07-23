@@ -8,6 +8,7 @@ import {
   getOrders,
   getSalesCount,
   getTotalRevenue,
+  updateDeliveryStatus,
   updateOrder,
 } from "../controllers/orderController.js";
 import { userAuth } from "../middleware/authMiddleware.js";
@@ -16,6 +17,7 @@ const router = express.Router();
 
 router.post("/", userAuth, createOrder);
 router.patch("/:productId", userAuth, updateOrder);
+router.patch("/delivery-status/:productId", userAuth, updateDeliveryStatus);
 router.delete("/:productId", userAuth, deleteOrderList);
 router.get("/", getOrders);
 router.get("/get-total-revenue", userAuth, getTotalRevenue);
