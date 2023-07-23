@@ -3,11 +3,15 @@ import { ChakraProvider } from "@chakra-ui/react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
-import "./index.css";
+import { ToastContainer } from "react-toastify";
+
 import { router } from "./routes";
 import ModalProvider from "./context/ContextProvider";
 import { store } from "./store";
 import DialogProvider from "./context/DialogContextProvider";
+
+import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
