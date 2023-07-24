@@ -155,9 +155,9 @@ const ProductDetails = () => {
                 </div>
               </div>
             </Section>
-            <Section className="px-xl-5 mt-3 mt-md-5">
+            {/* <Section className="px-xl-5 mt-3 mt-md-5">
               <h3 className="review-label mt-3 text-center">You may also like</h3>
-            </Section>
+            </Section> */}
           </>
         ) : (
           <Loader />
