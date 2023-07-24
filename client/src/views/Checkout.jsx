@@ -59,7 +59,6 @@ const Checkout = () => {
       };
 
       const res = await postCheckout("POST", "customer/checkout", data);
-      console.log(res);
       if (res.status === 200) {
         console.log("redirect");
         dispatch(clearCart());

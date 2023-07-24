@@ -111,7 +111,7 @@ const ProductDetails = () => {
                   <Button
                     onClick={() => handleAddToCart(product?.price)}
                     variant="outline-danger"
-                    className="px-4 py-2 w-75"
+                    className="px-4 py-2 w-50"
                     disabled={isLoading}
                   >
                     {isAdding && (
@@ -127,9 +127,6 @@ const ProductDetails = () => {
                       </>
                     )}
                     {isAdding ? "Adding..." : "Add To Cart"}
-                  </Button>
-                  <Button variant="danger" className="px-4 py-2 w-75">
-                    Buy Now
                   </Button>
                 </div>
               </div>
