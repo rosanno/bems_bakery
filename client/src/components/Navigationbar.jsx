@@ -192,12 +192,12 @@ const Navigationbar = () => {
                 My Orders
               </Link>
             </li>
-            <li className="border-bottom pt-3" onClick={handleClose}>
+            <li className="border-bottom d-block d-lg-none pt-3" onClick={handleClose}>
               <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
                 Contact Us
               </Link>
             </li>
-            <li className="border-bottom pt-3" onClick={handleClose}>
+            <li className="border-bottom d-block d-lg-none pt-3" onClick={handleClose}>
               <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
                 FAQ
               </Link>
