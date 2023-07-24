@@ -370,7 +370,7 @@ input[type="search"]::-webkit-search-results-decoration {
   font-size: .8rem;
 }
 
-.not-found {
+.not-found, .order-result {
   height: 330px;
 }
 
