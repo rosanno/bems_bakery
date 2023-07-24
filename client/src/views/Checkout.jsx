@@ -50,6 +50,7 @@ const Checkout = () => {
       const productsData = cartItems.map((item) => ({
         orderItem: item.productId._id,
         quantity: item.quantity,
+        totalAmount: totalCartPrice,
       }));
 
       const data = {

@@ -29,6 +29,17 @@ const orderSchema = new mongoose.Schema(
           type: Boolean,
           default: false,
         },
+        totalAmount: {
+          type: Number,
+        },
+        createdDate: {
+          type: Date,
+          default: Date.now,
+        },
+        lastUpdatedDate: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
     totalPrice: {
