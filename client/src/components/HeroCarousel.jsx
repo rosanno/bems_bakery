@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+import Container from "react-bootstrap/Container";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const HeroCarousel = () => {
   return (
-    <>
+    <Container fluid>
       <Swiper
         slidesPerView={1}
         spaceBetween={30}
@@ -53,7 +54,7 @@ const HeroCarousel = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </Container>
   );
 };
 
