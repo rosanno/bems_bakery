@@ -10,6 +10,7 @@ import Account from "./views/Account";
 import Checkout from "./views/Checkout";
 import Success from "./views/Success";
 import Reviews from "./views/Reviews";
+import ProductCategory from "./views/ProductCategory";
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "product/:category",
-        element: <Products />,
+        element: <ProductCategory />,
       },
       {
         path: "customer/order",

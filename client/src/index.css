@@ -370,6 +370,10 @@ input[type="search"]::-webkit-search-results-decoration {
   font-size: .8rem;
 }
 
+.not-found {
+  height: 330px;
+}
+
 @media (min-width: 475px) {
   /* product review styles */
   .review-name,
