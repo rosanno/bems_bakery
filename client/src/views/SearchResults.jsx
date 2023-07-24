@@ -34,26 +34,34 @@ const SearchResults = () => {
     <Container className="mx-md-0 mx-lg-auto">
       <Section className="px-xl-5 mt-3 mt-md-5">
         <div>
-          <h1 className="fs-2 text-capitalize fw-bold">Search Result For &quot;{search}&quot;</h1>
-          {products.length === 0 && (
+          <h1 className="text-capitalize fw-bold search-heading">
+            Search Result For &quot;{search}&quot;
+          </h1>
+          {products.length === 0 ? (
             <div className="order-result d-flex justify-content-center align-items-center">
               <h3 className="text-muted">Results found</h3>
             </div>
-          )}
-          {!loading ? (
-            <div className="mt-2 mt-lg-3">
-              <Row className="row-gap-3 row-gap-lg-4">
-                {products?.map((product) => (
-                  <Col xs={6} sm={4} md={4} lg={3} key={product._id}>
-                    <Link to={`/product/details/${product._id}`} className="text-decoration-none">
-                      <ProductCard product={product} />
-                    </Link>
-                  </Col>
-                ))}
-              </Row>
-            </div>
           ) : (
-            <Loader />
+            <>
+              {!loading ? (
+                <div className="mt-2 mt-lg-3">
+                  <Row className="row-gap-3 row-gap-lg-4">
+                    {products?.map((product) => (
+                      <Col xs={6} sm={4} md={4} lg={3} key={product._id}>
+                        <Link
+                          to={`/product/details/${product._id}`}
+                          className="text-decoration-none"
+                        >
+                          <ProductCard product={product} />
+                        </Link>
+                      </Col>
+                    ))}
+                  </Row>
+                </div>
+              ) : (
+                <Loader />
+              )}
+            </>
           )}
         </div>
       </Section>

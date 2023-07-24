@@ -137,6 +137,10 @@ input[type="search"]::-webkit-search-results-decoration {
   font-size: 1.4rem;
 }
 
+.search-heading {
+  font-size: 1.2rem !important;
+}
+
 .product-decription {
   font-size: 0.8rem;
 }
@@ -367,10 +371,11 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .footer-buttom {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
-.not-found, .order-result {
+.not-found,
+.order-result {
   height: 330px;
 }
 
@@ -379,7 +384,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .delivery-text {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .delivery-text span {
@@ -441,6 +446,10 @@ input[type="search"]::-webkit-search-results-decoration {
   .footer-heading {
     font-size: 2rem;
   }
+
+  .search-heading {
+    font-size: 1.6rem !important;
+  }
 }
 
 /** lg device **/
@@ -494,6 +503,10 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .search-bar {
     width: 450px;
+  }
+
+  .search-heading {
+    font-size: 1.6rem !important;
   }
 }
 
@@ -586,5 +599,9 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .search-bar {
     width: 450px;
+  }
+
+  .search-heading {
+    font-size: 1.6rem !important;
   }
 }
