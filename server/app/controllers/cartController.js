@@ -1,7 +1,8 @@
 import Cart from "../models/cart.js";
+import Product from "../models/product.js";
 
 export const addToCart = async (req, res) => {
-  const { product_id, quantity } = req.body;
+  const { product_id, quantity, totalAmount } = req.body;
   const { userId } = req.user;
 
   try {
@@ -14,7 +15,7 @@ export const addToCart = async (req, res) => {
     if (existingCartItem) {
       existingCartItem.quantity += quantity;
     } else {
-      cart.items.push({ productId: product_id, quantity });
+      cart.items.push({ productId: product_id, quantity, totalAmount });
     }
 
     await cart.save();
@@ -68,6 +69,14 @@ export const updateCartItem = async (req, res) => {
 
     cart.items[cartItemIndex].quantity = quantity;
 
+    const product = await Product.findById(product_id);
+    const pricePerUnit = product.price;
+    const newTotalAmount = pricePerUnit * quantity;
+
+    cart.items[cartItemIndex].totalAmount = newTotalAmount;
+
+    cart.totalAmount = cart.items.reduce((total, item) => total + item.totalAmount, 0);
+
     await cart.save();
 
     res.status(200).json({ message: "Cart item updated successfully", cart });
@@ -76,6 +85,7 @@ export const updateCartItem = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 export const deleteCartItem = async (req, res) => {
   const { product_id } = req.params;

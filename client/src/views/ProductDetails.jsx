@@ -57,7 +57,7 @@ const ProductDetails = () => {
     }
   }, [token, dispatch]);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (price) => {
     if (!token) {
       return navigate("/login"); // Redirect to the login page if the user is not logged in
     }
@@ -65,6 +65,7 @@ const ProductDetails = () => {
     const data = {
       product_id: productId, // Replace productId with the actual product ID
       quantity: 1,
+      totalAmount: price,
     };
     const res = await addToCart("POST", "cart", data);
     if (res?.cart) {
@@ -108,7 +109,7 @@ const ProductDetails = () => {
 
                 <div className="d-flex align-align-items-center gap-2 mt-lg-5">
                   <Button
-                    onClick={handleAddToCart}
+                    onClick={() => handleAddToCart(product?.price)}
                     variant="outline-danger"
                     className="px-4 py-2 w-75"
                     disabled={isLoading}

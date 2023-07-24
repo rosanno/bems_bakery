@@ -7,12 +7,18 @@ import Button from "react-bootstrap/Button";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import usePrivateRequest from "../hooks/usePrivateRequest";
-import { deleteCartItem } from "../features/cartSlice";
+import { deleteCartItem, setCart } from "../features/cartSlice";
 
-const CartItem = ({ item, handleDelete }) => {
+const CartItem = ({ item, handleDelete, dispatch }) => {
   const [quantity, setQuantity] = useState(item?.quantity);
   const { token } = useSelector((state) => state.auth);
   const { fetchData: updateQuantity } = usePrivateRequest(token);
+  const { fetchData: refetchCart } = usePrivateRequest(token);
+
+  const updateCart = async () => {
+    const res = await refetchCart("GET", "cart");
+    dispatch(setCart({ cartItem: res?.cartItems }));
+  };
 
   const updateQty = async (newQuantity) => {
     const data = {
@@ -21,6 +27,7 @@ const CartItem = ({ item, handleDelete }) => {
     };
 
     await updateQuantity("PUT", "cart/update", data);
+    updateCart();
   };
 
   const handleDecrease = () => {
@@ -42,7 +49,7 @@ const CartItem = ({ item, handleDelete }) => {
       </div>
       <div className="w-100">
         <p className="m-0 fw-semibold">{item?.productId?.name}</p>
-        <p>₱{item?.productId?.price}</p>
+        <p>₱{item?.totalAmount}</p>
         <div className="d-flex align-items-center gap-2">
           <button className="qty-btn rounded-2" onClick={handleDecrease} disabled={quantity === 1}>
             <AiOutlineMinus />
@@ -101,7 +108,12 @@ const Cart = ({ onCartOpen, setOnCartOpen }) => {
                 </div>
               )}
               {cartItems?.map((item) => (
-                <CartItem key={item?._id} item={item} handleDelete={handleDelete} />
+                <CartItem
+                  key={item?._id}
+                  item={item}
+                  handleDelete={handleDelete}
+                  dispatch={dispatch}
+                />
               ))}
             </div>
             {cartItems?.length !== 0 && (
