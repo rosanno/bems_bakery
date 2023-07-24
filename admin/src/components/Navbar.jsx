@@ -16,7 +16,6 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { BsBell } from "react-icons/bs";
 
 import { useLogoutMutation } from "../services/bakeryApi";
 import { persistor } from "../store";
@@ -27,14 +26,6 @@ const Links = [
   {
     label: "Dashboard",
     href: "/",
-  },
-  {
-    label: "Category",
-    href: "/category",
-  },
-  {
-    label: "Ingredients",
-    href: "/ingredients",
   },
   {
     label: "Products",
@@ -109,9 +100,6 @@ const Navbar = () => {
             </HStack>
           </HStack>
           <Flex alignItems={"center"} gap="4">
-            <IconButton backgroundColor="transparent">
-              <BsBell size="20" />
-            </IconButton>
             <Menu>
               <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
                 <Avatar

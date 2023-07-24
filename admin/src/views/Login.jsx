@@ -38,7 +38,7 @@ const Login = () => {
       dispatch(setToken({ token: res?.data?.accessToken }));
     }
 
-    if (res?.error?.status === 404) {
+    if (res?.error?.status === 404 || res?.error?.status === 401) {
       toast({
         title: `${res?.error?.data.message}`,
         status: "error",

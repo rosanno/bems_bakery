@@ -46,7 +46,7 @@ const HeroCarousel = () => {
             >
               <img src={item.img_path} alt="" className="rounded-4" />
               <div className="position-absolute z-2 feature-label">
-                <h1>{item.category}</h1>
+                <h1 className="text-capitalize">{item.category}</h1>
               </div>
               <div className="bg-black opacity-25 position-absolute top-0 h-100 w-100 rounded-4" />
             </Link>

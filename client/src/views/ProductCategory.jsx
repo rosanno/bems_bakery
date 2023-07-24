@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 
-import usePublicRequest from "../hooks/usePublicRequest";
+import Container from "react-bootstrap/Container";
 import Section from "../components/ui/Section";
 import { useDispatch, useSelector } from "react-redux";
+import usePublicRequest from "../hooks/usePublicRequest";
 import { setProducts } from "../features/productSlice";
+import { Link, useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/ui/Loader";
 
-const Products = () => {
+const ProductCategory = () => {
+  const { category } = useParams();
   const dispatch = useDispatch();
   const { loading, error, fetchData } = usePublicRequest();
   const products = useSelector((state) => state.product.products);
@@ -21,7 +22,7 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const productsData = await fetchData("GET", "product");
+        const productsData = await fetchData("GET", `product/category/${category}`);
         dispatch(setProducts({ products: productsData?.products }));
       } catch (error) {
         console.log(error);
@@ -51,10 +52,10 @@ const Products = () => {
   };
 
   return (
-    <Container className="mx-md-0 mx-lg-auto">
+    <Container>
       <Section className="px-xl-5 mt-3 mt-md-5">
         <div>
-          <h1 className="text-size text-capitalize fw-bold">Finest Cakes Await</h1>
+          <h1 className="fs-2 text-capitalize fw-bold">Finest Cakes Await</h1>
           <div className="mt-lg-4">
             <Form.Select
               aria-label="Sort"
@@ -70,6 +71,11 @@ const Products = () => {
               <option value="priceLow">Sort By: Price Low</option>
             </Form.Select>
           </div>
+          {products?.length === 0 && (
+            <div className="not-found d-flex justify-content-center align-items-center">
+              <h4 className="text-muted">No products found</h4>
+            </div>
+          )}
           {!loading ? (
             <div className="mt-2 mt-lg-3">
               <Row className="row-gap-3 row-gap-lg-4">
@@ -91,4 +97,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProductCategory;

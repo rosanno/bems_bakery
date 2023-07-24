@@ -4,13 +4,13 @@ import bcrypt from "bcrypt";
 
 export const register = async (req, res) => {
   try {
-    const { name, email, address, password } = req.body;
+    const { name, email, address, phone, password } = req.body;
 
     const foundEmail = await User.findOne({ email });
 
     if (foundEmail) return res.status(302).json({ message: "Email already registered" });
 
-    if (!name || !email || !address || !password)
+    if (!name || !email || !phone || !address || !password)
       return res.status(400).json({ message: "Fields required" });
 
     const hashPasssword = bcrypt.hashSync(password, 10);
@@ -18,6 +18,7 @@ export const register = async (req, res) => {
     const newUser = new User({
       name,
       email,
+      phone,
       addresses: { address },
       password: hashPasssword,
     });

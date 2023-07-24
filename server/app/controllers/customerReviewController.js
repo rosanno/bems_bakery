@@ -20,12 +20,10 @@ export const addReviewToProduct = async (req, res) => {
 
     const savedReview = await newReview.save();
 
-    console.log(savedReview);
-
     product.customerReviews.push(savedReview._id);
     await product.save();
 
-    res.status(201).json(savedReview);
+    res.status(201).json({ review: savedReview, status: 200 });
   } catch (error) {
     console.error("Error adding review to product:", error);
     res.status(500).json({ error: "Internal server error" });

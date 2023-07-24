@@ -1,9 +1,10 @@
 import express from "express";
-import { addReviewToProduct } from "../controllers/customerReviewController.js";
+
 import { userAuth } from "../middleware/authMiddleware.js";
+import { createOrder } from "../controllers/checkoutController.js";
 
 const router = express.Router();
 
-router.post("/:productId", userAuth, addReviewToProduct);
+router.post("/", userAuth, createOrder);
 
 export default router;

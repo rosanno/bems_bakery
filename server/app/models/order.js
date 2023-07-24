@@ -18,8 +18,27 @@ const orderSchema = new mongoose.Schema(
         },
         paymentStatus: {
           type: String,
-          enum: ["Pending", "Paid", "Failed"],
-          default: "Pending",
+          enum: ["Unpaid", "Paid"],
+          default: "Unpaid",
+        },
+        isDelivered: {
+          type: Boolean,
+          default: false,
+        },
+        isReview: {
+          type: Boolean,
+          default: false,
+        },
+        totalAmount: {
+          type: Number,
+        },
+        createdDate: {
+          type: Date,
+          default: Date.now,
+        },
+        lastUpdatedDate: {
+          type: Date,
+          default: Date.now,
         },
       },
     ],

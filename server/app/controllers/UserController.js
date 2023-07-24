@@ -60,6 +60,10 @@ export const updateUser = async (req, res) => {
       user.email = req.body.email;
     }
 
+    if (typeof req.body.address === "string" && req.body.address.trim() !== "") {
+      user.addresses.push({ address: req.body.address });
+    }
+
     if (typeof req.body.password === "string" && req.body.password.trim() !== "") {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);

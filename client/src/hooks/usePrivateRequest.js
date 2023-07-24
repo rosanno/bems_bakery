@@ -1,9 +1,7 @@
 import { useState } from "react";
-
 import { privateRequest } from "../axiosInstance";
 
 const usePrivateRequest = (token) => {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -27,16 +25,15 @@ const usePrivateRequest = (token) => {
         data,
         ...options,
       });
-      setData(response.data);
+      setLoading(false);
+      return response.data; // Return the actual response data
     } catch (error) {
       console.log(error);
-      setError(error);
-    } finally {
       setLoading(false);
     }
   };
 
-  return { data, loading, error, fetchData };
+  return { loading, error, fetchData }; // Return the fetchData function directly
 };
 
 export default usePrivateRequest;

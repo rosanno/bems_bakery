@@ -23,3 +23,18 @@ export const userAuth = (req, res, next) => {
     return res.status(401).json({ error: "Invalid access token" });
   }
 };
+
+export const adminAuth = (req, res, next) => {
+  try {
+    userAuth(req, res, () => {
+      if (req.user.role !== "admin") {
+        return res.status(403).json({ error: "Forbidden - Admin access required" });
+      }
+
+      next();
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ error: "Invalid access token" });
+  }
+};

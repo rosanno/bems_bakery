@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
@@ -24,12 +23,8 @@ const ProductDetails = () => {
   const token = useSelector((state) => state.auth.token);
   const { productId } = useParams();
   const { loading, error, fetchData } = usePublicRequest();
-  const {
-    data: cartData,
-    loading: isLoading,
-    error: isError,
-    fetchData: fetchCart,
-  } = usePrivateRequest(token);
+  const { loading: isLoading, error: isError, fetchData: fetchCart } = usePrivateRequest(token);
+  const { loading: isAdding, fetchData: addToCart } = usePrivateRequest(token);
   const { product } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -44,28 +39,48 @@ const ProductDetails = () => {
     fetchProductData();
   }, [productId]);
 
-  useEffect(() => {
-    if (cartData?.cartItems) {
-      dispatch(setCart({ cartItem: cartData?.cartItems }));
+  const getCartData = async () => {
+    try {
+      const cartData = await fetchCart("GET", "cart");
+      if (cartData?.cartItems) {
+        dispatch(setCart({ cartItem: cartData.cartItems }));
+      }
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+      // Handle error (e.g., show an error message or retry)
     }
-  }, [cartData]);
+  };
 
   useEffect(() => {
     if (token) {
-      fetchCart("GET", "cart");
+      getCartData();
     }
-  }, [cartData?.cart, token]);
+  }, [token, dispatch]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async (price) => {
     if (!token) {
-      return navigate("/login");
+      return navigate("/login"); // Redirect to the login page if the user is not logged in
     }
 
     const data = {
-      product_id: productId,
+      product_id: productId, // Replace productId with the actual product ID
       quantity: 1,
+      totalAmount: price,
     };
-    fetchCart("POST", "cart", data);
+    const res = await addToCart("POST", "cart", data);
+    if (res?.cart) {
+      toast.success(`${res?.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      getCartData();
+    }
   };
 
   return (
@@ -91,15 +106,17 @@ const ProductDetails = () => {
                     <p className="text-muted product-decription">{product?.description}</p>
                   </div>
                 </div>
-
+                <p className="text-muted delivery-text">
+                  <span>*</span> Same day delivery
+                </p>
                 <div className="d-flex align-align-items-center gap-2 mt-lg-5">
                   <Button
-                    onClick={handleAddToCart}
+                    onClick={() => handleAddToCart(product?.price)}
                     variant="outline-danger"
-                    className="px-4 py-2 w-75"
+                    className="px-4 py-2 w-50"
                     disabled={isLoading}
                   >
-                    {isLoading && (
+                    {isAdding && (
                       <>
                         <Spinner
                           as="span"
@@ -111,38 +128,34 @@ const ProductDetails = () => {
                         <span className="visually-hidden">Loading...</span>
                       </>
                     )}
-                    {isLoading ? "Adding..." : "Add To Cart"}
+                    {isAdding ? "Adding..." : "Add To Cart"}
                   </Button>
-                  <Button variant="danger" className="px-4 py-2 w-75">
-                    Buy Now
-                  </Button>
-                </div>
-
-                <div className="border-top mt-4" />
-
-                <div>
-                  <div>
-                    <h3 className="review-label mt-3 text-center text-lg-start">
-                      Rating & Reviews
-                    </h3>
-                    <div className="d-flex align-items-center">
-                      <h4 className="p-0 m-0">{product?.overallRating}</h4>
-                      <AiFillStar size={"20px"} className="text-warning" />
-                    </div>
-                  </div>
-                  <div>
-                    {product?.customerReviews?.length > 0 ? (
-                      product.customerReviews.map((review) => (
-                        <Review key={review._id} review={review} />
-                      ))
-                    ) : (
-                      <p>No review for this product</p>
-                    )}
-                  </div>
                 </div>
               </div>
             </div>
-            <Section className="px-xl-5 mt-3 mt-md-2">
+            <Section>
+              <div className="border-top mt-4" />
+
+              <div>
+                <div>
+                  <h3 className="review-label mt-3 text-center text-lg-start">Rating & Reviews</h3>
+                  <div className="d-flex align-items-center">
+                    <h4 className="p-0 m-0">{product?.overallRating}</h4>
+                    <AiFillStar size={"20px"} className="text-warning" />
+                  </div>
+                </div>
+                <div>
+                  {product?.customerReviews?.length > 0 ? (
+                    product.customerReviews.map((review) => (
+                      <Review key={review._id} review={review} />
+                    ))
+                  ) : (
+                    <p>No review for this product</p>
+                  )}
+                </div>
+              </div>
+            </Section>
+            <Section className="px-xl-5 mt-3 mt-md-5">
               <h3 className="review-label mt-3 text-center">You may also like</h3>
             </Section>
           </>

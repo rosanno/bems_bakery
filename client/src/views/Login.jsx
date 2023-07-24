@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
+import { toast } from "react-toastify";
+import Spinner from "react-bootstrap/Spinner";
 
 import Section from "../components/ui/Section";
 import Button from "react-bootstrap/Button";
@@ -12,7 +14,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, loading, error, fetchData } = usePublicRequest();
+  const { loading, error, fetchData } = usePublicRequest();
   const [validated, setValidated] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +36,18 @@ const Login = () => {
           dispatch(setToken({ token: response.accessToken }));
         }
       } catch (error) {
-        console.log(error);
+        if (error?.response?.status === 401 || error?.response?.status === 404) {
+          toast.error(`${error?.response?.data?.message}`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
       }
     }
 
@@ -78,8 +91,21 @@ const Login = () => {
                 <Form.Control.Feedback type="invalid">Password is required.</Form.Control.Feedback>
               </Form.Group>
               <div className="mt-3">
-                <Button type="submit" variant="danger" className="w-100 py-2">
-                  Login
+                <Button type="submit" variant="danger" className="w-100 py-2" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">Loading...</span>
+                    </>
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
               </div>
             </Form>
