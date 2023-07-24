@@ -35,6 +35,7 @@ import Pagination from "../components/ui/Pagination";
 import { BsSearch } from "react-icons/bs";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import { DialogContext } from "../context/DialogContextProvider";
+import { useEffect } from "react";
 
 const tableHead = [
   {
@@ -70,6 +71,7 @@ const Order = () => {
   const [paymentStatus, setPaymentStatus] = useState("");
   const [deliveryStatus, setdeliveryStatus] = useState(false);
   const [subHeading, setSubHeading] = useState("");
+  const [productId, setProductId] = useState("null");
 
   const orderId = useSelector((state) => state.ids.id);
   const { data: orderList, isFetching } = useGetOrderListQuery({ page, search });
@@ -92,13 +94,20 @@ const Order = () => {
     onDialogOpen();
   };
 
-  const updateStatus = async (productId) => {
-    await updateDeliveryStatus({ id: productId, deliveryStatus });
-  };
+  useEffect(() => {
+    const update = async () => {
+      console.log("update");
+      console.log(productId);
+      console.log(deliveryStatus);
+      await updateDeliveryStatus({ id: productId, deliveryStatus });
+    };
+
+    deliveryStatus && update();
+  }, [deliveryStatus]);
 
   const updateDelivery = async (productId) => {
     setdeliveryStatus(true);
-    updateStatus(productId);
+    setProductId(productId);
   };
 
   return (
@@ -162,7 +171,7 @@ const Order = () => {
                 <Td>
                   <Box display={"flex"} alignItems={"center"} gap={"2"}>
                     <Badge colorScheme={order.deliveryStatus ? "green" : "gray"}>
-                      {order.deliveryStatus ? "Devlivered" : "Pending"}
+                      {order.deliveryStatus ? "Delivered" : "Pending"}
                     </Badge>
                     {!order.deliveryStatus ? (
                       <IconButton

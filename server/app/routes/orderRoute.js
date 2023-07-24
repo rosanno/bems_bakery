@@ -11,19 +11,19 @@ import {
   updateDeliveryStatus,
   updateOrder,
 } from "../controllers/orderController.js";
-import { userAuth } from "../middleware/authMiddleware.js";
+import { adminAuth, userAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/", userAuth, createOrder);
-router.patch("/:productId", userAuth, updateOrder);
-router.patch("/delivery-status/:productId", userAuth, updateDeliveryStatus);
-router.delete("/:productId", userAuth, deleteOrderList);
+router.patch("/:productId", adminAuth, updateOrder);
+router.patch("/delivery-status/:productId", adminAuth, updateDeliveryStatus);
+router.delete("/:productId", adminAuth, deleteOrderList);
 router.get("/", getOrders);
-router.get("/get-total-revenue", userAuth, getTotalRevenue);
-router.get("/get-sales-count", userAuth, getSalesCount);
-router.get("/get-monthly-revenue", userAuth, getMonthlyRevenuePaidOrders);
-router.get("/order-list", userAuth, getOrderList);
+router.get("/get-total-revenue", adminAuth, getTotalRevenue);
+router.get("/get-sales-count", adminAuth, getSalesCount);
+router.get("/get-monthly-revenue", adminAuth, getMonthlyRevenuePaidOrders);
+router.get("/order-list", adminAuth, getOrderList);
 router.get("/customer/orders", userAuth, getOrder);
 
 export default router;

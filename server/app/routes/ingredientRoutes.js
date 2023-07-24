@@ -6,13 +6,13 @@ import {
   getIngredients,
   updateIngredient,
 } from "../controllers/ingredientController.js";
-import { userAuth } from "../middleware/authMiddleware.js";
+import { adminAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", userAuth, createIngredient);
-router.put("/:id", userAuth, updateIngredient);
-router.delete("/:id", userAuth, deleteIngredient);
+router.post("/", adminAuth, createIngredient);
+router.put("/:id", adminAuth, updateIngredient);
+router.delete("/:id", adminAuth, deleteIngredient);
 router.get("/", getIngredients);
 router.get("/:id", getIngredient);
 
