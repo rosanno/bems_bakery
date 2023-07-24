@@ -441,6 +441,24 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 }
 
+
+/*contact style */
+.contact-head {
+  background-color: #f07167;
+  width: 100%;
+}
+#btn-submit {
+  background-color: #f07167;
+}
+.sm {
+  background-color: white;
+}
+@media (min-width: 1024px) {
+  .sm {
+    font-size: 22px;
+  }
+}
+
 /** lg device **/
 @media (min-width: 1024px) {
   .custom-select {
