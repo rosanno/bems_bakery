@@ -7,6 +7,7 @@ import Container from "react-bootstrap/esm/Container";
 import usePrivateRequest from "../hooks/usePrivateRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../features/authSlice";
+import Footer from "./Footer";
 
 const Layout = () => {
   const token = useSelector((state) => state.auth.token);
@@ -40,6 +41,7 @@ const Layout = () => {
           <Outlet />
         </main>
       </Container>
+      <Footer />
     </>
   );
 };
