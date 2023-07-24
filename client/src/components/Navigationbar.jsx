@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
@@ -21,12 +21,14 @@ import { persistor } from "../store";
 
 const Navigationbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [show, setShow] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
   const { fetchData: privateFetch } = usePrivateRequest(token);
   const [onCartOpen, setOnCartOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -44,6 +46,11 @@ const Navigationbar = () => {
       fetchCartItems();
     }
   }, [token, dispatch]);
+
+  const handelSearch = async (e) => {
+    e.preventDefault();
+    navigate(`search/${search}`);
+  };
 
   const handleLogout = async () => {
     try {
@@ -85,15 +92,20 @@ const Navigationbar = () => {
             </Button>
           </div>
           <Navbar.Collapse id="navbarScroll">
-            <div className="search-bar d-flex align-items-center me-auto ms-auto pe-3 py-1 rounded-2">
+            <Form
+              onSubmit={handelSearch}
+              className="search-bar d-flex align-items-center me-auto ms-auto pe-3 py-1 rounded-2"
+            >
               <Form.Control
                 type="search"
                 placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 className="search-input me-2 border-0 shadow-none bg-transparent"
                 aria-label="Search"
               />
               <BsSearch className="fs-5" />
-            </div>
+            </Form>
             <Nav
               className="my-2 my-lg-0 d-flex align-items-center gap-3"
               style={{ maxHeight: "100px" }}

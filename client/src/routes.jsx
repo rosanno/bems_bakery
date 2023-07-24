@@ -11,6 +11,7 @@ import Checkout from "./views/Checkout";
 import Success from "./views/Success";
 import Reviews from "./views/Reviews";
 import ProductCategory from "./views/ProductCategory";
+import SearchResults from "./views/SearchResults";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "customer/order",
         element: <Order />,
+      },
+      {
+        path: "search/:search",
+        element: <SearchResults />,
       },
       {
         path: "customer/review/:productId",
