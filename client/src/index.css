@@ -2,7 +2,7 @@
 
 /* search style */
 .search-bar {
-  width: 450px;
+  width: 100%;
   background: #f7f7f7;
 }
 
@@ -491,6 +491,10 @@ input[type="search"]::-webkit-search-results-decoration {
   .footer-heading {
     font-size: 2rem;
   }
+
+  .search-bar {
+    width: 450px;
+  }
 }
 
 /** xl device **/
@@ -578,5 +582,9 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .footer-heading {
     font-size: 2rem;
+  }
+
+  .search-bar {
+    width: 450px;
   }
 }

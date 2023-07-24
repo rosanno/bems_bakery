@@ -6,6 +6,7 @@ import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { BsSearch, BsBag } from "react-icons/bs";
@@ -19,6 +20,29 @@ import Cart from "./Cart";
 import { resetAuthUser } from "../features/authSlice";
 import { persistor } from "../store";
 
+const SearchModal = ({ openModal, onCloseModal, search, setSearch, handelSearch }) => {
+  return (
+    <Modal show={openModal} onHide={onCloseModal}>
+      <Modal.Body className="p-0">
+        <Form
+          onSubmit={handelSearch}
+          className="search-bar d-flex align-items-center me-auto pe-3 py-1 rounded-2"
+        >
+          <Form.Control
+            type="search"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="search-input me-2 border-0 shadow-none bg-transparent"
+            aria-label="Search"
+          />
+          <BsSearch className="fs-5" />
+        </Form>
+      </Modal.Body>
+    </Modal>
+  );
+};
+
 const Navigationbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,6 +53,7 @@ const Navigationbar = () => {
   const { fetchData: privateFetch } = usePrivateRequest(token);
   const [onCartOpen, setOnCartOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -50,6 +75,10 @@ const Navigationbar = () => {
   const handelSearch = async (e) => {
     e.preventDefault();
     navigate(`search/${search}`);
+    setSearch("")
+    if (openModal === true) {
+      onCloseModal();
+    }
   };
 
   const handleLogout = async () => {
@@ -63,11 +92,21 @@ const Navigationbar = () => {
     }
   };
 
+  const onCloseModal = () => setOpenModal(false);
+  const onShowModal = () => setOpenModal(true);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <>
+      <SearchModal
+        openModal={openModal}
+        onCloseModal={onCloseModal}
+        search={search}
+        setSearch={setSearch}
+        handelSearch={handelSearch}
+      />
       <Cart onCartOpen={onCartOpen} setOnCartOpen={setOnCartOpen} />
       <Navbar expand="lg" className="bg-white border p-md-0">
         <Container fluid className="mx-xl-5">
@@ -77,7 +116,7 @@ const Navigationbar = () => {
           </Navbar.Brand>
           <div className="d-flex align-items-center gap-3 d-block d-lg-none">
             <Button variant="outline" className="p-0">
-              <BsSearch className="fs-3" />
+              <BsSearch className="fs-3" onClick={onShowModal} />
             </Button>
             <div className="position-relative" onClick={() => setOnCartOpen(true)}>
               <BsBag className="fs-4" />
