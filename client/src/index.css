@@ -87,6 +87,10 @@ input[type="search"]::-webkit-search-results-decoration {
   line-height: 1.1;
 }
 
+.text-size {
+  font-size: 1.3rem !important;
+}
+
 /* card style */
 .card-img-top {
   background-color: #f4f4f4 !important;
@@ -450,6 +454,10 @@ input[type="search"]::-webkit-search-results-decoration {
   .search-heading {
     font-size: 1.6rem !important;
   }
+
+  .text-size {
+    font-size: 1.7rem !important;
+  }
 }
 
 /** lg device **/
@@ -507,6 +515,10 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .search-heading {
     font-size: 1.6rem !important;
+  }
+
+  .text-size {
+    font-size: 1.7rem !important;
   }
 }
 
@@ -603,5 +615,9 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .search-heading {
     font-size: 1.6rem !important;
+  }
+
+  .text-size {
+    font-size: 1.7rem !important;
   }
 }

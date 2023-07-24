@@ -43,7 +43,7 @@ const Home = () => {
       <Section className="px-xl-5 mt-3 mt-md-5">
         <Container>
           <div className="border-top mb-3  mb-md-5" />
-          <h1 className="fs-2 text-capitalize">Surprise you loved one</h1>
+          <h2 className="text-size text-capitalize">Surprise you loved one</h2>
           {!loading ? (
             <div className="mt-lg-3">
               <Row className="row-gap-3 row-gap-lg-4">
