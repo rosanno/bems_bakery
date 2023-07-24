@@ -13,6 +13,7 @@ import { setProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/ui/Loader";
 import Section from "../components/ui/Section";
+import Faq from "./Faq";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -34,7 +35,6 @@ const Home = () => {
     fetchProductData();
   }, []);
 
-
   return (
     <>
       <Section className="px-xl-5 mt-3 mt-md-5">
@@ -49,7 +49,10 @@ const Home = () => {
               <Row className="row-gap-3 row-gap-lg-4">
                 {products?.map((product) => (
                   <Col xs={6} sm={4} md={4} lg={3} key={product._id}>
-                    <Link to={`/product/details/${product._id}`} className="text-decoration-none">
+                    <Link
+                      to={`/product/details/${product._id}`}
+                      className="text-decoration-none"
+                    >
                       <ProductCard product={product} />
                     </Link>
                   </Col>

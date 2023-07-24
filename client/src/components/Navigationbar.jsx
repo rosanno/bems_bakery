@@ -25,7 +25,8 @@ const Navigationbar = () => {
   const [show, setShow] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
-  const { data: protectedData, fetchData: privateFetch } = usePrivateRequest(token);
+  const { data: protectedData, fetchData: privateFetch } =
+    usePrivateRequest(token);
   const [onCartOpen, setOnCartOpen] = useState(false);
 
   useEffect(() => {
@@ -62,10 +63,18 @@ const Navigationbar = () => {
             <Button variant="outline" className="p-0">
               <BsSearch className="fs-3" />
             </Button>
-            <div className="position-relative" onClick={() => setOnCartOpen(true)}>
+            <div
+              className="position-relative"
+              onClick={() => setOnCartOpen(true)}
+            >
               <BsBag className="fs-4" />
               <div className="position-absolute translate-middle-y start-50 top-0 end-0 mt-1">
-                <Badge pill bg="danger" className="py-1" style={{ fontSize: ".6rem" }}>
+                <Badge
+                  pill
+                  bg="danger"
+                  className="py-1"
+                  style={{ fontSize: ".6rem" }}
+                >
                   {cartItems?.length}
                 </Badge>
               </div>
@@ -94,7 +103,12 @@ const Navigationbar = () => {
                   <div className="position-relative">
                     <BsBag className="fs-4" />
                     <div className="position-absolute translate-middle-y start-50 top-0 end-0 mt-1">
-                      <Badge pill bg="danger" className="py-1" style={{ fontSize: ".6rem" }}>
+                      <Badge
+                        pill
+                        bg="danger"
+                        className="py-1"
+                        style={{ fontSize: ".6rem" }}
+                      >
                         {cartItems?.length}
                       </Badge>
                     </div>
@@ -119,13 +133,19 @@ const Navigationbar = () => {
                     }}
                   >
                     <FaRegUserCircle className="fs-4" />
-                    <span className="cart-label text-truncate">{user?.name}</span>
+                    <span className="cart-label text-truncate">
+                      {user?.name}
+                    </span>
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
                     <Dropdown.Item href="#/action-1">Account</Dropdown.Item>
-                    <Dropdown.Item href="/customer/order">My Orders</Dropdown.Item>
-                    <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+                    <Dropdown.Item href="/customer/order">
+                      My Orders
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>
+                      Sign out
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               )}
@@ -133,7 +153,10 @@ const Navigationbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Navbar expand="lg" className="bg-white d-none d-lg-block border border-top-0 p-0">
+      <Navbar
+        expand="lg"
+        className="bg-white d-none d-lg-block border border-top-0 p-0"
+      >
         <Container>
           <Navbar.Collapse className="d-flex justify-content-center">
             <Nav
@@ -149,7 +172,7 @@ const Navigationbar = () => {
               <Nav.Link href="#action1">
                 <span className="sub-nav fw-semibold">About Us</span>
               </Nav.Link>
-              <Nav.Link href="#action1">
+              <Nav.Link href="/faq">
                 <span className="sub-nav fw-semibold">FAQ</span>
               </Nav.Link>
             </Nav>
@@ -166,22 +189,34 @@ const Navigationbar = () => {
         <Offcanvas.Body>
           <ul className="nav-item list-unstyled">
             <li className="border-bottom" onClick={handleClose}>
-              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+              <Link
+                to="/"
+                className="text-decoration-none text-black d-inline-block py-1"
+              >
                 Home
               </Link>
             </li>
             <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link to="/products" className="text-decoration-none text-black d-inline-block py-1">
+              <Link
+                to="/products"
+                className="text-decoration-none text-black d-inline-block py-1"
+              >
                 Cakes
               </Link>
             </li>
             <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+              <Link
+                to="/"
+                className="text-decoration-none text-black d-inline-block py-1"
+              >
                 About
               </Link>
             </li>
             <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+              <Link
+                to="/"
+                className="text-decoration-none text-black d-inline-block py-1"
+              >
                 Contact Us
               </Link>
             </li>
