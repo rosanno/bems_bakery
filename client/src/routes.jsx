@@ -12,6 +12,7 @@ import Success from "./views/Success";
 import Reviews from "./views/Reviews";
 import ProductCategory from "./views/ProductCategory";
 import SearchResults from "./views/SearchResults";
+import Faq from "./views/Faq";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "customer/order",
         element: <Order />,
+      },
+      {
+        path: "faq",
+        element: <Faq />,
       },
       {
         path: "search/:search",

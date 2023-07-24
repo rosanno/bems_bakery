@@ -75,7 +75,7 @@ const Navigationbar = () => {
   const handelSearch = async (e) => {
     e.preventDefault();
     navigate(`search/${search}`);
-    setSearch("")
+    setSearch("");
     if (openModal === true) {
       onCloseModal();
     }
@@ -208,10 +208,7 @@ const Navigationbar = () => {
               >
                 <span className="sub-nav fw-semibold">About Us</span>
               </Nav.Link>
-              <Nav.Link
-                href="/products"
-                className={`border-0 ${pathname === "/faq" && "text-danger"}`}
-              >
+              <Nav.Link href="/faq" className={`border-0 ${pathname === "/faq" && "text-danger"}`}>
                 <span className="sub-nav fw-semibold">FAQ</span>
               </Nav.Link>
             </Nav>
@@ -247,44 +244,50 @@ const Navigationbar = () => {
                 Cakes
               </Link>
             </li>
-            <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link
-                to={`user/${user?._id}`}
-                className={`text-decoration-none text-black d-inline-block py-1 ${
-                  pathname === `/user/${user?._id}` && "text-danger"
-                }`}
-              >
-                Account
-              </Link>
-            </li>
-            <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link
-                to="/customer/order"
-                className={`text-decoration-none text-black d-inline-block py-1 ${
-                  pathname === "/customer/order" && "text-danger"
-                }`}
-              >
-                My Orders
-              </Link>
-            </li>
+            {token && (
+              <li className="border-bottom pt-3" onClick={handleClose}>
+                <Link
+                  to={`user/${user?._id}`}
+                  className={`text-decoration-none text-black d-inline-block py-1 ${
+                    pathname === `/user/${user?._id}` && "text-danger"
+                  }`}
+                >
+                  Account
+                </Link>
+              </li>
+            )}
+            {token && (
+              <li className="border-bottom pt-3" onClick={handleClose}>
+                <Link
+                  to="/customer/order"
+                  className={`text-decoration-none text-black d-inline-block py-1 ${
+                    pathname === "/customer/order" && "text-danger"
+                  }`}
+                >
+                  My Orders
+                </Link>
+              </li>
+            )}
             <li className="border-bottom d-block d-lg-none pt-3" onClick={handleClose}>
               <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
                 Contact Us
               </Link>
             </li>
             <li className="border-bottom d-block d-lg-none pt-3" onClick={handleClose}>
-              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+              <Link to="/faq" className="text-decoration-none text-black d-inline-block py-1">
                 FAQ
               </Link>
             </li>
-            <li className="border-bottom pt-3" onClick={handleClose}>
-              <Link
-                onClick={handleLogout}
-                className="text-decoration-none text-black d-inline-block py-1"
-              >
-                Sign out
-              </Link>
-            </li>
+            {token && (
+              <li className="border-bottom pt-3" onClick={handleClose}>
+                <Link
+                  onClick={handleLogout}
+                  className="text-decoration-none text-black d-inline-block py-1"
+                >
+                  Sign out
+                </Link>
+              </li>
+            )}
           </ul>
         </Offcanvas.Body>
       </Offcanvas>

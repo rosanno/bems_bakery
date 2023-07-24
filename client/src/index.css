@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
 
+:root {
+  --pink: #ef5350;
+  --pink-light: #ef9a9a;
+  --pink-lightest: rgb(246, 228, 228);
+}
+
 /* search style */
 .search-bar {
   width: 100%;
@@ -433,31 +439,6 @@ input[type="search"]::-webkit-search-results-decoration {
   .review-message {
     font-size: 0.9rem;
   }
-
-  .update-form {
-    width: 80% !important;
-  }
-
-  /* checkout pages style */
-  .custom-card {
-    width: 80%;
-  }
-
-  .card-container {
-    width: 60%;
-  }
-
-  .footer-heading {
-    font-size: 2rem;
-  }
-
-  .search-heading {
-    font-size: 1.6rem !important;
-  }
-
-  .text-size {
-    font-size: 1.7rem !important;
-  }
 }
 
 /** lg device **/
@@ -490,6 +471,7 @@ input[type="search"]::-webkit-search-results-decoration {
   .review-rating,
   .review-message {
     font-size: 0.9rem;
+
   }
 
   .update-form {
@@ -620,4 +602,29 @@ input[type="search"]::-webkit-search-results-decoration {
   .text-size {
     font-size: 1.7rem !important;
   }
+}
+
+/* faq styles */
+.bg-color-pink {
+  background-image: linear-gradient(
+    90deg,
+    var(--pink),
+    var(--pink),
+    var(--pink-light) 65%,
+    var(--pink)
+  );
+  color: white;
+}
+.accordion-button:not(.collapsed) {
+  color: white !important;
+  background-color: var(--pink-light) !important;
+  box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0
+    var(--bs-accordion-border-color);
+}
+.accordion-button:focus {
+  border-color: var(--pink) !important;
+  box-shadow: var(--pink) !important;
+}
+.accordion-body {
+  background-color: var(--pink-lightest);
 }

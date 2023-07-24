@@ -36,11 +36,9 @@ const Layout = () => {
     <>
       <ToastContainer />
       <Navigationbar />
-      <Container fluid>
-        <main>
-          <Outlet />
-        </main>
-      </Container>
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </>
   );
