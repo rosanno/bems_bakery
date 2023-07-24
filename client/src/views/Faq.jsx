@@ -33,7 +33,7 @@ const FAQ = () => {
       <Container>
         <Row className="my-4 py-4">
           <Col>
-            <h1>What can we help you?</h1>
+            <h1>Cake Questions and Answers</h1>
             <Col>
               <InputGroup className="mb-3">
                 <Form.Control
