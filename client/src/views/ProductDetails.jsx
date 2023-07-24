@@ -106,7 +106,9 @@ const ProductDetails = () => {
                     <p className="text-muted product-decription">{product?.description}</p>
                   </div>
                 </div>
-
+                <p className="text-muted delivery-text">
+                  <span>*</span> Same day delivery
+                </p>
                 <div className="d-flex align-align-items-center gap-2 mt-lg-5">
                   <Button
                     onClick={() => handleAddToCart(product?.price)}

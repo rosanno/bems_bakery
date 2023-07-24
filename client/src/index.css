@@ -378,6 +378,14 @@ input[type="search"]::-webkit-search-results-decoration {
   color: #d93642 !important;
 }
 
+.delivery-text {
+  font-size: .8rem;
+}
+
+.delivery-text span {
+  color: #bb2d3b;
+}
+
 @media (min-width: 475px) {
   /* product review styles */
   .review-name,
