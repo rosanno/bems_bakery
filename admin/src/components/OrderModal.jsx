@@ -8,8 +8,8 @@ import { useUpdateOrderPaymentStatusMutation } from "../services/bakeryApi";
 
 const options = [
   {
-    label: "Pending",
-    value: "Pending",
+    label: "Unpaid",
+    value: "Unpaid",
   },
   {
     label: "Paid",

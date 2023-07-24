@@ -213,11 +213,21 @@ export const bakeryApi = auth.injectEndpoints({
       invalidatesTags: ["Order"],
     }),
 
+    updateDeliveryStatus: builder.mutation({
+      query: ({ id, deliveryStatus }) => ({
+        url: `order/delivery-status/${id}`,
+        method: "PATCH",
+        body: { deliveryStatus },
+      }),
+      invalidatesTags: ["Order"],
+    }),
+
     // delete order endpoint
     deleteOrderFromList: builder.mutation({
-      query: ({ id }) => ({
+      query: ({ id, customerId }) => ({
         url: `order/${id}`,
         method: "DELETE",
+        body: { customerId },
       }),
       invalidatesTags: ["Order"],
     }),
@@ -268,6 +278,7 @@ export const {
   useGetOrderListQuery,
   useDeleteOrderFromListMutation,
   useUpdateOrderPaymentStatusMutation,
+  useUpdateDeliveryStatusMutation,
   useGetTotalRevenueQuery,
   useGetSalesCountQuery,
   useGetMonthlyRevenueQuery,

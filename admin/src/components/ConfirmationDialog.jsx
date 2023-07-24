@@ -6,13 +6,13 @@ import { useToast } from "@chakra-ui/react";
 import { DialogContext } from "../context/DialogContextProvider";
 import { resetId } from "../features/idsSlice";
 
-const ConfirmationDialog = ({ heading, subHeading, deleteData, id }) => {
+const ConfirmationDialog = ({ heading, subHeading, deleteData, id, customerId }) => {
   const { onClose } = useContext(DialogContext);
   const dispatch = useDispatch();
   const toast = useToast();
 
   const onDelete = async () => {
-    const res = await deleteData({ id: id });
+    const res = await deleteData({ id: id, customerId });
 
     if (res?.data) {
       toast({
