@@ -44,6 +44,7 @@ export const createOrder = async (req, res) => {
         const item = {
           orderItem: product.orderItem,
           quantity: product.quantity,
+          totalAmount: product.totalAmount,
           isDelivered: product.isDelivered,
           isReview: product.isReview,
         };
