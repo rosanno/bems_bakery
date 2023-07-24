@@ -64,8 +64,15 @@ const Checkout = () => {
         dispatch(clearCart());
         navigate("/success");
       }
-    } else if (selectedPayment === "paypal") {
-      console.log("Redirecting to PayPal payment gateway...");
+    } else if (selectedPayment === "stripe") {
+      const res = await postCheckout("POST", "customer/checkout/create-checkout-session", {
+        cartItems,
+      });
+
+      if (res.url) {
+        window.location.href = res.url;
+      }
+      console.log(res);
     } else {
       console.log("Invalid payment method selected!");
     }
@@ -74,7 +81,7 @@ const Checkout = () => {
   return (
     <Container className="mx-md-0 mx-lg-auto">
       <Section className="px-xl-5 mt-3 mt-md-5">
-        <div className="d-md-flex gap-4">
+        <div className="d-lg-flex gap-4">
           <div className="w-100">
             <Card className="border p-1 p-xl-2 rounded-0">
               <Card.Text className="px-2 card-heading-fs">Shipping Address</Card.Text>
@@ -123,18 +130,23 @@ const Checkout = () => {
                   Pay when you receive
                 </span>
               </div>
-              <div
+              {/* <div
                 className={`${
-                  selectedPayment === "paypal" && "active"
+                  selectedPayment === "stripe" && "active"
                 } payment-wrap rounded-1 p-3 mt-2`}
-                onClick={() => setSelectedPayment("paypal")}
+                onClick={() => setSelectedPayment("stripe")}
               >
                 <div className="payment-method d-flex align-items-center gap-2">
-                  <img src="/assets/paypal.svg" className="paypal-logo" />
-                  <p className="p-0 m-0">Paypal</p>
+                  <img
+                    src={
+                      "https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"
+                    }
+                    className="paypal-logo"
+                  />
+                  <p className="p-0 m-0">Stripe</p>
                 </div>
                 <span className="text-muted d-block mt-3 payment-text">Paypal e-wallet</span>
-              </div>
+              </div> */}
               <div className="mt-4">
                 <h4 className="order-summary">Order Summary</h4>
                 <div className="d-flex justify-content-between mt-4">
