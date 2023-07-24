@@ -110,7 +110,7 @@ export const getOrderList = async (req, res) => {
           id: product._id,
           status: product.paymentStatus,
           deliveryStatus: product.isDelivered,
-          totalPrice: order.totalPrice,
+          totalPrice: product.totalAmount,
           quantity: product.quantity,
           numberOfItems: order.products.length,
           customer: {
