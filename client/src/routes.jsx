@@ -13,6 +13,7 @@ import Reviews from "./views/Reviews";
 import ProductCategory from "./views/ProductCategory";
 import SearchResults from "./views/SearchResults";
 import Faq from "./views/Faq";
+import Contact from "./views/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: "customer/order",
         element: <Order />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
       {
         path: "faq",

@@ -203,10 +203,10 @@ const Navigationbar = () => {
                 <span className="sub-nav fw-semibold">Cakes</span>
               </Nav.Link>
               <Nav.Link
-                href="/products"
-                className={`border-0 ${pathname === "/about" && "text-danger"}`}
+                href="/contact"
+                className={`border-0 ${pathname === "/contact" && "text-danger"}`}
               >
-                <span className="sub-nav fw-semibold">About Us</span>
+                <span className="sub-nav fw-semibold">Contact Us</span>
               </Nav.Link>
               <Nav.Link href="/faq" className={`border-0 ${pathname === "/faq" && "text-danger"}`}>
                 <span className="sub-nav fw-semibold">FAQ</span>
@@ -269,7 +269,7 @@ const Navigationbar = () => {
               </li>
             )}
             <li className="border-bottom d-block d-lg-none pt-3" onClick={handleClose}>
-              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+              <Link to="/contact" className="text-decoration-none text-black d-inline-block py-1">
                 Contact Us
               </Link>
             </li>
