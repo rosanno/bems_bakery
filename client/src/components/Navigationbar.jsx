@@ -142,10 +142,7 @@ const Navigationbar = () => {
               className="my-2 my-lg-0 d-flex align-items-center gap-5"
               style={{ maxHeight: "100px" }}
             >
-              <Nav.Link
-                href="/products"
-                className={`border-0 ${pathname === "/" && "text-danger"}`}
-              >
+              <Nav.Link href="/" className={`border-0 ${pathname === "/" && "text-danger"}`}>
                 <span className="sub-nav fw-semibold">Home</span>
               </Nav.Link>
               <Nav.Link
