@@ -127,7 +127,7 @@ const UpdateProduct = () => {
                 rules={{
                   required: "Price is required",
                   min: 0,
-                  max: 1000,
+                  max: 5000,
                   pattern: {
                     value: /^\d+(\.\d{1,2})?$/,
                     message: "Invalid Price format",
