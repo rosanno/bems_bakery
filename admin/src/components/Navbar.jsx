@@ -28,12 +28,12 @@ const Links = [
     href: "/",
   },
   {
-    label: "Products",
-    href: "/products",
-  },
-  {
     label: "Order",
     href: "/order",
+  },
+  {
+    label: "Products",
+    href: "/products",
   },
 ];
 
