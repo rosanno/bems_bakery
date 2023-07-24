@@ -374,6 +374,10 @@ input[type="search"]::-webkit-search-results-decoration {
   height: 330px;
 }
 
+.nav-link:hover {
+  color: #d93642 !important;
+}
+
 @media (min-width: 475px) {
   /* product review styles */
   .review-name,

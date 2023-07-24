@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
@@ -21,6 +21,7 @@ import { persistor } from "../store";
 
 const Navigationbar = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const [show, setShow] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
@@ -141,16 +142,28 @@ const Navigationbar = () => {
               className="my-2 my-lg-0 d-flex align-items-center gap-5"
               style={{ maxHeight: "100px" }}
             >
-              <Nav.Link href="/" className="border-0">
+              <Nav.Link
+                href="/products"
+                className={`border-0 ${pathname === "/" && "text-danger"}`}
+              >
                 <span className="sub-nav fw-semibold">Home</span>
               </Nav.Link>
-              <Nav.Link href="/products" className="border-0">
+              <Nav.Link
+                href="/products"
+                className={`border-0 ${pathname === "/products" && "text-danger"}`}
+              >
                 <span className="sub-nav fw-semibold">Cakes</span>
               </Nav.Link>
-              <Nav.Link href="#action1" className="border-0">
+              <Nav.Link
+                href="/products"
+                className={`border-0 ${pathname === "/about" && "text-danger"}`}
+              >
                 <span className="sub-nav fw-semibold">About Us</span>
               </Nav.Link>
-              <Nav.Link href="#action1" className="border-0">
+              <Nav.Link
+                href="/products"
+                className={`border-0 ${pathname === "/faq" && "text-danger"}`}
+              >
                 <span className="sub-nav fw-semibold">FAQ</span>
               </Nav.Link>
             </Nav>
@@ -167,19 +180,31 @@ const Navigationbar = () => {
         <Offcanvas.Body>
           <ul className="nav-item list-unstyled">
             <li className="border-bottom d-block d-lg-none" onClick={handleClose}>
-              <Link to="/" className="text-decoration-none text-black d-inline-block py-1">
+              <Link
+                to="/"
+                className={`text-decoration-none text-black d-inline-block py-1 ${
+                  pathname === "/" && "sidebar-active"
+                }`}
+              >
                 Home
               </Link>
             </li>
             <li className="border-bottom pt-3 pt-lg-0 d-block d-lg-none" onClick={handleClose}>
-              <Link to="/products" className="text-decoration-none text-black d-inline-block py-1">
+              <Link
+                to="/products"
+                className={`text-decoration-none text-black d-inline-block py-1 ${
+                  pathname === "/products" && "text-danger"
+                }`}
+              >
                 Cakes
               </Link>
             </li>
             <li className="border-bottom pt-3" onClick={handleClose}>
               <Link
                 to={`user/${user?._id}`}
-                className="text-decoration-none text-black d-inline-block py-1"
+                className={`text-decoration-none text-black d-inline-block py-1 ${
+                  pathname === `/user/${user?._id}` && "text-danger"
+                }`}
               >
                 Account
               </Link>
@@ -187,7 +212,9 @@ const Navigationbar = () => {
             <li className="border-bottom pt-3" onClick={handleClose}>
               <Link
                 to="/customer/order"
-                className="text-decoration-none text-black d-inline-block py-1"
+                className={`text-decoration-none text-black d-inline-block py-1 ${
+                  pathname === "/customer/order" && "text-danger"
+                }`}
               >
                 My Orders
               </Link>
