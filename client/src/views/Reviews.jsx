@@ -55,7 +55,7 @@ const Reviews = () => {
           progress: undefined,
           theme: "light",
         });
-        navigate(`product/details/${productId}`);
+        navigate(`/product/details/${productId}`);
       }
     } else {
       toast.error("All fields required!", {
