@@ -16,12 +16,12 @@ const Checkout = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const [selectedPayment, setSelectedPayment] = useState("cod");
   const { fetchData: postCheckout } = usePrivateRequest(token);
-  const { fetchData: privateFetch } = usePrivateRequest(token);
+  const { fetchData: getCartItems } = usePrivateRequest(token);
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const protectedData = await privateFetch("GET", "cart");
+        const protectedData = await getCartItems("GET", "cart");
         if (protectedData?.cartItems) {
           dispatch(setCart({ cartItem: protectedData.cartItems }));
         }
@@ -72,7 +72,6 @@ const Checkout = () => {
       if (res.url) {
         window.location.href = res.url;
       }
-      console.log(res);
     } else {
       console.log("Invalid payment method selected!");
     }

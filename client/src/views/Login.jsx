@@ -104,7 +104,7 @@ const Login = () => {
                       <span className="visually-hidden">Loading...</span>
                     </>
                   ) : (
-                    "Login"
+                    "Sign in"
                   )}
                 </Button>
               </div>
