@@ -60,6 +60,10 @@ export const getOrderList = async (req, res) => {
   const search = req.query.search || "";
 
   try {
+    let results;
+    let totalCount;
+    let totalPages;
+
     let query = {};
     if (search) {
       // Case-insensitive search for customer names or any other relevant fields
@@ -93,12 +97,12 @@ export const getOrderList = async (req, res) => {
     const countPromise = Order.countDocuments(query).exec();
 
     // Execute both queries in parallel using Promise.all
-    const [orders, totalCount] = await Promise.all([ordersPromise, countPromise]);
+    [results, totalCount] = await Promise.all([ordersPromise, countPromise]);
 
     // Calculate the total number of pages
-    const totalPages = Math.ceil(totalCount / perPage);
+    totalPages = Math.ceil(totalCount / perPage);
 
-    const transformData = orders.flatMap((order) => {
+    const transformData = results.flatMap((order) => {
       const productItem = order.products.map((product) => {
         const { addresses } = order.customer;
         const addressObjs = addresses.map((address) => address.address);
