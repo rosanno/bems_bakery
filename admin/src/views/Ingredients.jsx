@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Box,
   Divider,
@@ -53,6 +54,14 @@ const Ingredients = () => {
   const [deleteIngredient] = useDeleteIngredientMutation();
   const dispatch = useDispatch();
   const [subHeading, setSubHeading] = useState("");
+
+  useEffect(() => {
+    document.title = "Admin | Ingredients";
+
+    return () => {
+      document.title = "Admin";
+    };
+  }, []);
 
   const handleUpdate = (ingredientId) => {
     dispatch(setId({ id: ingredientId }));

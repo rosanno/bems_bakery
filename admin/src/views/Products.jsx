@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
@@ -58,6 +59,14 @@ const Products = () => {
   const [deleteProduct] = useDeleteProductMutation();
   const { onOpen } = useContext(DialogContext);
   const [subHeading, setSubHeading] = useState("");
+
+  useEffect(() => {
+    document.title = "Admin | Products";
+
+    return () => {
+      document.title = "Admin";
+    };
+  }, []);
 
   const onClick = () => {
     navigate("/create-product");

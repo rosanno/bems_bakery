@@ -81,6 +81,22 @@ const Order = () => {
   const [updateDeliveryStatus] = useUpdateDeliveryStatusMutation();
   const [customerId, setCustomerId] = useState(null);
 
+  useEffect(() => {
+    document.title = "Admin | Orders";
+
+    return () => {
+      document.title = "Admin";
+    };
+  }, []);
+
+  useEffect(() => {
+    const update = async () => {
+      await updateDeliveryStatus({ id: productId, deliveryStatus });
+    };
+
+    deliveryStatus && update();
+  }, [deliveryStatus]);
+
   const onOpenModal = (productId, status) => {
     setPaymentStatus(status);
     dispatch(setId({ id: productId }));
@@ -93,14 +109,6 @@ const Order = () => {
     dispatch(setId({ id: orderId }));
     onDialogOpen();
   };
-
-  useEffect(() => {
-    const update = async () => {
-      await updateDeliveryStatus({ id: productId, deliveryStatus });
-    };
-
-    deliveryStatus && update();
-  }, [deliveryStatus]);
 
   const updateDelivery = async (productId) => {
     setdeliveryStatus(true);

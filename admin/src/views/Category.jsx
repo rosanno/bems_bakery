@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
@@ -53,6 +53,14 @@ const Category = () => {
   const [deleteData] = useDeleteCategoryMutation();
   const dispatch = useDispatch();
   const [subHeading, setSubHeading] = useState("");
+
+  useEffect(() => {
+    document.title = "Admin | Categories";
+
+    return () => {
+      document.title = "Admin";
+    };
+  }, []);
 
   const handleUpdate = (categoryId) => {
     dispatch(setId({ id: categoryId }));

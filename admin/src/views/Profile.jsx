@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { Box, Card, CardBody, Divider, Heading, Text } from "@chakra-ui/react";
 import Header from "../components/ui/Header";
 import PasswordForm from "../components/PasswordForm";
@@ -8,6 +8,14 @@ import Progress from "../components/ui/Progress";
 
 const Profile = () => {
   const { data: user, isFetching } = useGetUserQuery();
+
+  useEffect(() => {
+    document.title = "Admin | Settings";
+
+    return () => {
+      document.title = "Admin";
+    };
+  }, []);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Box, Button, Divider, Flex, Heading, Text, useToast } from "@chakra-ui/react";
 
@@ -41,6 +42,14 @@ const CreateProduct = () => {
       ingredients: "",
     },
   });
+
+  useEffect(() => {
+    document.title = "Admin | Add new product";
+
+    return () => {
+      document.title = "Admin";
+    };
+  }, []);
 
   const onSubmit = async (data) => {
     const newData = {
