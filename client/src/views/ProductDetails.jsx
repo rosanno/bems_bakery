@@ -23,8 +23,8 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const { productId } = useParams();
-  const { loading, error, fetchData } = usePublicRequest();
-  const { loading: isLoading, error: isError, fetchData: fetchCart } = usePrivateRequest(token);
+  const { loading, fetchData } = usePublicRequest();
+  const { fetchData: fetchCart } = usePrivateRequest(token);
   const { loading: isAdding, fetchData: addToCart } = usePrivateRequest(token);
   const { product } = useSelector((state) => state.product);
 
@@ -73,12 +73,8 @@ const ProductDetails = () => {
     if (res?.cart) {
       toast.success(`${res?.message}`, {
         position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
+        autoClose: 1000,
         closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
         theme: "light",
       });
       getCartData();
@@ -116,7 +112,7 @@ const ProductDetails = () => {
                     onClick={() => handleAddToCart(product?.price)}
                     variant="outline-danger"
                     className="px-4 py-2 w-50"
-                    disabled={isLoading}
+                    disabled={isAdding}
                   >
                     {isAdding && (
                       <>
