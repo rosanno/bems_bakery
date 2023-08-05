@@ -78,7 +78,7 @@ const Order = () => {
   const [deleteOrder] = useDeleteOrderFromListMutation();
   const { onOpen } = useContext(ModalContext);
   const { onOpen: onDialogOpen } = useContext(DialogContext);
-  const [updateDeliveryStatus, { isLoading, isSuccess }] = useUpdateDeliveryStatusMutation();
+  const [updateDeliveryStatus] = useUpdateDeliveryStatusMutation();
   const [customerId, setCustomerId] = useState(null);
 
   const onOpenModal = (productId, status) => {
@@ -96,9 +96,6 @@ const Order = () => {
 
   useEffect(() => {
     const update = async () => {
-      console.log("update");
-      console.log(productId);
-      console.log(deliveryStatus);
       await updateDeliveryStatus({ id: productId, deliveryStatus });
     };
 
