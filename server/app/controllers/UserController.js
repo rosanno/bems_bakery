@@ -61,7 +61,8 @@ export const updateUser = async (req, res) => {
     }
 
     if (typeof req.body.address === "string" && req.body.address.trim() !== "") {
-      user.addresses.push({ address: req.body.address });
+      // user.addresses.push({ address: req.body.address });
+      user.addresses = { address: req.body.address };
     }
 
     if (typeof req.body.password === "string" && req.body.password.trim() !== "") {

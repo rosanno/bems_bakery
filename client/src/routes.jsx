@@ -14,7 +14,6 @@ import ProductCategory from "./views/ProductCategory";
 import SearchResults from "./views/SearchResults";
 import Faq from "./views/Faq";
 import Contact from "./views/Contact";
-import StripeSuccess from "./views/StripeSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -60,10 +59,6 @@ export const router = createBrowserRouter([
       {
         path: "user/:userId",
         element: <Account />,
-      },
-      {
-        path: "stripe/success",
-        element: <StripeSuccess />,
       },
       {
         path: "checkout",

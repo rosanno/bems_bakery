@@ -23,7 +23,6 @@ const Layout = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        // Handle error (e.g., show an error message or retry)
       }
     };
 
@@ -36,7 +35,11 @@ const Layout = () => {
     <>
       <ToastContainer />
       <Navigationbar />
-      <main>
+      <main
+        style={{
+          minHeight: "210px",
+        }}
+      >
         <Outlet />
       </main>
       <Footer />

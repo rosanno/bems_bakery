@@ -24,10 +24,9 @@ const Home = () => {
     async function fetchProductData() {
       try {
         const data = await fetchData("GET", "product");
-        console.log(data);
         dispatch(setProducts({ products: data?.products }));
       } catch (error) {
-        // Handle the error, if needed
+        console.log(error);
       }
     }
 
