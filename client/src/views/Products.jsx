@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/ui/Loader";
+import useScrollTop from "../hooks/useScrollTop";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const Products = () => {
   const { loading, fetchData } = usePublicRequest();
   const products = useSelector((state) => state.product.products);
   const [sort, setSort] = useState("");
+
+  useScrollTop();
 
   useEffect(() => {
     const getProducts = async () => {
