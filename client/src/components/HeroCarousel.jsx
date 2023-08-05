@@ -42,7 +42,7 @@ const HeroCarousel = () => {
         {FeaturedCategory.map((item) => (
           <SwiperSlide key={item.category}>
             <Link
-              to={`/product/${item.category}`}
+              to={`/products/${item.category}`}
               className="hero-img d-block position-relative overflow-hidden"
             >
               <img src={item.img_path} alt="" className="rounded-4" />

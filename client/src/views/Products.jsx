@@ -14,14 +14,18 @@ import Loader from "../components/ui/Loader";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { loading, error, fetchData } = usePublicRequest();
+  const { category } = useParams();
+  const { loading, fetchData } = usePublicRequest();
   const products = useSelector((state) => state.product.products);
   const [sort, setSort] = useState("");
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const productsData = await fetchData("GET", "product");
+        const productsData = await fetchData(
+          "GET",
+          `product${category ? `/category/${category}` : ""}${sort !== "" ? `?sort=${sort}` : ""}`
+        );
         dispatch(setProducts({ products: productsData?.products }));
       } catch (error) {
         console.log(error);
@@ -29,22 +33,7 @@ const Products = () => {
     };
 
     getProducts();
-  }, [dispatch]);
-
-  useEffect(() => {
-    const fetchSortedProducts = async () => {
-      try {
-        if (sort) {
-          const sortedData = await fetchData("GET", `product?sort=${sort}`);
-          dispatch(setProducts({ products: sortedData?.products }));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchSortedProducts();
-  }, [sort, dispatch]);
+  }, [dispatch, sort]);
 
   const handleSort = (e) => {
     setSort(e.target.value);
@@ -70,6 +59,11 @@ const Products = () => {
               <option value="priceLow">Sort By: Price Low</option>
             </Form.Select>
           </div>
+          {products?.length === 0 && !loading && (
+            <div className="not-found d-flex justify-content-center align-items-center">
+              <h4 className="text-muted">No products found</h4>
+            </div>
+          )}
           {!loading ? (
             <div className="mt-2 mt-lg-3">
               <Row className="row-gap-3 row-gap-lg-4">
