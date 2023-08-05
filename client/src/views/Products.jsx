@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -7,7 +8,6 @@ import Container from "react-bootstrap/Container";
 
 import usePublicRequest from "../hooks/usePublicRequest";
 import Section from "../components/ui/Section";
-import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/ui/Loader";

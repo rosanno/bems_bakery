@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
+import { BsCash } from "react-icons/bs";
 
 import Section from "../components/ui/Section";
-import { BsCash } from "react-icons/bs";
 import usePrivateRequest from "../hooks/usePrivateRequest";
 import { clearCart, setCart } from "../features/cartSlice";
 
