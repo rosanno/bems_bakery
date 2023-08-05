@@ -98,7 +98,15 @@ const Navbar = () => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Admin</Box>
+            <Link
+              href="/"
+              fontWeight={"extrabold"}
+              _hover={{
+                textDecoration: "none",
+              }}
+            >
+              CakeShop Admin
+            </Link>
             <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
               {Links.map((link) => (
                 <NavLink href={link.href} pathname={pathname} key={link.label}>
