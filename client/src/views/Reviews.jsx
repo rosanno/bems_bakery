@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import Section from "../components/ui/Section";
 import usePublicRequest from "../hooks/usePublicRequest";
 import usePrivateRequest from "../hooks/usePrivateRequest";
+import useScrollTop from "../hooks/useScrollTop";
 
 const RatingComponent = ({ onChange }) => {
   return <Rating count={5} onChange={onChange} size={24} activeColor="#ffd700" edit />;
@@ -26,6 +27,8 @@ const Reviews = () => {
   const [product, setProduct] = useState({});
   const [rating, setRating] = useState(null);
   const [message, setMessage] = useState("");
+
+  useScrollTop();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -47,12 +50,9 @@ const Reviews = () => {
       if (res.status === 200) {
         toast.success("Review added!", {
           position: "top-center",
-          autoClose: 5000,
+          autoClose: 300,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
           theme: "light",
         });
         navigate(`/product/details/${productId}`);
