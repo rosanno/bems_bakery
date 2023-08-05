@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
@@ -16,6 +16,7 @@ import usePrivateRequest from "../hooks/usePrivateRequest";
 import { setCart } from "../features/cartSlice";
 import Loader from "../components/ui/Loader";
 import Review from "../components/Review";
+import useScrollTop from "../hooks/useScrollTop";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const ProductDetails = () => {
   const { loading: isLoading, error: isError, fetchData: fetchCart } = usePrivateRequest(token);
   const { loading: isAdding, fetchData: addToCart } = usePrivateRequest(token);
   const { product } = useSelector((state) => state.product);
+
+  useScrollTop();
 
   useEffect(() => {
     async function fetchProductData() {
@@ -47,7 +50,6 @@ const ProductDetails = () => {
       }
     } catch (error) {
       console.error("Error fetching cart data:", error);
-      // Handle error (e.g., show an error message or retry)
     }
   };
 
@@ -63,7 +65,7 @@ const ProductDetails = () => {
     }
 
     const data = {
-      product_id: productId, // Replace productId with the actual product ID
+      product_id: productId,
       quantity: 1,
       totalAmount: price,
     };

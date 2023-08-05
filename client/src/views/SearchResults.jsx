@@ -10,12 +10,15 @@ import { Link, useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/ui/Loader";
 import Section from "../components/ui/Section";
+import useScrollTop from "../hooks/useScrollTop";
 
 const SearchResults = () => {
   const dispatch = useDispatch();
   const { search } = useParams();
   const products = useSelector((state) => state.product.products);
   const { loading, error, fetchData } = usePublicRequest();
+
+  useScrollTop();
 
   useEffect(() => {
     const getProducts = async () => {
