@@ -3,6 +3,7 @@ import {
   addProduct,
   deleteProduct,
   getProduct,
+  getProductByCategory,
   getProductOverallRating,
   getProducts,
   updateProduct,
@@ -17,5 +18,6 @@ router.delete("/:productId", adminAuth, deleteProduct);
 router.get("/", getProducts);
 router.get("/:productId", getProduct);
 router.get("/rating/:productId", getProductOverallRating);
+router.get("/category/:category", getProductByCategory);
 
 export default router;
