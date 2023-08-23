@@ -47,7 +47,7 @@ const Home = () => {
           {!loading ? (
             <div className="mt-lg-3">
               <Row className="row-gap-3 row-gap-lg-4">
-                {products?.map((product) => (
+                {products?.slice(0, 4).map((product) => (
                   <Col xs={6} sm={4} md={4} lg={3} key={product._id}>
                     <Link to={`/product/details/${product._id}`} className="text-decoration-none">
                       <ProductCard product={product} />
