@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import "./index.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "react-toastify/dist/ReactToastify.css";
+import store from "./app/store.js";
+import { router } from "./router.jsx";
 
-import { router } from "./routes.jsx";
-import { store } from "./store";
+import "./index.css";
+import 'swiper/css'; // swiper styles
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
