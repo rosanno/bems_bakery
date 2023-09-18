@@ -21,6 +21,7 @@ The Cake Ecommerce Website is an online platform where users can browse, order, 
 - **Browse Cakes**: Users can view a catalog of available cakes with details such as name, price, and description.
 
 - **Search and Filter**: Users can search for specific cakes and filter them by various criteria, such as cake type, flavor, and price range.
+Not implemented yet.
 
 - **Shopping Cart**: Users can add cakes to their shopping cart, review their selections, and proceed to checkout.
 
@@ -93,7 +94,8 @@ The Cake Ecommerce Website is built using the following technologies:
 - **Frontend**:
   - React.js
   - Redux Toolkit
-  - Tailwind CSS
+  - axios migrated to rtk quert
+  - Bootstrap migrated to Tailwind CSS
   - chakraUI
 
 - **Backend**:
