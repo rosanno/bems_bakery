@@ -173,13 +173,18 @@ const Navbar = () => {
                       onClick={() => navigate("/login")}
                     />
                   )}
-                  <IconButton
-                    icon={<BsHandbag />}
-                    count={cartItems?.items?.length}
-                    isCart
-                    variant="danger"
-                    onClick={() => navigate("/cart")}
-                  />
+                  <div className="relative">
+                    <IconButton
+                      icon={<BsHandbag />}
+                      count={cartItems?.items?.length}
+                      isCart
+                      variant="danger"
+                      onClick={() => navigate("/cart")}
+                    />
+                    <span className="absolute -top-2 -right-1 text-xs text-black text-center font-semibold bg-white shadow-md rounded-full h-4 w-4 transition-all duration-300">
+                      {cartItems?.items?.length || 0}
+                    </span>
+                  </div>
                   <div className="md:hidden">
                     <IconButton
                       icon={<RxHamburgerMenu size={18} />}

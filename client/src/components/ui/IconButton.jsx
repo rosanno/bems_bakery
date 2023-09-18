@@ -1,11 +1,4 @@
-const IconButton = ({
-  icon,
-  isCart = false,
-  disabled,
-  count,
-  variant,
-  onClick,
-}) => {
+const IconButton = ({ icon, disabled, variant, onClick }) => {
   let style = "";
 
   switch (variant) {
@@ -28,11 +21,6 @@ const IconButton = ({
       }`}
     >
       {icon}
-      {isCart && count !== 0 && (
-        <span className="absolute -top-2 -right-1 text-xs text-black font-semibold bg-white shadow-md rounded-full h-4 w-4 transition-all duration-300">
-          {count}
-        </span>
-      )}
     </button>
   );
 };
