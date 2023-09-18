@@ -32,89 +32,7 @@ export const addProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const perPage = parseInt(req.query.perPage) || 10;
-  const search = req.query.search || "";
-  const sort = req.query.sort || "";
-
-  try {
-    let results;
-    let totalCount;
-    let totalPages;
-
-    const categories = await Category.find({ name: { $regex: search, $options: "i" } });
-
-    // MongoDB aggregation pipeline for pagination and search
-    const query = {};
-    if (search) {
-      // Case-insensitive search for product names or any other relevant fields
-      query.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-      ];
-
-      const categoryIds = categories.map((category) => category._id);
-
-      // Add the extracted _id values to the $or query
-      query.$or.push({ category: { $in: categoryIds } });
-    }
-
-    const sortOptions = {};
-
-    if (sort === "priceHigh") {
-      sortOptions.price = -1;
-    } else if (sort === "priceLow") {
-      sortOptions.price = 1;
-    } else if (sort === "nameDesc") {
-      sortOptions.name = -1;
-    } else if (sort === "nameAsc") {
-      sortOptions.name = 1;
-    }
-
-    const skip = (page - 1) * perPage;
-    const productsPromise = Product.find(query)
-      .populate("category")
-      .populate("ingredients")
-      .populate("customerReviews")
-      .skip(skip)
-      .limit(perPage)
-      .sort(sortOptions)
-      .exec();
-
-    // Get the total count of products (without pagination)
-    const countPromise = Product.countDocuments(query).exec();
-
-    // Execute both queries in parallel using Promise.all
-    [results, totalCount] = await Promise.all([productsPromise, countPromise]);
-
-    // Calculate the overall rating for each product
-    const productsWithOverallRating = results.map((product) => {
-      let totalRating = 0;
-      const reviewsCount = product.customerReviews.length;
-      for (const review of product.customerReviews) {
-        totalRating += review.rating;
-      }
-      const overallRating = reviewsCount > 0 ? totalRating / reviewsCount : 0;
-
-      return {
-        ...product.toJSON(),
-        overallRating,
-        reviewsCount,
-      };
-    });
-
-    // Calculate the total number of pages
-    totalPages = Math.ceil(totalCount / perPage);
-
-    res.status(200).json({ products: productsWithOverallRating, totalCount, totalPages });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-export const getProductByCategory = async (req, res) => {
-  const { category } = req.params;
+  const { category } = req.query;
   const page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const search = req.query.search || "";
@@ -124,10 +42,13 @@ export const getProductByCategory = async (req, res) => {
     const regex = new RegExp(category, "i");
     const categories = await Category.find({ name: regex });
 
-    if (!categories) return res.status(404).json({ message: "product not found" });
+    if (!categories)
+      return res.status(404).json({ message: "product not found" });
 
     // MongoDB aggregation pipeline for pagination and search
-    const query = { category: { $in: categories.map((category) => category._id) } };
+    const query = {
+      category: { $in: categories.map((category) => category._id) },
+    };
     if (search) {
       // Case-insensitive search for product names or any other relevant fields
       query.$or = [
@@ -162,7 +83,10 @@ export const getProductByCategory = async (req, res) => {
     const countPromise = Product.countDocuments(query).exec();
 
     // Execute both queries in parallel using Promise.all
-    const [products, totalCount] = await Promise.all([productsPromise, countPromise]);
+    const [products, totalCount] = await Promise.all([
+      productsPromise,
+      countPromise,
+    ]);
 
     // Calculate the overall rating for each product
     const productsWithOverallRating = products.map((product) => {
@@ -183,7 +107,94 @@ export const getProductByCategory = async (req, res) => {
     // Calculate the total number of pages
     const totalPages = Math.ceil(totalCount / perPage);
 
-    res.status(200).json({ products: productsWithOverallRating, totalCount, totalPages });
+    res
+      .status(200)
+      .json({ products: productsWithOverallRating, totalCount, totalPages });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getProductByCategory = async (req, res) => {
+  const { category } = req.params;
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+  const search = req.query.search || "";
+  const sort = req.query.sort || "";
+
+  try {
+    const regex = new RegExp(category, "i");
+    const categories = await Category.find({ name: regex });
+
+    if (!categories)
+      return res.status(404).json({ message: "product not found" });
+
+    // MongoDB aggregation pipeline for pagination and search
+    const query = {
+      category: { $in: categories.map((category) => category._id) },
+    };
+    if (search) {
+      // Case-insensitive search for product names or any other relevant fields
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const sortOptions = {};
+
+    if (sort === "priceHigh") {
+      sortOptions.price = -1;
+    } else if (sort === "priceLow") {
+      sortOptions.price = 1;
+    } else if (sort === "nameDesc") {
+      sortOptions.name = -1;
+    } else if (sort === "nameAsc") {
+      sortOptions.name = 1;
+    }
+
+    const skip = (page - 1) * perPage;
+    const productsPromise = Product.find(query)
+      .populate("category")
+      .populate("ingredients")
+      .populate("customerReviews")
+      .skip(skip)
+      .limit(perPage)
+      .sort(sortOptions)
+      .exec();
+
+    // Get the total count of products (without pagination)
+    const countPromise = Product.countDocuments(query).exec();
+
+    // Execute both queries in parallel using Promise.all
+    const [products, totalCount] = await Promise.all([
+      productsPromise,
+      countPromise,
+    ]);
+
+    // Calculate the overall rating for each product
+    const productsWithOverallRating = products.map((product) => {
+      let totalRating = 0;
+      const reviewsCount = product.customerReviews.length;
+      for (const review of product.customerReviews) {
+        totalRating += review.rating;
+      }
+      const overallRating = reviewsCount > 0 ? totalRating / reviewsCount : 0;
+
+      return {
+        ...product.toJSON(),
+        overallRating,
+        reviewsCount,
+      };
+    });
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(totalCount / perPage);
+
+    res
+      .status(200)
+      .json({ products: productsWithOverallRating, totalCount, totalPages });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
@@ -209,7 +220,7 @@ export const getProduct = async (req, res) => {
     const overallRating = reviewsCount > 0 ? totalRating / reviewsCount : 0;
 
     res.status(200).json({
-      result: {
+      product: {
         ...product.toJSON(),
         overallRating, // Adding the overallRating field to the result
         reviewsCount,

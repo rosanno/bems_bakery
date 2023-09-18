@@ -15,31 +15,6 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const createUser = async (req, res) => {
-  try {
-    const { name, email, address, password } = req.body;
-
-    if (!name || !email || !address || !password)
-      return res.status(400).json({ message: "Fields required" });
-
-    const hashPasssword = bcrypt.hashSync(password, 10);
-
-    const newUser = new User({
-      name,
-      email,
-      addresses: { address },
-      password: hashPasssword,
-    });
-
-    const user = await newUser.save();
-
-    res.status(200).json({ user, accessToken });
-  } catch (error) {
-    console.log(error);
-    res.status(500).jsom({ message: "Internal server error" });
-  }
-};
-
 export const getAllUsers = async (req, res) => {};
 
 export const updateUser = async (req, res) => {
@@ -56,16 +31,25 @@ export const updateUser = async (req, res) => {
       user.name = req.body.name;
     }
 
+    if (
+      typeof req.body.address === "string" &&
+      req.body.address.trim() !== ""
+    ) {
+      user.addresses = { address: req.body.address };
+    }
+
+    if (typeof req.body.phone === "string" && req.body.phone.trim() !== "") {
+      user.phone = req.body.phone;
+    }
+
     if (typeof req.body.email === "string" && req.body.email.trim() !== "") {
       user.email = req.body.email;
     }
 
-    if (typeof req.body.address === "string" && req.body.address.trim() !== "") {
-      // user.addresses.push({ address: req.body.address });
-      user.addresses = { address: req.body.address };
-    }
-
-    if (typeof req.body.password === "string" && req.body.password.trim() !== "") {
+    if (
+      typeof req.body.password === "string" &&
+      req.body.password.trim() !== ""
+    ) {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
       user.password = hashedPassword;
@@ -73,7 +57,9 @@ export const updateUser = async (req, res) => {
 
     const updatedUser = await user.save();
 
-    res.status(200).json({ message: "User updated successfully", user: updatedUser });
+    res
+      .status(200)
+      .json({ message: "updated successfully", user: updatedUser });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

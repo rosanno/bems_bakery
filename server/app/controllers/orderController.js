@@ -5,32 +5,29 @@ export const createOrder = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    let existingCustomer = await Order.findOne({ customer: userId });
+    // Check if an order already exists for the customer
+    let existingOrder = await Order.findOne({ customer: userId });
 
-    if (!existingCustomer) {
-      const newOrder = new Order(req.body);
+    if (!existingOrder) {
+      // If no existing order, create a new order
+      const newOrder = new Order({
+        customer: userId,
+        orderItems: req.body.orderItems,
+      });
+
       await newOrder.save();
-
-      return res.sendStatus(201);
     } else {
-      const orderItem = [];
-      for (const product of req.body.products) {
-        const item = {
-          orderItem: product.orderItem,
-          quantity: product.quantity,
-          totalAmount: product.totalAmount,
-        };
-
-        orderItem.push(item);
+      for (const incomingItem of req.body.orderItems) {
+        // If the item is not found in the order, add it as a new order item
+        existingOrder.orderItems.push(incomingItem);
       }
 
-      existingCustomer.products.push(...orderItem);
-      existingCustomer.save();
+      await existingOrder.save();
     }
 
-    res.sendStatus(201);
+    res.status(201).json({ message: "Order created" });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -43,7 +40,7 @@ export const getOrders = async (req, res) => {
         select: "name addresses email",
       })
       .populate({
-        path: "products.orderItem",
+        path: "orderItems.product",
         select: "name price category",
       });
 
@@ -67,7 +64,9 @@ export const getOrderList = async (req, res) => {
     let query = {};
     if (search) {
       // Case-insensitive search for customer names or any other relevant fields
-      const customers = await User.find({ name: { $regex: search, $options: "i" } });
+      const customers = await User.find({
+        name: { $regex: search, $options: "i" },
+      });
 
       const customerIds = customers.map((customer) => customer._id);
 
@@ -145,11 +144,13 @@ export const getOrder = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const foundOrder = await Order.findOne({ customer: userId }).populate("products.orderItem");
+    const order = await Order.findOne({ customer: userId }).populate(
+      "orderItems.product"
+    );
 
-    if (!foundOrder) return res.status(404).json({ message: "Order not found!" });
+    if (!order) return res.status(404).json({ message: "Order not found!" });
 
-    res.status(200).json({ order: foundOrder });
+    res.status(200).json({ order: order });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

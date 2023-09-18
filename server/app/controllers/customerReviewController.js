@@ -1,10 +1,12 @@
 import CustomerReview from "../models/customerReview.js";
+import Order from "../models/order.js";
 import Product from "../models/product.js";
 
 export const addReviewToProduct = async (req, res) => {
   try {
+    const { userId } = req.user;
     const { productId } = req.params;
-    const { customerName, rating, reviewText } = req.body;
+    const { itemId, customerName, rating, reviewText } = req.body;
 
     const product = await Product.findById(productId);
 
@@ -22,6 +24,14 @@ export const addReviewToProduct = async (req, res) => {
 
     product.customerReviews.push(savedReview._id);
     await product.save();
+
+    const foundOrderItem = await Order.findOne({ customer: userId });
+    const orderIndex = foundOrderItem.orderItems.findIndex(
+      (item) => item._id.toString() === itemId
+    );
+
+    foundOrderItem.orderItems[orderIndex].isReview = true;
+    foundOrderItem.save();
 
     res.status(201).json({ review: savedReview, status: 200 });
   } catch (error) {

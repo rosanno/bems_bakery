@@ -19,7 +19,7 @@ router.post("/", userAuth, createOrder);
 router.patch("/:productId", adminAuth, updateOrder);
 router.patch("/delivery-status/:productId", adminAuth, updateDeliveryStatus);
 router.delete("/:productId", adminAuth, deleteOrderList);
-router.get("/", getOrders);
+router.get("/", userAuth, getOrders);
 router.get("/get-total-revenue", adminAuth, getTotalRevenue);
 router.get("/get-sales-count", adminAuth, getSalesCount);
 router.get("/get-monthly-revenue", adminAuth, getMonthlyRevenuePaidOrders);

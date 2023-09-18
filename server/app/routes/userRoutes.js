@@ -1,11 +1,10 @@
 import express from "express";
-import { createUser, getUser, updateUser } from "../controllers/UserController.js";
+import { getUser, updateUser } from "../controllers/UserController.js";
 import { userAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", createUser);
-router.patch("/", userAuth, updateUser);
+router.patch("/update", userAuth, updateUser);
 router.get("/:userId", getUser);
 
 export default router;
