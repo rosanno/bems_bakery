@@ -147,12 +147,18 @@ const Navbar = () => {
                         </div>
                         <ul className="space-y-2 px-2 pt-1.5">
                           <li className="list-item">
-                            <Link to="/account">Account</Link>
+                            <Link
+                              to="/account"
+                              className="block cursor-pointer"
+                            >
+                              Account
+                            </Link>
                           </li>
                           <li className="list-item">
                             <Link
                               to="/orders"
                               onClick={() => setIsDropdownOpen(false)}
+                              className="block cursor-pointer"
                             >
                               Orders
                             </Link>

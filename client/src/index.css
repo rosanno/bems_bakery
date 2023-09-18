@@ -6,7 +6,7 @@
 
 @layer components {
   .list-item {
-    @apply text-xs text-gray-500/80 hover:text-black transition duration-300 cursor-pointer;
+    @apply text-xs text-gray-500/80 hover:text-black transition duration-300 w-full;
   }
 
   .input {
