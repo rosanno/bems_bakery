@@ -1,5 +1,4 @@
 import Container from "../components/ui/Container";
-import Heading from "../components/ui/Heading";
 import { useGetOrdersQuery } from "../services/cakeApi";
 import OrderItem from "../components/OrderItem";
 import useScrollTop from "../hooks/useScrollTop";
