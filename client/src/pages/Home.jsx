@@ -17,7 +17,7 @@ const Home = () => {
     sort: "",
   });
 
-  // useScrollTop(); // scroll to top
+  useScrollTop(); // scroll to top
 
   return (
     <Container>
