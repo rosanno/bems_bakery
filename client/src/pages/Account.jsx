@@ -19,10 +19,12 @@ const Account = () => {
               Update your account&apos;s profile
             </p>
           </div>
-          <div>
-            <ProfileForm />
-          </div>
+          <div>{/* <ProfileForm /> */}</div>
         </div>
+
+        <h1 className="flex justify-center mt-10 font-semibold text-2xl text-gray-400">
+          Under construction
+        </h1>
       </section>
     </Container>
   );

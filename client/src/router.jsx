@@ -50,6 +50,14 @@ export const router = createBrowserRouter([
         element: <Contact />,
       },
       {
+        path: "/account",
+        element: (
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "/cart/",
         element: (
           <ProtectedRoute>
