@@ -19,6 +19,7 @@ import IconButton from "./ui/IconButton";
 import MobileSidebar from "./MobileSidebar";
 import Logo from "./ui/Logo";
 import { toggleSidebar } from "../features/mobileSidebar/mobileSidebarSlice";
+import toast from "react-hot-toast";
 
 const navItems = [
   {
@@ -88,6 +89,14 @@ const Navbar = () => {
     }
   }, [accessToken, data, dispatch]);
 
+  const handleSearch = () => {
+    toast.error("Not working yet!", {
+      style: {
+        fontSize: "12px",
+      },
+    });
+  };
+
   return (
     <>
       <MobileSidebar items={navItems} />
@@ -115,6 +124,7 @@ const Navbar = () => {
                   <HiMiniMagnifyingGlass
                     className="text-[#F8605F] cursor-pointer"
                     size={23}
+                    onClick={handleSearch}
                   />
                   {accessToken ? (
                     <div className="relative">
