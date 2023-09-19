@@ -14,6 +14,7 @@ import Orders from "./pages/Orders";
 import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
+import Faq from "./pages/Faq";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "/success",
         element: <Success />,
+      },
+      {
+        path: "/faq",
+        element: <Faq />,
       },
       {
         path: "/contact",

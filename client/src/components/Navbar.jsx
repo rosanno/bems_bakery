@@ -34,8 +34,8 @@ const navItems = [
     route: "/contact",
   },
   {
-    label: "About",
-    route: "/about",
+    label: "Faq",
+    route: "/faq",
   },
 ];
 
