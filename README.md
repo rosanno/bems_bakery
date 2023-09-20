@@ -94,7 +94,7 @@ The Cake Ecommerce Website is built using the following technologies:
 - **Frontend**:
   - React.js
   - Redux Toolkit
-  - axios migrated to rtk quert
+  - axios migrated to rtk query
   - Bootstrap migrated to Tailwind CSS
   - chakraUI
 
