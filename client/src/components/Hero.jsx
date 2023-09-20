@@ -18,14 +18,14 @@ const Hero = () => {
           <h1 className="text-4xl md:text-6xl text-white font-semibold pointer-events-none">
             Amazing Cakes
           </h1>
-          <h2 className="text-lg md:text-xl text-white pointer-events-none">
+          <h2 className="text-sm md:text-xl text-white pointer-events-none">
             Here to brings life style to the next level.
           </h2>
           <Link
             to="/cakes"
             className="border-2 border-white px-4 md:px-6 py-1.5 md:py-2 mt-2.5 text-white text-xs hover:bg-white hover:text-black rounded-sm uppercase transition-colors duration-300"
           >
-            shop now
+            browse cakes
           </Link>
         </div>
       </div>

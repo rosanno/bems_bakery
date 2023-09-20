@@ -27,7 +27,7 @@ const Home = () => {
 
       <section className="sm:p-6 lg:p-8 lg:mt-16">
         <div className="flex justify-center text-center my-10">
-          <h2 className="text-2xl lg:text-3xl font-bold capitalize my-2">
+          <h2 className="text-2xl lg:text-3xl font-bold capitalize mt-2">
             Featured Cakes
           </h2>
         </div>
@@ -48,7 +48,7 @@ const Home = () => {
               slidesPerView: 5,
             },
           }}
-          className="py-10"
+          className="py-5"
         >
           {data?.products?.slice(0, 5).map((item) => (
             <SwiperSlide key={item._id} className="px-2.5">
