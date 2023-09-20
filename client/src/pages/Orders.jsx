@@ -27,7 +27,7 @@ const Orders = () => {
               </h3>
             </div>
           ) : (
-            <div className="mt-6 md:mt-10 lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
+            <div className="mt-6 lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
               <div className="lg:col-span-full">
                 <ul>
                   {orders?.order?.orderItems?.map((item) => (
