@@ -70,7 +70,7 @@ const Cakes = () => {
                   <ProductCard key={item._id} item={item} />
                 ))}
               </div>
-              {data?.totalPages !== 1 && (
+              {data?.totalPages !== 1 && data?.products?.length !== 0 && (
                 <div className="my-10">
                   <Pagination
                     currentPage={currentPage}
