@@ -1,28 +1,41 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { useGetUserQuery, useUpdateUserMutation } from "../services/cakeApi";
+import { useUpdateUserMutation } from "../services/cakeApi";
 import Button from "../components/ui/Button";
 import Input from "./ui/Input";
+import useScrollTop from "../hooks/useScrollTop";
 
 const ProfilePasswordForm = () => {
-  const { data } = useGetUserQuery();
   const [updateProfile, { isLoading: isUpdateLoading }] =
     useUpdateUserMutation();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
+  useScrollTop();
+
   const onSubmit = async (data) => {
+    if (data.password !== data.confirm_password) {
+      toast.error("Password did not match!", {
+        style: {
+          fontSize: "12px",
+        },
+      });
+      return;
+    }
+
     const response = await updateProfile({ data });
     if (response) {
-      toast.success("info updated", {
+      toast.success("password updated", {
         style: {
           fontSize: "13px",
         },
       });
+      reset();
     }
   };
 
