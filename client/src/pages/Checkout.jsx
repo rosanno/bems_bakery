@@ -65,7 +65,7 @@ const Checkout = () => {
                   <h4 className="text-sm">{user?.addresses[0]?.address}</h4>
                 </div>
               </div>
-              {/* <div className="mt-3 rounded-lg bg-gray-50 px-4 py-6">
+              <div className="mt-3 rounded-lg bg-gray-50 px-4 py-6">
                 {data?.cartItems?.items?.map((item) => (
                   <div
                     key={item._id}
@@ -94,9 +94,9 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
-            {/* <div className="rounded-lg bg-gray-50 px-4 py-6 lg:col-span-4">
+            <div className="rounded-lg bg-gray-50 px-4 py-6 lg:col-span-4">
               <h3 className="capitalize">Select payment method</h3>
               <div className="space-y-2.5 mt-2.5">
                 <PaymentButton
@@ -148,7 +148,7 @@ const Checkout = () => {
                   </Button>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         )}
       </div>
