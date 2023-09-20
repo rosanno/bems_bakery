@@ -29,8 +29,8 @@ const SearchInput = ({ isSearhOpen, setIsSearchOpen }) => {
       onClick={onClose}
       className={`fixed inset-0 z-50 transition-opacity duration-300 ${searchClassName} overflow-auto bg-black/20 backdrop-blur-sm`}
     >
-      <div className="fixed top-28 inset-x-0 flex items-center justify-center z-50 px-2">
-        <form onSubmit={handleSearch}>
+      <div className="fixed top-20 inset-x-0 flex items-center justify-center z-50 px-2">
+        <form onSubmit={handleSearch} className="w-full md:w-[480px]">
           <div
             onClick={(event) => event.stopPropagation()}
             className="flex items-center gap-3 bg-white px-4 rounded-md"
@@ -41,7 +41,7 @@ const SearchInput = ({ isSearhOpen, setIsSearchOpen }) => {
               type="text"
               value={search}
               placeholder="Search for cakes product"
-              className="w-72 md:w-[480px] bg-transparent outline-none py-3 text-xs md:text-sm"
+              className="bg-transparent outline-none py-3 text-xs md:text-sm"
             />
           </div>
         </form>
