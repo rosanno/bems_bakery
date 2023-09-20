@@ -15,8 +15,6 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const getAllUsers = async (req, res) => {};
-
 export const updateUser = async (req, res) => {
   try {
     const { userId } = req.user;
