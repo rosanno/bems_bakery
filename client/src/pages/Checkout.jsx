@@ -19,8 +19,6 @@ const Checkout = () => {
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const [selectedPayment, setSelectedPayment] = useState("cod");
 
-  console.log(location.state.item);
-
   const onPaymentSelect = (paymentMethod) => {
     setSelectedPayment(paymentMethod);
   };
