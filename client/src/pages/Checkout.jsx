@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Container from "../components/ui/Container";
 import {
@@ -12,11 +12,14 @@ import PaymentButton from "../components/PaymentButton";
 import Loader from "../components/Loader";
 
 const Checkout = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { data, isLoading: isItemLoading } = useGetCartItemsQuery();
   const { user } = useSelector((state) => state.authenticated);
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const [selectedPayment, setSelectedPayment] = useState("cod");
+
+  console.log(location.state.item);
 
   const onPaymentSelect = (paymentMethod) => {
     setSelectedPayment(paymentMethod);
@@ -62,7 +65,7 @@ const Checkout = () => {
                   <h4 className="text-sm">{user?.addresses[0]?.address}</h4>
                 </div>
               </div>
-              <div className="mt-3 rounded-lg bg-gray-50 px-4 py-6">
+              {/* <div className="mt-3 rounded-lg bg-gray-50 px-4 py-6">
                 {data?.cartItems?.items?.map((item) => (
                   <div
                     key={item._id}
@@ -91,9 +94,9 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
-            <div className="rounded-lg bg-gray-50 px-4 py-6 lg:col-span-4">
+            {/* <div className="rounded-lg bg-gray-50 px-4 py-6 lg:col-span-4">
               <h3 className="capitalize">Select payment method</h3>
               <div className="space-y-2.5 mt-2.5">
                 <PaymentButton
@@ -145,7 +148,7 @@ const Checkout = () => {
                   </Button>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         )}
       </div>

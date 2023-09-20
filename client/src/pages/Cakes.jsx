@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 
 import Sorting from "../components/Sorting";
 import Container from "../components/ui/Container";
-import IconButton from "../components/ui/IconButton";
 import { useGetProductsQuery } from "../services/cakeApi";
 import ProductCard from "../components/ui/ProductCard";
 import FilterSidebar from "../components/FilterSidebar";
@@ -15,7 +14,7 @@ import Pagination from "../components/Pagination";
 import Loader from "../components/Loader";
 
 const Cakes = () => {
-  const { category } = useParams();
+  const { category, search } = useParams();
   const categoryLabel = category && category.replace(/-/g, " ");
   const [currentPage, setCurrentPage] = useState(1);
   const [sort, setSort] = useState("");
@@ -23,6 +22,7 @@ const Cakes = () => {
     sort,
     category: categoryLabel,
     page: currentPage,
+    search,
   });
   const dispatch = useDispatch();
 

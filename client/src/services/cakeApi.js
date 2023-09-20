@@ -55,9 +55,9 @@ export const cakeApi = api.injectEndpoints({
 
     /** get products */
     getProducts: builder.query({
-      query: ({ sort, category, page }) => ({
+      query: ({ sort, category, page, search }) => ({
         url: "product",
-        params: { sort, category, page },
+        params: { sort, category, page, search },
       }),
       providesTags: ["Products"],
     }),

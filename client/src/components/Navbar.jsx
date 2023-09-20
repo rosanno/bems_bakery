@@ -5,6 +5,7 @@ import { BsHandbag } from "react-icons/bs";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { FiUser } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
+import toast from "react-hot-toast";
 
 import { resetState, setUser } from "../features/auth/authSlice";
 import { persistor } from "../app/store";
@@ -19,7 +20,7 @@ import IconButton from "./ui/IconButton";
 import MobileSidebar from "./MobileSidebar";
 import Logo from "./ui/Logo";
 import { toggleSidebar } from "../features/mobileSidebar/mobileSidebarSlice";
-import toast from "react-hot-toast";
+import SearchInput from "./SearchInput";
 
 const navItems = [
   {
@@ -91,16 +92,16 @@ const Navbar = () => {
   }, [accessToken, data, dispatch]);
 
   const handleSearch = () => {
-    toast.error("Not working yet!", {
-      style: {
-        fontSize: "12px",
-      },
-    });
+    setIsSearchOpen(true);
   };
 
   return (
     <>
       <MobileSidebar items={navItems} />
+      <SearchInput
+        isSearhOpen={isSearchOpen}
+        setIsSearchOpen={setIsSearchOpen}
+      />
       <div
         className={`fixed top-0 left-0 right-0 z-20 bg-white border-b`}
         ref={dropdownRef}

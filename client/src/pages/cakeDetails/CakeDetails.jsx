@@ -47,8 +47,16 @@ const CakeDetails = () => {
       return;
     }
 
+    const item = {
+      name: data?.product?.name,
+      quantity: quantity,
+      total: data?.product?.price * quantity,
+    };
+
     navigate("/checkout", {
-      state: {},
+      state: {
+        item,
+      },
     });
   };
 
