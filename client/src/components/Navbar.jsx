@@ -45,6 +45,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { accessToken } = useSelector((state) => state.authenticated);
   const { data } = useGetCartItemsQuery({}, { skip: !accessToken });
   const { data: user } = useGetUserQuery({}, { skip: !accessToken });
@@ -159,6 +160,7 @@ const Navbar = () => {
                           <li className="list-item">
                             <Link
                               to="/account"
+                              onClick={() => setIsDropdownOpen(false)}
                               className="block cursor-pointer"
                             >
                               Account

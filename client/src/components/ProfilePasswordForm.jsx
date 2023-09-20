@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -6,7 +5,7 @@ import { useGetUserQuery, useUpdateUserMutation } from "../services/cakeApi";
 import Button from "../components/ui/Button";
 import Input from "./ui/Input";
 
-const ProfileForm = () => {
+const ProfilePasswordForm = () => {
   const { data } = useGetUserQuery();
   const [updateProfile, { isLoading: isUpdateLoading }] =
     useUpdateUserMutation();
@@ -14,17 +13,7 @@ const ProfileForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm();
-
-  useEffect(() => {
-    if (data) {
-      setValue("name", data?.user?.name);
-      setValue("address", data?.user?.addresses[0].address);
-      setValue("phone", data?.user?.phone);
-      setValue("email", data?.user?.email);
-    }
-  }, [data]);
 
   const onSubmit = async (data) => {
     const response = await updateProfile({ data });
@@ -39,54 +28,31 @@ const ProfileForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
-      <div className="md:w-96">
+      <div className="md:w-96 mt-2">
         <Input
-          label="Name"
-          type="text"
+          label="New Password"
+          type="password"
           register={register}
           errors={errors}
-          name="name"
+          name="password"
         />
       </div>
       <div className="md:w-96 mt-2">
         <Input
-          label="Address"
-          type="text"
+          label="Confirm Password"
+          type="password"
           register={register}
           errors={errors}
-          name="address"
-        />
-      </div>
-      <div className="md:w-96 mt-2">
-        <Input
-          label="Phone #"
-          type="number"
-          register={register}
-          errors={errors}
-          name="phone"
-        />
-      </div>
-      <div className="md:w-96 mt-2">
-        <Input
-          label="Email"
-          type="email"
-          register={register}
-          errors={errors}
-          name="email"
+          name="confirm_password"
         />
       </div>
       <div className="mt-5">
-        <Button
-          type="submit"
-          variant="danger"
-          className="w-16"
-          disabled={isUpdateLoading}
-        >
-          Save
+        <Button type="submit" variant="danger" disabled={isUpdateLoading}>
+          update
         </Button>
       </div>
     </form>
   );
 };
 
-export default ProfileForm;
+export default ProfilePasswordForm;
