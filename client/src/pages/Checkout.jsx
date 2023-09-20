@@ -53,7 +53,7 @@ const Checkout = () => {
             <Loader label="loading items" />
           </div>
         ) : (
-          <div className="mt-5 md:mt-10 lg:grid lg:grid-cols-12 lg:items-start gap-x-4">
+          <div className="mt-5 md:mt-7 lg:grid lg:grid-cols-12 lg:items-start gap-x-4">
             <div className="lg:col-span-8">
               <div className="rounded-lg bg-gray-50 px-4 py-6">
                 <h3 className="text-sm">Shipping Address</h3>

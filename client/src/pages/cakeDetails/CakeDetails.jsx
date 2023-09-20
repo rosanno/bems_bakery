@@ -41,6 +41,17 @@ const CakeDetails = () => {
     }
   }, [accessToken, data, dispatch]);
 
+  const handleBuyNow = () => {
+    if (!accessToken) {
+      navigate("/login");
+      return;
+    }
+
+    navigate("/checkout", {
+      state: {},
+    });
+  };
+
   return (
     <Container>
       {isItemLoading ? (
@@ -88,7 +99,9 @@ const CakeDetails = () => {
                 </div>
                 <QuantityInput quantity={quantity} setQuantity={setQuantity} />
                 <div className="mt-4 md:mt-auto flex gap-4">
-                  <Button className="w-full">Buy Now</Button>
+                  <Button onClick={handleBuyNow} className="w-full">
+                    Buy Now
+                  </Button>
                   <Button
                     className="w-full"
                     variant="danger"
