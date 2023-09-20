@@ -17,7 +17,7 @@ const api = createApi({
   reducerPath: "cakeApi",
   baseQuery: baseQuery,
   endpoints: (builder) => ({}),
-  tagTypes: ["Products", "Cart", "Order"],
+  tagTypes: ["Products", "Cart", "Order", "User"],
 });
 
 export const cakeApi = api.injectEndpoints({
@@ -129,6 +129,16 @@ export const cakeApi = api.injectEndpoints({
       query: () => "cart",
       providesTags: ["Cart"],
     }),
+
+    /** update user information */
+    updateUser: builder.mutation({
+      query: ({ data }) => ({
+        url: "user/update-info",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -147,4 +157,5 @@ export const {
   useRemoveCartItemMutation,
   useUpdateQuantityMutation,
   useGetCartItemsQuery,
+  useUpdateUserMutation,
 } = cakeApi;
