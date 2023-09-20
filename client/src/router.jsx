@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/cart/",
+        path: "/cart",
         element: (
           <ProtectedRoute>
             <Cart />
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/checkout",
+        path: "/proceed-cart-item-checkout",
         element: (
           <ProtectedRoute>
             <Checkout />

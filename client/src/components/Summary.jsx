@@ -29,7 +29,7 @@ const Summary = () => {
         </div>
       </div>
       <Button
-        onClick={() => navigation("/checkout")}
+        onClick={() => navigation("/proceed-cart-item-checkout")}
         variant="danger"
         className="w-full mt-4"
       >
