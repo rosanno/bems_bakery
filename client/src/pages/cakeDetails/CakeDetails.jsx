@@ -48,12 +48,15 @@ const CakeDetails = () => {
     }
 
     const item = {
+      id: data?.product?._id,
+      imageURL: data?.product?.imageURL,
       name: data?.product?.name,
+      price: data?.product?.price,
       quantity: quantity,
       total: data?.product?.price * quantity,
     };
 
-    navigate("/checkout", {
+    navigate("/proceed-buy-now-checkout", {
       state: {
         item,
       },

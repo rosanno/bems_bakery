@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
 import Faq from "./pages/Faq";
+import BuyNowCheckout from "./pages/BuyNowCheckout";
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +71,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Checkout />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/proceed-buy-now-checkout",
+        element: (
+          <ProtectedRoute>
+            <BuyNowCheckout />
           </ProtectedRoute>
         ),
       },
