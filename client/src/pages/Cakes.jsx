@@ -44,7 +44,7 @@ const Cakes = () => {
       <Container>
         <header className="flex items-center justify-between mt-4 md:mt-8">
           <h1 className="text-xl md:text-2xl font-semibold capitalize">
-            Cakes
+            {!search ? "Cakes" : `Results for "${search}"`}
           </h1>
           <div className="flex gap-2">
             <Sorting onChange={handleChange} />
