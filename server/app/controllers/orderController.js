@@ -73,7 +73,7 @@ export const getOrderList = async (req, res) => {
       query = {
         $or: [
           { customer: { $in: customerIds } },
-          { "products.orderItem.name": { $regex: search, $options: "i" } },
+          { "orderItems.product.name": { $regex: search, $options: "i" } },
         ],
       };
     }
@@ -85,7 +85,7 @@ export const getOrderList = async (req, res) => {
         select: "name addresses email",
       })
       .populate({
-        path: "products.orderItem",
+        path: "orderItems.product",
         select: "name price category",
       })
       .skip(skip)
@@ -101,39 +101,7 @@ export const getOrderList = async (req, res) => {
     // Calculate the total number of pages
     totalPages = Math.ceil(totalCount / perPage);
 
-    const transformData = results.flatMap((order) => {
-      const productItem = order.products.map((product) => {
-        const { addresses } = order.customer;
-        const addressObjs = addresses.map((address) => address.address);
-
-        const { _id: customerId, name: customerName } = order.customer;
-        const [firstName, lastName] = customerName.split(" ");
-
-        const transformedOrder = {
-          id: product._id,
-          status: product.paymentStatus,
-          deliveryStatus: product.isDelivered,
-          totalPrice: product.totalAmount,
-          quantity: product.quantity,
-          numberOfItems: order.products.length,
-          customer: {
-            id: customerId,
-            firstName,
-            lastName,
-            address: addressObjs[0],
-          },
-          orderItem: product.orderItem.name,
-          createdAt: order.createdAt.toISOString(),
-          updatedAt: order.updatedAt.toISOString(),
-        };
-
-        return transformedOrder;
-      });
-
-      return productItem;
-    });
-
-    res.status(200).json({ data: transformData, totalPages });
+    res.status(200).json({ data: results, totalPages });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
@@ -159,26 +127,26 @@ export const getOrder = async (req, res) => {
 
 export const updateOrder = async (req, res) => {
   try {
-    const { productId } = req.params;
+    const { orderId } = req.params;
     const { paymentStatus } = req.body;
 
-    let foundOrder = await Order.findOne({
-      "products._id": productId,
+    let findOrder = await Order.findOne({
+      "orderItems._id": orderId,
     });
 
-    if (!foundOrder) return res.sendStatus(404);
+    if (!findOrder) return res.sendStatus(404);
 
-    const productIndex = foundOrder.products.findIndex(
-      (product) => product._id.toString() === productId
+    const productIndex = findOrder.orderItems.findIndex(
+      (product) => product._id.toString() === orderId
     );
 
     if (productIndex === -1) {
       return res.sendStatus(404);
     }
 
-    foundOrder.products[productIndex].paymentStatus = paymentStatus;
+    findOrder.orderItems[productIndex].paymentStatus = paymentStatus;
 
-    await foundOrder.save();
+    await findOrder.save();
 
     res.status(200).json({ message: "updated successfully" });
   } catch (error) {
@@ -189,28 +157,26 @@ export const updateOrder = async (req, res) => {
 
 export const updateDeliveryStatus = async (req, res) => {
   try {
-    const { productId } = req.params;
+    const { orderId } = req.params;
     const { deliveryStatus } = req.body;
 
-    let foundOrder = await Order.findOne({
-      "products._id": productId,
+    let findOrder = await Order.findOne({
+      "orderItems._id": orderId,
     });
 
-    console.log("test");
+    if (!findOrder) return res.sendStatus(404);
 
-    if (!foundOrder) return res.sendStatus(404);
-
-    const productIndex = foundOrder.products.findIndex(
-      (product) => product._id.toString() === productId
+    const productIndex = findOrder.orderItems.findIndex(
+      (product) => product._id.toString() === orderId
     );
 
     if (productIndex === -1) {
       return res.sendStatus(404);
     }
 
-    foundOrder.products[productIndex].isDelivered = deliveryStatus;
+    findOrder.orderItems[productIndex].isDelivered = deliveryStatus;
 
-    await foundOrder.save();
+    await findOrder.save();
 
     res.status(200).json({ message: "updated successfully" });
   } catch (error) {
@@ -227,16 +193,16 @@ export const getTotalRevenue = async (req, res) => {
         select: "name addresses email",
       })
       .populate({
-        path: "products.orderItem",
+        path: "orderItems.product",
         select: "name price category",
       });
 
     let totalRevenue = 0;
 
     orders.forEach((order) => {
-      order.products.forEach((product) => {
-        if (product.paymentStatus === "Paid") {
-          totalRevenue += product.orderItem.price * product.quantity;
+      order.orderItems.forEach((item) => {
+        if (item.paymentStatus === "Paid") {
+          totalRevenue += item.total * item.quantity;
         }
       });
     });
@@ -256,14 +222,14 @@ export const getSalesCount = async (req, res) => {
         select: "name addresses email",
       })
       .populate({
-        path: "products.orderItem",
+        path: "orderItems.product",
         select: "name price category",
       });
 
     let salesCount = 0;
 
     orders.forEach((order) => {
-      order.products.forEach((product) => {
+      order.orderItems.forEach((product) => {
         if (product.paymentStatus === "Paid") {
           salesCount += product.quantity;
         }
@@ -285,7 +251,7 @@ export const getMonthlyRevenuePaidOrders = async (req, res) => {
         select: "name addresses email",
       })
       .populate({
-        path: "products.orderItem",
+        path: "orderItems.product",
         select: "name price category",
       });
 
@@ -305,15 +271,17 @@ export const getMonthlyRevenuePaidOrders = async (req, res) => {
     ];
 
     orders.forEach((order) => {
-      if (order.products.some((product) => product.paymentStatus === "Paid")) {
+      if (
+        order.orderItems.some((product) => product.paymentStatus === "Paid")
+      ) {
         // Get the month from the createdAt date
         const createdAtDate = new Date(order.createdAt);
         const month = createdAtDate.getMonth();
 
         // Calculate the total revenue for the order
-        const orderRevenue = order.products.reduce((total, product) => {
+        const orderRevenue = order.orderItems.reduce((total, product) => {
           if (product.paymentStatus === "Paid") {
-            return total + product.orderItem.price * product.quantity;
+            return total + product.product.price * product.quantity;
           }
           return total;
         }, 0);
@@ -339,7 +307,7 @@ export const deleteOrderList = async (req, res) => {
 
     if (!order) return res.status(404).json({ error: "Customer not found" });
 
-    const orderItemIndex = order.products.findIndex(
+    const orderItemIndex = order.orderItems.findIndex(
       (product) => product._id.toString() === productId
     );
 
@@ -347,7 +315,7 @@ export const deleteOrderList = async (req, res) => {
       return res.status(404).json({ message: "Order item not found" });
     }
 
-    order.products.splice(orderItemIndex, 1);
+    order.orderItems.splice(orderItemIndex, 1);
     order.save();
 
     res.json({ message: "deleted successfully" });

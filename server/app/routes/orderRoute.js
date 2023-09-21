@@ -16,8 +16,8 @@ import { adminAuth, userAuth } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.post("/", userAuth, createOrder);
-router.patch("/:productId", adminAuth, updateOrder);
-router.patch("/delivery-status/:productId", adminAuth, updateDeliveryStatus);
+router.patch("/:orderId", adminAuth, updateOrder);
+router.patch("/delivery-status/:orderId", adminAuth, updateDeliveryStatus);
 router.delete("/:productId", adminAuth, deleteOrderList);
 router.get("/", userAuth, getOrders);
 router.get("/get-total-revenue", adminAuth, getTotalRevenue);
