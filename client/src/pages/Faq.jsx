@@ -3,8 +3,11 @@ import React from "react";
 import Container from "../components/ui/Container";
 import Accordion from "../components/Accordion";
 import { items } from "../constants";
+import useScrollTop from "../hooks/useScrollTop";
 
 const Faq = () => {
+  useScrollTop();
+
   return (
     <Container>
       <div className="container mx-auto mt-5 md:mt-10">
