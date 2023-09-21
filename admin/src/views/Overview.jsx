@@ -1,11 +1,11 @@
 import {
   Box,
-  Card,
-  CardBody,
   Divider,
   Flex,
   Heading,
-  Text,
+  Stat,
+  StatLabel,
+  StatNumber,
 } from "@chakra-ui/react";
 import Header from "../components/ui/Header";
 import {
@@ -31,48 +31,14 @@ const Overview = () => {
 
         <Box mt={"10"}>
           <Flex width={"full"} alignItems={"center"} gap={"5"}>
-            <Card
-              width={"72"}
-              height={"28"}
-              boxShadow={0}
-              sx={{
-                backgroundColor: "#F7FAFC",
-              }}
-            >
-              <CardBody
-                display="flex"
-                flexDirection={"column"}
-                justifyContent={"center"}
-              >
-                <Heading fontSize={"md"} fontWeight={"medium"}>
-                  Total Revenue
-                </Heading>
-                <Text mt={"2"} fontSize={"2xl"} fontWeight={"semibold"}>
-                  ₱{data?.totalRevenue}
-                </Text>
-              </CardBody>
-            </Card>
-            <Card
-              width={"72"}
-              height={"28"}
-              boxShadow={0}
-              sx={{
-                backgroundColor: "#F7FAFC",
-              }}
-            >
-              <CardBody
-                display="flex"
-                flexDirection={"column"}
-                justifyContent={"center"}
-              >
-                <Heading fontSize={"md"} fontWeight={"medium"}>
-                  Sales
-                </Heading>
-                <Text mt={"2"} fontSize={"2xl"} fontWeight={"semibold"}>
-                  +{result?.salesCount}
-                </Text>
-              </CardBody>
-            </Card>
+            <Stat>
+              <StatLabel>Total Revenue</StatLabel>
+              <StatNumber>₱{data?.totalRevenue}</StatNumber>
+            </Stat>
+            <Stat>
+              <StatLabel>Sales</StatLabel>
+              <StatNumber>+{result?.salesCount}</StatNumber>
+            </Stat>
           </Flex>
 
           <Divider mt="5" mb="5" />
