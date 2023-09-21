@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/cakes/:search?",
+        path: "/cakes",
         element: <Cakes />,
       },
       {

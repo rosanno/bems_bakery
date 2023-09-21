@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
@@ -18,7 +18,12 @@ const SearchInput = ({ isSearhOpen, setIsSearchOpen }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/cakes/${search}`);
+    navigate({
+      pathname: "/cakes",
+      search: `?${createSearchParams({
+        search,
+      }).toString()}`,
+    });
     setIsSearchOpen(false);
     setSearch("");
   };

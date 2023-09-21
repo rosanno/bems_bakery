@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 
@@ -14,16 +14,18 @@ import Pagination from "../components/Pagination";
 import Loader from "../components/Loader";
 
 const Cakes = () => {
-  const { category, search } = useParams();
-  const categoryLabel = category && category.replace(/-/g, " ");
+  const { category } = useParams();
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search");
   const [currentPage, setCurrentPage] = useState(1);
   const [sort, setSort] = useState("");
-  const { data, isFetching } = useGetProductsQuery({
-    sort,
-    category: categoryLabel,
-    page: currentPage,
-    search,
-  });
+  const optionalProps = {
+    sort: sort || "",
+    category: category || "",
+    page: currentPage || 1,
+    search: search || "",
+  };
+  const { data, isFetching } = useGetProductsQuery(optionalProps);
   const dispatch = useDispatch();
 
   useScrollTop(); // scroll top top
