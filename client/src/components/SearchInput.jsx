@@ -41,7 +41,7 @@ const SearchInput = ({ isSearhOpen, setIsSearchOpen }) => {
               type="text"
               value={search}
               placeholder="Search for cakes product"
-              className="bg-transparent outline-none py-3 text-xs md:text-sm"
+              className="bg-transparent outline-none py-3 text-xs md:text-sm w-full"
             />
           </div>
         </form>
