@@ -1,4 +1,12 @@
-import { Box, Card, CardBody, Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Divider,
+  Flex,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 import Header from "../components/ui/Header";
 import {
   useGetMonthlyRevenueQuery,
@@ -23,22 +31,44 @@ const Overview = () => {
 
         <Box mt={"10"}>
           <Flex width={"full"} alignItems={"center"} gap={"5"}>
-            <Card width={"72"} height={"28"}>
-              <CardBody display="flex" flexDirection={"column"} justifyContent={"center"}>
+            <Card
+              width={"72"}
+              height={"28"}
+              boxShadow={0}
+              sx={{
+                backgroundColor: "#F7FAFC",
+              }}
+            >
+              <CardBody
+                display="flex"
+                flexDirection={"column"}
+                justifyContent={"center"}
+              >
                 <Heading fontSize={"md"} fontWeight={"medium"}>
                   Total Revenue
                 </Heading>
-                <Text mt={"2"} fontSize={"2xl"} fontWeight={"bold"}>
+                <Text mt={"2"} fontSize={"2xl"} fontWeight={"semibold"}>
                   ₱{data?.totalRevenue}
                 </Text>
               </CardBody>
             </Card>
-            <Card width={"72"} height={"28"}>
-              <CardBody display="flex" flexDirection={"column"} justifyContent={"center"}>
+            <Card
+              width={"72"}
+              height={"28"}
+              boxShadow={0}
+              sx={{
+                backgroundColor: "#F7FAFC",
+              }}
+            >
+              <CardBody
+                display="flex"
+                flexDirection={"column"}
+                justifyContent={"center"}
+              >
                 <Heading fontSize={"md"} fontWeight={"medium"}>
                   Sales
                 </Heading>
-                <Text mt={"2"} fontSize={"2xl"} fontWeight={"bold"}>
+                <Text mt={"2"} fontSize={"2xl"} fontWeight={"semibold"}>
                   +{result?.salesCount}
                 </Text>
               </CardBody>
@@ -47,15 +77,17 @@ const Overview = () => {
 
           <Divider mt="5" mb="5" />
 
-          <Box>
-            <Card shadow={"md"}>
-              <CardBody py={"5"}>
-                <Heading fontSize={"md"} fontWeight={"medium"} mb={"10"}>
-                  Monthly Revenue
-                </Heading>
-                <MonthlyRevenueChart data={revenue?.monthlyRevenue} />
-              </CardBody>
-            </Card>
+          <Box
+            sx={{
+              backgroundColor: "#F7FAFC",
+              paddingY: 5,
+              paddingX: 10,
+            }}
+          >
+            <Heading fontSize={"md"} fontWeight={"medium"} mb={"10"}>
+              Monthly Revenue
+            </Heading>
+            <MonthlyRevenueChart data={revenue?.monthlyRevenue} />
           </Box>
         </Box>
       </Box>
