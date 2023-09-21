@@ -139,6 +139,15 @@ export const cakeApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+
+    /** send message endpoint */
+    sendMessage: builder.mutation({
+      query: ({ data }) => ({
+        url: "message/send-message",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -158,4 +167,5 @@ export const {
   useUpdateQuantityMutation,
   useGetCartItemsQuery,
   useUpdateUserMutation,
+  useSendMessageMutation,
 } = cakeApi;

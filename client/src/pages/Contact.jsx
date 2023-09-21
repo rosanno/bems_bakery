@@ -1,7 +1,32 @@
-import React from "react";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+
 import Container from "../components/ui/Container";
+import Input from "../components/ui/Input";
+import { useSendMessageMutation } from "../services/cakeApi";
+import Button from "../components/ui/Button";
 
 const Contact = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [sendMessage, { isLoading }] = useSendMessageMutation();
+
+  const onSubmit = async (data) => {
+    const response = await sendMessage({ data });
+    if (response.data) {
+      toast.success(response.data.message, {
+        style: {
+          fontSize: "13px",
+        },
+      });
+      reset();
+    }
+  };
+
   return (
     <div className="relative">
       <div
@@ -22,35 +47,51 @@ const Contact = () => {
       </div>
       <div className="mt-8 mx-auto max-w-7xl px-3">
         <div className="lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
-          <form className="space-y-4 lg:col-span-7">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 lg:col-span-7"
+          >
             <h2 className="text-2xl font-semibold">Get in touch</h2>
-            <div className="flex flex-col">
-              <label className="mb-1.5 text-sm text-gray-500">Name</label>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                className="input"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="mb-1.5 text-sm text-gray-500">Email</label>
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="input"
-              />
-            </div>
+            <Input
+              label="Name"
+              type="text"
+              register={register}
+              errors={errors}
+              name="name"
+            />
+            <Input
+              label="Email"
+              type="email"
+              register={register}
+              errors={errors}
+              name="email"
+            />
             <div className="flex flex-col">
               <label className="mb-1.5 text-sm text-gray-500">Message</label>
               <textarea
                 rows="5"
+                {...register("messages", {
+                  required: "Messages field is required",
+                })}
                 placeholder="Messages..."
-                className="input"
+                className={`input ${
+                  errors.messages && "border border-red-500"
+                }`}
               ></textarea>
+              {errors.messages && (
+                <p className="text-xs text-red-500 mt-2">
+                  {errors.messages.message}
+                </p>
+              )}
             </div>
-            <button className="bg-rose-600 hover:bg-rose-700 transition-colors duration-300 text-white text-sm font-semibold px-6 py-2.5 rounded-md">
-              Submit
-            </button>
+            <Button
+              type="submit"
+              variant="danger"
+              className="w-28"
+              disabled={isLoading}
+            >
+              Send
+            </Button>
           </form>
           <div className="border-t lg:border-t-0 lg:border-l h-full lg:pl-10 mt-10 lg:mt-0 lg:mb-0 lg:col-span-4">
             <div className="mt-5">
