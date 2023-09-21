@@ -12,8 +12,15 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spinner,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
   Td,
   Text,
+  Th,
+  Thead,
   Tr,
 } from "@chakra-ui/react";
 import { AiOutlineEllipsis } from "react-icons/ai";
@@ -27,7 +34,6 @@ import {
   useGetOrderListQuery,
   useUpdateDeliveryStatusMutation,
 } from "../services/bakeryApi";
-import CustomTable from "../components/ui/CustomTable";
 import OrderModal from "../components/OrderModal";
 import { ModalContext } from "../context/ContextProvider";
 import { setId } from "../features/idsSlice";
@@ -74,7 +80,10 @@ const Order = () => {
   const [productId, setProductId] = useState("null");
 
   const orderId = useSelector((state) => state.ids.id);
-  const { data: orderList, isFetching } = useGetOrderListQuery({ page, search });
+  const { data: orderList, isFetching } = useGetOrderListQuery({
+    page,
+    search,
+  });
   const [deleteOrder] = useDeleteOrderFromListMutation();
   const { onOpen } = useContext(ModalContext);
   const { onOpen: onDialogOpen } = useContext(DialogContext);
@@ -97,9 +106,9 @@ const Order = () => {
     deliveryStatus && update();
   }, [deliveryStatus]);
 
-  const onOpenModal = (productId, status) => {
+  const onOpenModal = (orderId, status) => {
     setPaymentStatus(status);
-    dispatch(setId({ id: productId }));
+    dispatch(setId({ id: orderId }));
     onOpen();
   };
 
@@ -110,9 +119,9 @@ const Order = () => {
     onDialogOpen();
   };
 
-  const updateDelivery = async (productId) => {
+  const updateDelivery = async (orderId) => {
     setdeliveryStatus(true);
-    setProductId(productId);
+    setProductId(orderId);
   };
 
   return (
@@ -145,72 +154,111 @@ const Order = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <CustomTable
-            tableHead={tableHead}
-            isFetching={isFetching}
-            data={orderList?.data?.length}
-            label="Customer not found"
-          >
-            {orderList?.data.map((order) => (
-              <Tr key={order.id}>
-                <Td fontSize="sm" textColor="gray.600">
-                  {order.customer.firstName} {order.customer.lastName}
-                </Td>
-                <Td fontSize="sm" textColor="gray.600">
-                  {order.orderItem} ({order.quantity})
-                </Td>
-                <Td fontSize="sm" textColor="gray.600">
-                  ₱{order.totalPrice}
-                </Td>
-                <Td fontSize="sm" textColor="gray.600">
-                  {order.customer.address}
-                </Td>
-                <Td fontSize="sm" textColor="gray.600">
-                  {moment(order.createdAt).format("MMMM Do YYYY")}
-                </Td>
-                <Td>
-                  <Badge colorScheme={order.status === "Paid" ? "green" : "gray"}>
-                    {order.status}
-                  </Badge>
-                </Td>
-                <Td>
-                  <Box display={"flex"} alignItems={"center"} gap={"2"}>
-                    <Badge colorScheme={order.deliveryStatus ? "green" : "gray"}>
-                      {order.deliveryStatus ? "Delivered" : "Pending"}
-                    </Badge>
-                    {!order.deliveryStatus ? (
-                      <IconButton
-                        onClick={() => updateDelivery(order.id)}
-                        aria-label="check icon"
-                        size={"xs"}
-                        icon={<AiOutlineCheckCircle size={"18px"} />}
-                      />
-                    ) : null}
-                  </Box>
-                </Td>
-                <Td isNumeric>
-                  <Menu>
-                    <MenuButton bg={"gray.100"} p={"1"} borderRadius={"md"}>
-                      <AiOutlineEllipsis />
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem fontSize="xs" onClick={() => onOpenModal(order.id, order.status)}>
-                        <EditIcon fontSize="sm" mr="1" />
-                        Edit
-                      </MenuItem>
-                      <MenuItem
-                        fontSize="xs"
-                        onClick={() => handleDelete(order.id, order.orderItem, order.customer.id)}
-                      >
-                        <DeleteIcon mr="1" fontSize="sm" />
-                        Delete
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td>
-              </Tr>
-            ))}
-          </CustomTable>
+          <TableContainer border="1px" borderColor="gray.100" borderRadius="6">
+            <Table variant="simple">
+              {isFetching && (
+                <TableCaption>
+                  <Spinner size="lg" />
+                </TableCaption>
+              )}
+              {orderList?.data?.length === 0 && !isFetching && (
+                <TableCaption>Data not found</TableCaption>
+              )}
+              <Thead>
+                <Tr>
+                  {tableHead.map((thead) => (
+                    <Th key={thead.label}>{thead.label}</Th>
+                  ))}
+                </Tr>
+              </Thead>
+              {!isFetching && (
+                <Tbody>
+                  {orderList?.data.map((order) =>
+                    order.orderItems.map((item) => (
+                      <Tr key={item._id}>
+                        <Td fontSize="sm" textColor="gray.600">
+                          {order.customer.name}
+                        </Td>
+                        <Td fontSize="sm" textColor="gray.600">
+                          {item.product.name} ({item.quantity})
+                        </Td>
+                        <Td fontSize="sm" textColor="gray.600">
+                          ₱{item.total}
+                        </Td>
+                        <Td fontSize="sm" textColor="gray.600">
+                          {order.customer.addresses[0].address}
+                        </Td>
+                        <Td fontSize="sm" textColor="gray.600">
+                          {moment(order.createdAt).format("MMMM Do YYYY")}
+                        </Td>
+                        <Td>
+                          <Badge
+                            colorScheme={
+                              item.paymentStatus === "Paid" ? "green" : "gray"
+                            }
+                          >
+                            {item.paymentStatus}
+                          </Badge>
+                        </Td>
+                        <Td>
+                          <Box display={"flex"} alignItems={"center"} gap={"2"}>
+                            <Badge
+                              colorScheme={item.isDelivered ? "green" : "gray"}
+                            >
+                              {item.isDelivered ? "Delivered" : "Pending"}
+                            </Badge>
+                            {!item.isDelivered ? (
+                              <IconButton
+                                onClick={() => updateDelivery(item._id)}
+                                aria-label="check icon"
+                                size={"xs"}
+                                icon={<AiOutlineCheckCircle size={"18px"} />}
+                              />
+                            ) : null}
+                          </Box>
+                        </Td>
+                        <Td isNumeric>
+                          <Menu>
+                            <MenuButton
+                              bg={"gray.100"}
+                              p={"1"}
+                              borderRadius={"md"}
+                            >
+                              <AiOutlineEllipsis />
+                            </MenuButton>
+                            <MenuList>
+                              <MenuItem
+                                fontSize="xs"
+                                onClick={() =>
+                                  onOpenModal(item._id, item.paymentStatus)
+                                }
+                              >
+                                <EditIcon fontSize="sm" mr="1" />
+                                update
+                              </MenuItem>
+                              <MenuItem
+                                fontSize="xs"
+                                onClick={() =>
+                                  handleDelete(
+                                    item._id,
+                                    item.product.name,
+                                    order.customer._id
+                                  )
+                                }
+                              >
+                                <DeleteIcon mr="1" fontSize="sm" />
+                                Delete
+                              </MenuItem>
+                            </MenuList>
+                          </Menu>
+                        </Td>
+                      </Tr>
+                    ))
+                  )}
+                </Tbody>
+              )}
+            </Table>
+          </TableContainer>
           {orderList?.totalPages !== 1 && orderList?.totalPages !== 0 && (
             <Box
               style={{
@@ -219,7 +267,10 @@ const Order = () => {
                 alignItems: "center",
               }}
             >
-              <Pagination totalPages={orderList?.totalPages} setPage={setPage} />
+              <Pagination
+                totalPages={orderList?.totalPages}
+                setPage={setPage}
+              />
             </Box>
           )}
         </Box>

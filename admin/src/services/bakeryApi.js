@@ -73,7 +73,8 @@ export const bakeryApi = auth.injectEndpoints({
      * get products
      */
     getProducts: builder.query({
-      query: ({ page, search }) => `product?page=${page}&perPage=5&search=${search}`,
+      query: ({ page, search }) =>
+        `product?page=${page}&perPage=5&search=${search}`,
       providesTags: ["Product"],
     }),
     /**
@@ -110,7 +111,9 @@ export const bakeryApi = auth.injectEndpoints({
      */
     getCategories: builder.query({
       query: ({ page, search, isQueryParams }) =>
-        `category${isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""}`,
+        `category${
+          isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""
+        }`,
       providesTags: ["Category"],
     }),
     /**
@@ -158,7 +161,9 @@ export const bakeryApi = auth.injectEndpoints({
      */
     getIngredients: builder.query({
       query: ({ page, search, isQueryParams }) =>
-        `ingredient${isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""}`,
+        `ingredient${
+          isQueryParams ? `?page=${page}&perPage=5&search=${search}` : ""
+        }`,
       providesTags: ["Ingredient"],
     }),
     /**
@@ -198,7 +203,8 @@ export const bakeryApi = auth.injectEndpoints({
      * get order items
      */
     getOrderList: builder.query({
-      query: ({ page, search }) => `order/order-list?page=${page}&perPage=5&search=${search}`,
+      query: ({ page, search }) =>
+        `order/order-list?page=${page}&perPage=5&search=${search}`,
       providesTags: ["Order"],
     }),
     /**
@@ -208,7 +214,7 @@ export const bakeryApi = auth.injectEndpoints({
       query: ({ id, paymentStatus }) => ({
         url: `order/${id}`,
         method: "PATCH",
-        body: { paymentStatus },
+        body: { id, paymentStatus },
       }),
       invalidatesTags: ["Order"],
     }),
