@@ -14,7 +14,7 @@ const Cart = () => {
       <section className="mt-10">
         <h1 className="text-xl md:text-2xl font-semibold capitalize">Cart</h1>
         <div className="px-4 py-4 sm:px-6 lg:px-8">
-          {cartItems?.items?.length === 0 ? (
+          {cartItems?.items?.length === 0 || cartItems.length === 0 ? (
             <div className="flex flex-col justify-center items-center h-96">
               <img src="/assets/empty-cart.svg" alt="" className="w-52 h-52" />
               <h3 className="text-base text-neutral-500 font-medium">
