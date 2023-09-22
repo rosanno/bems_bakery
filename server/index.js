@@ -41,9 +41,18 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  // Set the Access-Control-Allow-Origin header to the origin of the request
+  // when the request's credentials mode is 'include'.
+  if (req.header("Access-Control-Allow-Credentials") === "include") {
+    res.header("Access-Control-Allow-Origin", req.header("Origin"));
+  } else {
+    res.header("Access-Control-Allow-Origin", "*");
+  }
+
+  // Set the other CORS headers.
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
   next();
 });
 
