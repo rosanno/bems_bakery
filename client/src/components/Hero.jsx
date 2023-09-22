@@ -13,13 +13,13 @@ const Hero = () => {
         <div className="absolute inset-0 bg-black/50" />
         <div className="flex flex-col justify-center items-center gap-y-1 md:gap-y-3 px-5 md:px-20 h-96 md:h-[630px] relative z-10">
           <h3 className="uppercase text-base md:text-xl text-white font-medium pointer-events-none">
-            Don&apos;t miss today&apos;s featured deals
+            Discover Today&apos;s Special Offers!
           </h3>
           <h1 className="text-4xl md:text-6xl text-white font-semibold pointer-events-none">
-            Amazing Cakes
+            Indulge in Exquisite Cakes
           </h1>
           <h2 className="text-sm md:text-xl text-white pointer-events-none">
-            Here to brings life style to the next level.
+            Taking Your Taste Buds to New Height.
           </h2>
           <Link
             to="/cakes"
