@@ -33,11 +33,6 @@ const ProductCard = ({ item }) => {
           className="w-36 h-36 object-contain"
         />
       </div>
-      {item.overallRating > 4 && (
-        <div className="bg-rose-600/80 text-white py-0.5 px-4 rounded-tl-lg rounded-br-lg absolute top-0 left-0 transform -translate-y-1/2">
-          <span className="text-xs">Best seller</span>
-        </div>
-      )}
       <div className="p-2 md:px-4">
         <h5 className="text-xs md:text-sm font-medium truncate">{item.name}</h5>
         <div className="flex items-center gap-1 pt-2">
