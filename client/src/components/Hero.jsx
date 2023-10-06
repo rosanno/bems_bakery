@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -6,7 +7,20 @@ const Hero = () => {
   return (
     <section>
       <div className="flex flex-col-reverse md:flex-row items-start">
-        <div className="flex-1 mt-10 md:mt-28">
+        <motion.div
+          initial={{ opacity: 0, x: -60 }}
+          animate={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 0.8,
+              delay: 0.3,
+              type: "tween",
+            },
+            animation: "ease-in",
+          }}
+          className="flex-1 mt-10 md:mt-28"
+        >
           <h1 className="text-base text-[#916045] font-[500] leading-10 md:leading-none">
             Suggested for you
           </h1>
@@ -28,15 +42,28 @@ const Hero = () => {
               order now
             </button>
           </div>
-        </div>
-        <div className="mt-5">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 0.8,
+              delay: 0.3,
+              type: "tween",
+            },
+            animation: "ease-in",
+          }}
+          className="mt-5"
+        >
           <img
             src="/assets/images/hero-bg.png"
             alt=""
             loading="lazy"
             className="w-[390px] h-[390px] sm:w-[470px] sm:h-[470px] md:w-[550px] md:h-[490px] object-contain"
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

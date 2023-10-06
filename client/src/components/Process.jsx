@@ -1,17 +1,60 @@
 import { BsWallet2, BsTruck, BsFileEarmarkText } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 const Process = () => {
   return (
-    <section className="sm:p-6 lg:p-8 mt-16 lg:mt-20">
+    <section className="sm:p-6 lg:p-8 mt-16 lg:mt-28">
       <div className="flex flex-col items-center justify-center text-center my-10">
-        <h2 className="text-2xl lg:text-3xl font-bold capitalize mt-2">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              duration: 0.5,
+              delay: 0.3,
+            },
+          }}
+          viewport={{
+            once: true,
+          }}
+          className="text-2xl lg:text-3xl font-bold capitalize mt-2"
+        >
           How it works
-        </h2>
-        <h3 className="text-sm pt-2.5 text-gray-500">
+        </motion.h2>
+        <motion.h3
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              duration: 0.5,
+              delay: 0.5,
+            },
+          }}
+          viewport={{
+            once: true,
+          }}
+          className="text-sm pt-2.5 text-gray-500"
+        >
           Overview of the Process
-        </h3>
+        </motion.h3>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10 px-20">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration: 0.5,
+            delay: 0.5,
+          },
+        }}
+        viewport={{
+          once: true,
+        }}
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10 px-10 md:px-20"
+      >
         <div className="rounded-md pl-5 pr-2 pt-10 h-[260px]">
           <BsFileEarmarkText className="text-4xl text-rose-400" />
           <div className="pt-5">
@@ -49,7 +92,7 @@ const Process = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

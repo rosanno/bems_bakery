@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { useGetProductsQuery } from "../services/cakeApi";
@@ -22,37 +23,66 @@ const Home = () => {
       <Hero />
       <Process />
 
-      <section className="sm:p-6 lg:p-8 mt-16 lg:mt-20 mb-10">
+      <section className="sm:p-6 lg:p-8 mt-16 lg:mt-36 mb-10">
         <div className="flex justify-center text-center my-10">
-          <h2 className="text-2xl lg:text-3xl font-bold capitalize mt-2">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 0.5,
+                delay: 0.3,
+              },
+            }}
+            viewport={{
+              once: true,
+            }}
+            className="text-2xl lg:text-3xl font-bold capitalize mt-2"
+          >
             Featured Cakes
-          </h2>
+          </motion.h2>
         </div>
-        {isLoading && <Loader label="Loading products..." />}
-        <Swiper
-          slidesPerView={2}
-          pagination={{
-            clickable: true,
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 3,
-            },
-            768: {
-              slidesPerView: 3,
-            },
-            1024: {
-              slidesPerView: 5,
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              duration: 0.5,
+              delay: 0.5,
             },
           }}
-          className="py-5"
+          viewport={{
+            once: true,
+          }}
         >
-          {data?.products?.slice(0, 5).map((item) => (
-            <SwiperSlide key={item._id} className="px-2.5">
-              <ProductCard item={item} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          {isLoading && <Loader label="Loading products..." />}
+          <Swiper
+            slidesPerView={2}
+            pagination={{
+              clickable: true,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 3,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 5,
+              },
+            }}
+            className="py-5"
+          >
+            {data?.products?.slice(0, 5).map((item) => (
+              <SwiperSlide key={item._id} className="px-2.5">
+                <ProductCard item={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
       </section>
     </Container>
   );
