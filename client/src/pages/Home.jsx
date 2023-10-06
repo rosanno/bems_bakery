@@ -6,9 +6,9 @@ import ProductCard from "../components/ui/ProductCard";
 import useScrollTop from "../hooks/useScrollTop";
 import Loader from "../components/Loader";
 import Hero from "../components/Hero";
+import Process from "../components/Process";
 
 import "swiper/css";
-import Process from "../components/process";
 
 const Home = () => {
   const { data, isLoading } = useGetProductsQuery({
