@@ -111,7 +111,7 @@ const CakeDetails = () => {
                 <QuantityInput quantity={quantity} setQuantity={setQuantity} />
                 <div className="mt-4 md:mt-auto flex gap-4">
                   <Button onClick={handleBuyNow} className="w-full">
-                    Buy Now
+                    Order Now
                   </Button>
                   <Button
                     className="w-full"
