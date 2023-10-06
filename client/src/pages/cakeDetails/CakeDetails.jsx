@@ -1,17 +1,18 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
+import { motion } from "framer-motion";
 
-import Container from "../../components/ui/Container";
 import {
   useAddToCartMutation,
   useGetCartItemsQuery,
   useGetProductQuery,
 } from "../../services/cakeApi";
-import Button from "../../components/ui/Button";
-import { useEffect, useState } from "react";
-import useAddToCart from "../../hooks/useAddToCart";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartItems } from "../../features/cart/cartSlice";
+import useAddToCart from "../../hooks/useAddToCart";
+import Container from "../../components/ui/Container";
+import Button from "../../components/ui/Button";
 import useScrollTop from "../../hooks/useScrollTop";
 import Loader from "../../components/Loader";
 import CustomerReview from "../../components/CustomerReview";
@@ -73,14 +74,32 @@ const CakeDetails = () => {
         <>
           <section className="mt-10">
             <article className="flex flex-col md:flex-row md:gap-10">
-              <div className="flex flex-1 items-center justify-center border border-gray-300/30 rounded-md">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: {
+                    duration: 0.6,
+                  },
+                }}
+                className="flex flex-1 items-center justify-center border border-gray-300/30 rounded-md"
+              >
                 <img
                   src={data?.product?.imageURL}
                   alt={data?.product?.name}
                   className="w-72 h-72 object-contain"
                 />
-              </div>
-              <div className="mt-4 md:mt-0 flex flex-col flex-1">
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: {
+                    duration: 0.6,
+                  },
+                }}
+                className="mt-4 md:mt-0 flex flex-col flex-1"
+              >
                 <h2 className="text-2xl md:text-3xl font-bold">
                   {data?.product?.name}
                 </h2>
@@ -129,7 +148,7 @@ const CakeDetails = () => {
                     Add To Cart
                   </Button>
                 </div>
-              </div>
+              </motion.div>
             </article>
           </section>
           <CustomerReview
