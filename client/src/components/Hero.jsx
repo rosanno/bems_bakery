@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <section>
       <div className="flex flex-col-reverse md:flex-row items-start">
-        <div className="flex-1 mt-10 md:mt-20">
+        <div className="flex-1 mt-10 md:mt-28">
           <h1 className="text-base text-[#916045] font-[500] leading-10 md:leading-none">
             Suggested for you
           </h1>
@@ -33,6 +33,7 @@ const Hero = () => {
           <img
             src="/assets/images/hero-bg.png"
             alt=""
+            loading="lazy"
             className="w-[390px] h-[390px] sm:w-[470px] sm:h-[470px] md:w-[550px] md:h-[490px] object-contain"
           />
         </div>
