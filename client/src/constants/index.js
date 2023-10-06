@@ -39,3 +39,30 @@ export const items = [
       "Yes, we offer cake tastings by appointment. Please contact us to schedule a tasting.",
   },
 ];
+
+export const categories = [
+  {
+    name: "Premium cake",
+    img: "/assets/premium-cake.png",
+  },
+  {
+    name: "Mini cake",
+    img: "/assets/mini-cake.png",
+  },
+  {
+    name: "Regular cake",
+    img: "/assets/regular-cake.png",
+  },
+  {
+    name: "Birthday cake",
+    img: "/assets/birthday-cake.png",
+  },
+  {
+    name: "Wedding cake",
+    img: "/assets/wedding-cake.png",
+  },
+  {
+    name: "Premium cakes",
+    img: "/assets/premium-cake.png",
+  },
+];

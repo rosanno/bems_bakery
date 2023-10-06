@@ -1,35 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
-    <header>
-      <div
-        className="h-96 w-full md:h-auto aspect-[1/1] md:aspect-[2/1] bg-cover relative"
-        style={{
-          backgroundImage: "url(/assets/hero-bg.jpg)",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="flex flex-col justify-center items-center gap-y-1 md:gap-y-3 px-5 md:px-20 h-96 md:h-[630px] relative z-10">
-          <h3 className="uppercase text-base md:text-xl text-white font-medium pointer-events-none">
-            Discover Today&apos;s Special Offers!
-          </h3>
-          <h1 className="text-4xl md:text-6xl text-white font-semibold pointer-events-none">
-            Indulge in Exquisite Cakes
+    <section>
+      <div className="flex flex-col-reverse md:flex-row items-start">
+        <div className="flex-1 mt-10 md:mt-20">
+          <h1 className="text-base text-[#916045] font-[500] leading-10 md:leading-none">
+            Suggested for you
           </h1>
-          <h2 className="text-sm md:text-xl text-white pointer-events-none">
-            Taking Your Taste Buds to New Height.
+          <h2 className="text-6xl md:text-7xl font-[600] leading-[1.1] md:leading-[1.2] lg:leading-[1.4]">
+            Stawberry <span className="text-[#916045]">Cake</span>
           </h2>
-          <Link
-            to="/cakes"
-            className="border-2 border-white px-4 md:px-6 py-1.5 md:py-2 mt-2.5 text-white text-xs hover:bg-white hover:text-black rounded-sm uppercase transition-colors duration-300"
-          >
-            browse cakes
-          </Link>
+          <p className="mt-4 text-sm text-gray-500 leading-[1.9]">
+            A delectable strawberry mini cake is a bite-sized delight that
+            combines the sweet and juicy essence of ripe strawberries with a
+            moist, fluffy cake. This miniature dessert offers a burst of fruity
+            flavor in every bite, topped with a luscious strawberry glaze or
+            frosting for an extra layer of indulgence.
+          </p>
+          <div className="mt-10">
+            <button
+              onClick={() => navigate("/cakes")}
+              className="border border-rose-500 hover:bg-rose-600 hover:text-white transition py-2.5 px-4 rounded-md font-[600] capitalize text-sm"
+            >
+              order now
+            </button>
+          </div>
+        </div>
+        <div className="mt-5">
+          <img
+            src="/assets/images/hero-bg.png"
+            alt=""
+            className="w-[390px] h-[390px] sm:w-[470px] sm:h-[470px] md:w-[550px] md:h-[490px] object-contain"
+          />
         </div>
       </div>
-    </header>
+    </section>
   );
 };
 
