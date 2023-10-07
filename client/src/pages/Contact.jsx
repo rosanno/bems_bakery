@@ -1,7 +1,6 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
-import Container from "../components/ui/Container";
 import Input from "../components/ui/Input";
 import { useSendMessageMutation } from "../services/cakeApi";
 import Button from "../components/ui/Button";
@@ -37,13 +36,13 @@ const Contact = () => {
       >
         <div className="absolute inset-0 bg-black/50" />
 
-        <Container>
+        <div className="mx-auto max-w-7xl px-3 pt-20">
           <div className="flex justify-center items-center h-[300px] relative z-10">
             <h2 className="text-white text-3xl md:text-4xl font-bold uppercase pointer-events-none">
               Contact Us
             </h2>
           </div>
-        </Container>
+        </div>
       </div>
       <div className="mt-8 mx-auto max-w-7xl px-3">
         <div className="lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
