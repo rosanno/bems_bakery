@@ -66,7 +66,7 @@ const CakeDetails = () => {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-3 pt-20">
+    <div className="mx-auto max-w-7xl px-5 md:px-3 pt-16 md:pt-20">
       {isItemLoading ? (
         <div className="flex flex-col justify-center items-center space-y-2 h-[600px]">
           <Loader label="Loading product..." />
@@ -118,7 +118,7 @@ const CakeDetails = () => {
                 </h2>
                 <div className="mt-6">
                   <h3 className="font-bold text-lg">Description</h3>
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-xs leading-5 md:leading-6 md:text-sm text-gray-500">
                     {data?.product?.description}
                   </p>
                 </div>
