@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   useAddToCartMutation,
   useGetCartItemsQuery,
   useGetProductQuery,
 } from "@/services/cakeApi";
-import { useDispatch, useSelector } from "react-redux";
 import { setCartItems } from "@/features/cart/cartSlice";
+
 import useAddToCart from "@/hooks/useAddToCart";
 import Button from "@/components/ui/Button";
 import useScrollTop from "@/hooks/useScrollTop";
