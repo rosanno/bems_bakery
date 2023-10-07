@@ -24,10 +24,10 @@ const Hero = () => {
           <h1 className="text-base text-[#916045] font-[500] leading-10 md:leading-none">
             Suggested for you
           </h1>
-          <h2 className="text-6xl md:text-7xl font-[600] leading-[1.1] md:leading-[1.2] lg:leading-[1.4]">
+          <h2 className="text-5xl md:text-7xl font-[600] leading-[1.1] md:leading-[1.2] lg:leading-[1.4]">
             Stawberry <span className="text-[#916045]">Cake</span>
           </h2>
-          <p className="mt-4 text-sm text-gray-500 leading-[1.9]">
+          <p className="mt-4 text-xs md:text-sm text-gray-500 leading-5 md:leading-6">
             A delectable strawberry mini cake is a bite-sized delight that
             combines the sweet and juicy essence of ripe strawberries with a
             moist, fluffy cake. This miniature dessert offers a burst of fruity
