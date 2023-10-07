@@ -3,14 +3,14 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 
-import Sorting from "../components/Sorting";
-import { useGetProductsQuery } from "../services/cakeApi";
-import ProductCard from "../components/ui/ProductCard";
-import FilterSidebar from "../components/FilterSidebar";
-import { toggleFilterSidebar } from "../features/filterSidebar/filterSidebarSlice";
-import useScrollTop from "../hooks/useScrollTop";
-import Pagination from "../components/Pagination";
-import Loader from "../components/Loader";
+import Sorting from "@/components/Sorting";
+import { useGetProductsQuery } from "@/services/cakeApi";
+import ProductCard from "@/components/ui/ProductCard";
+import FilterSidebar from "@/components/FilterSidebar";
+import { toggleFilterSidebar } from "@/features/filterSidebar/filterSidebarSlice";
+import useScrollTop from "@/hooks/useScrollTop";
+import Pagination from "@/components/Pagination";
+import Loader from "@/components/Loader";
 
 const Cakes = () => {
   const { category } = useParams();

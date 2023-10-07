@@ -2,17 +2,13 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import {
-  useCreateOrderMutation,
-  useGetCartItemsQuery,
-} from "../services/cakeApi";
-import CheckoutItem from "../components/CheckoutItem";
-import CheckoutSummary from "../components/CheckoutSummary";
+import { useCreateOrderMutation } from "@/services/cakeApi";
+import CheckoutItem from "@/components/CheckoutItem";
+import CheckoutSummary from "@/components/CheckoutSummary";
 
 const BuyNowCheckout = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { data, isLoading: isItemLoading } = useGetCartItemsQuery();
   const { user } = useSelector((state) => state.authenticated);
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const [selectedPayment, setSelectedPayment] = useState("cod");

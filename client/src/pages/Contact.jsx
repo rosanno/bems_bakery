@@ -1,9 +1,9 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
-import Input from "../components/ui/Input";
-import { useSendMessageMutation } from "../services/cakeApi";
-import Button from "../components/ui/Button";
+import Input from "@/components/ui/Input";
+import { useSendMessageMutation } from "@/services/cakeApi";
+import Button from "@/components/ui/Button";
 
 const Contact = () => {
   const {

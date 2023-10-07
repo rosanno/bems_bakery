@@ -1,7 +1,7 @@
-import { useGetOrdersQuery } from "../services/cakeApi";
-import OrderItem from "../components/OrderItem";
-import useScrollTop from "../hooks/useScrollTop";
-import Loader from "../components/Loader";
+import { useGetOrdersQuery } from "@/services/cakeApi";
+import OrderItem from "@/components/OrderItem";
+import useScrollTop from "@/hooks/useScrollTop";
+import Loader from "@/components/Loader";
 
 const Orders = () => {
   const { data: orders, error, isLoading } = useGetOrdersQuery();

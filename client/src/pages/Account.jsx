@@ -1,9 +1,9 @@
-import ProfileForm from "../components/ProfileForm";
-import ProfilePasswordForm from "../components/ProfilePasswordForm";
+import ProfileForm from "@/components/ProfileForm";
+import ProfilePasswordForm from "@/components/ProfilePasswordForm";
 
 const Account = () => {
   return (
-    <div className="mx-auto max-w-7xl px-3 pt-20">
+    <div className="mx-auto max-w-7xl px-3 md:px-5 pt-20">
       <section className="mt-5 md:mt-10">
         <div>
           <h3 className="text-lg">Account</h3>

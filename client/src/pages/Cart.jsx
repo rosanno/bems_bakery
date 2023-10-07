@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 
-import CartItem from "../components/CartItem";
-import Summary from "../components/Summary";
+import CartItem from "@/components/CartItem";
+import Summary from "@/components/Summary";
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);

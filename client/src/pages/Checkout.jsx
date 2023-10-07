@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import {
   useCreateOrderMutation,
   useGetCartItemsQuery,
-} from "../services/cakeApi";
-import Loader from "../components/Loader";
-import CheckoutItem from "../components/CheckoutItem";
-import CheckoutSummary from "../components/CheckoutSummary";
+} from "@/services/cakeApi";
+import Loader from "@/components/Loader";
+import CheckoutItem from "@/components/CheckoutItem";
+import CheckoutSummary from "@/components/CheckoutSummary";
 
 const Checkout = () => {
   const navigate = useNavigate();

@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { useRegisterMutation } from "../services/cakeApi";
-import { setAccessToken } from "../features/auth/authSlice";
-import Input from "../components/ui/Input";
+import { useRegisterMutation } from "@/services/cakeApi";
+import { setAccessToken } from "@/features/auth/authSlice";
+import Input from "@/components/ui/Input";
 
 const Register = () => {
   const dispatch = useDispatch();

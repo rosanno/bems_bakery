@@ -1,8 +1,8 @@
 import React from "react";
 
-import Accordion from "../components/Accordion";
-import { items } from "../constants";
-import useScrollTop from "../hooks/useScrollTop";
+import Accordion from "@/components/Accordion";
+import { items } from "@/constants";
+import useScrollTop from "@/hooks/useScrollTop";
 
 const Faq = () => {
   useScrollTop();

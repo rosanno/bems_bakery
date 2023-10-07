@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { useGetProductsQuery } from "../services/cakeApi";
-import ProductCard from "../components/ui/ProductCard";
-import useScrollTop from "../hooks/useScrollTop";
-import Loader from "../components/Loader";
-import Hero from "../components/Hero";
-import Process from "../components/Process";
+import { useGetProductsQuery } from "@/services/cakeApi";
+import ProductCard from "@/components/ui/ProductCard";
+import useScrollTop from "@/hooks/useScrollTop";
+import Loader from "@/components/Loader";
+import Hero from "@/components/Hero";
+import Process from "@/components/Process";
 
 import "swiper/css";
 
