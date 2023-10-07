@@ -149,10 +149,10 @@ const Navbar = () => {
                       >
                         <div className="border-b">
                           <div className="px-2 pb-2">
-                            <h4 className="text-sm text-gray-500/80 font-medium">
+                            <h4 className="text-xs text-gray-500/80">
                               {user?.user?.name}
                             </h4>
-                            <p className="text-xs text-gray-500/80 truncate">
+                            <p className="text-xs text-gray-500/80 truncate pt-1.5">
                               {user?.user?.email}
                             </p>
                           </div>
