@@ -7,15 +7,15 @@ import {
   useAddToCartMutation,
   useGetCartItemsQuery,
   useGetProductQuery,
-} from "../../services/cakeApi";
+} from "@/services/cakeApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartItems } from "../../features/cart/cartSlice";
-import useAddToCart from "../../hooks/useAddToCart";
-import Button from "../../components/ui/Button";
-import useScrollTop from "../../hooks/useScrollTop";
-import Loader from "../../components/Loader";
-import CustomerReview from "../../components/CustomerReview";
-import QuantityInput from "../../components/ui/QuantityInput";
+import { setCartItems } from "@/features/cart/cartSlice";
+import useAddToCart from "@/hooks/useAddToCart";
+import Button from "@/components/ui/Button";
+import useScrollTop from "@/hooks/useScrollTop";
+import Loader from "@/components/Loader";
+import CustomerReview from "@/components/CustomerReview";
+import QuantityInput from "@/components/ui/QuantityInput";
 
 const CakeDetails = () => {
   const dispatch = useDispatch();
