@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 
-import Container from "../components/ui/Container";
 import CartItem from "../components/CartItem";
 import Summary from "../components/Summary";
 
@@ -10,7 +9,7 @@ const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
 
   return (
-    <Container>
+    <div className="mx-auto max-w-7xl px-3 pt-20">
       <section className="mt-10">
         <h1 className="text-xl md:text-2xl font-semibold capitalize">Cart</h1>
         <div className="px-4 py-4 sm:px-6 lg:px-8">
@@ -41,7 +40,7 @@ const Cart = () => {
           )}
         </div>
       </section>
-    </Container>
+    </div>
   );
 };
 

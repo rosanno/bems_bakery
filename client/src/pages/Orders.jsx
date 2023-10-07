@@ -1,4 +1,3 @@
-import Container from "../components/ui/Container";
 import { useGetOrdersQuery } from "../services/cakeApi";
 import OrderItem from "../components/OrderItem";
 import useScrollTop from "../hooks/useScrollTop";
@@ -10,7 +9,7 @@ const Orders = () => {
   useScrollTop();
 
   return (
-    <Container>
+    <div className="mx-auto max-w-7xl px-3 pt-20">
       <section className="mt-3 md:mt-6">
         <h1 className="text-xl md:text-2xl font-semibold capitalize">Orders</h1>
         {isLoading && (
@@ -39,7 +38,7 @@ const Orders = () => {
           )}
         </div>
       </section>
-    </Container>
+    </div>
   );
 };
 

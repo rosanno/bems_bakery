@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Container from "../components/ui/Container";
 import {
   useCreateOrderMutation,
   useGetCartItemsQuery,
@@ -43,7 +42,7 @@ const Checkout = () => {
   };
 
   return (
-    <Container>
+    <div className="mx-auto max-w-7xl px-3 pt-20">
       <div className="mt-4 md:mt-7">
         <h1 className="text-xl md:text-2xl font-semibold capitalize">
           Checkout
@@ -79,7 +78,7 @@ const Checkout = () => {
           </div>
         )}
       </div>
-    </Container>
+    </div>
   );
 };
 

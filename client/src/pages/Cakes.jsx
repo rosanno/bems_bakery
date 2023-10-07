@@ -4,7 +4,6 @@ import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 
 import Sorting from "../components/Sorting";
-import Container from "../components/ui/Container";
 import { useGetProductsQuery } from "../services/cakeApi";
 import ProductCard from "../components/ui/ProductCard";
 import FilterSidebar from "../components/FilterSidebar";
@@ -43,7 +42,7 @@ const Cakes = () => {
   return (
     <>
       <FilterSidebar />
-      <Container>
+      <div className="mx-auto max-w-7xl px-3 pt-20">
         <header className="flex items-center justify-between mt-4 md:mt-8">
           <h1 className="text-xl md:text-2xl font-semibold capitalize">
             {!search ? "Cakes" : `Results for "${search}"`}
@@ -84,7 +83,7 @@ const Cakes = () => {
             </>
           )}
         </section>
-      </Container>
+      </div>
     </>
   );
 };

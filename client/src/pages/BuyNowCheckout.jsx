@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Container from "../components/ui/Container";
-import Loader from "../components/Loader";
-
 import {
   useCreateOrderMutation,
   useGetCartItemsQuery,
@@ -47,7 +44,7 @@ const BuyNowCheckout = () => {
   };
 
   return (
-    <Container>
+    <div className="mx-auto max-w-7xl px-3 pt-20">
       <div className="mt-4 md:mt-7">
         <h1 className="text-xl md:text-2xl font-semibold capitalize">
           Checkout
@@ -76,7 +73,7 @@ const BuyNowCheckout = () => {
           />
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

@@ -1,10 +1,9 @@
 import ProfileForm from "../components/ProfileForm";
 import ProfilePasswordForm from "../components/ProfilePasswordForm";
-import Container from "../components/ui/Container";
 
 const Account = () => {
   return (
-    <Container>
+    <div className="mx-auto max-w-7xl px-3 pt-20">
       <section className="mt-5 md:mt-10">
         <div>
           <h3 className="text-lg">Account</h3>
@@ -32,7 +31,7 @@ const Account = () => {
           <ProfilePasswordForm />
         </div>
       </section>
-    </Container>
+    </div>
   );
 };
 

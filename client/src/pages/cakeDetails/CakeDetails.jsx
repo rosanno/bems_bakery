@@ -11,7 +11,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setCartItems } from "../../features/cart/cartSlice";
 import useAddToCart from "../../hooks/useAddToCart";
-import Container from "../../components/ui/Container";
 import Button from "../../components/ui/Button";
 import useScrollTop from "../../hooks/useScrollTop";
 import Loader from "../../components/Loader";
@@ -21,13 +20,15 @@ import QuantityInput from "../../components/ui/QuantityInput";
 const CakeDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cakeId } = useParams();
-  const { data, isLoading: isItemLoading } = useGetProductQuery({ cakeId });
-  const { data: items } = useGetCartItemsQuery();
-  const { accessToken } = useSelector((state) => state.authenticated);
   const [quantity, setQuantity] = useState(1);
+
+  const { cakeId } = useParams();
+  const { accessToken } = useSelector((state) => state.authenticated);
+
   const [addItemToCart, { isLoading }] = useAddToCartMutation();
   const { addToCart } = useAddToCart(accessToken, navigate, addItemToCart);
+  const { data, isLoading: isItemLoading } = useGetProductQuery({ cakeId });
+  const { data: items } = useGetCartItemsQuery();
 
   useScrollTop(); // scroll to top
 
@@ -65,7 +66,7 @@ const CakeDetails = () => {
   };
 
   return (
-    <Container>
+    <div className="mx-auto max-w-7xl px-3 pt-20">
       {isItemLoading ? (
         <div className="flex flex-col justify-center items-center space-y-2 h-[600px]">
           <Loader label="Loading product..." />
@@ -159,7 +160,7 @@ const CakeDetails = () => {
           />
         </>
       )}
-    </Container>
+    </div>
   );
 };
 

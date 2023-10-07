@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { useGetProductsQuery } from "../services/cakeApi";
-import Container from "../components/ui/Container";
 import ProductCard from "../components/ui/ProductCard";
 import useScrollTop from "../hooks/useScrollTop";
 import Loader from "../components/Loader";
@@ -19,7 +18,7 @@ const Home = () => {
   useScrollTop(); // scroll to top
 
   return (
-    <Container>
+    <div className="mx-auto max-w-7xl px-3 pt-20">
       <Hero />
       <Process />
 
@@ -84,7 +83,7 @@ const Home = () => {
           </Swiper>
         </motion.div>
       </section>
-    </Container>
+    </div>
   );
 };
 
