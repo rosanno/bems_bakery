@@ -30,7 +30,7 @@ const ReviewItem = ({ item }) => {
     <div className="border-b border-gray-400/10 last:border-0 px-5">
       <HalfStarRating rating={item.rating} textSize={"text-sm"} />
       <h4 className="text-xs text-gray-400/80 pt-1">{item.customerName}</h4>
-      <p className="text-sm my-4">{item.reviewText}</p>
+      <p className="text-sm leading-6 my-4">{item.reviewText}</p>
     </div>
   );
 };
@@ -67,7 +67,7 @@ const CustomerReview = ({ product, reviews, rating, reviewCount }) => {
         </>
       ) : (
         <div className="text-center py-3">
-          <h3 className="text-sm text-gray-400">
+          <h3 className="text-sm text-gray-400 tracking-wider">
             No review(s) for this product
           </h3>
         </div>
