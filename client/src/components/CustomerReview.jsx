@@ -39,7 +39,7 @@ const CustomerReview = ({ product, reviews, rating, reviewCount }) => {
   return (
     <section className="mt-10 bg-gray-100/50 rounded-sm">
       <div className="py-5 px-5">
-        <h1 className="text-base font-semibold">
+        <h1 className="text-base tracking-wide">
           Rating & Reviews of {product}
         </h1>
       </div>
