@@ -5,7 +5,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section>
+    <section className="px-5 md:px-10">
       <div className="flex flex-col-reverse md:flex-row items-start">
         <motion.div
           initial={{ opacity: 0, x: -60 }}

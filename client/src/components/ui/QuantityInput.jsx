@@ -8,7 +8,7 @@ const QuantityInput = ({ quantity, setQuantity }) => {
       <IconButton
         icon={<AiOutlineMinus />}
         variant="danger"
-        disabled={quantity === 0}
+        disabled={quantity === 1}
         onClick={() => setQuantity(quantity - 1)}
       />
       <input
